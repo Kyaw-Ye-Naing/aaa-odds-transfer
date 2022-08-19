@@ -1,23 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import OddsTransfer from './Page/OddsTransfer'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav>
+      <h3 class="title">Odds Trasfer Page</h3>
+      </nav>   
+      <div className="App">
+      <OddsTransfer/>
+      </div>
     </div>
   );
 }
