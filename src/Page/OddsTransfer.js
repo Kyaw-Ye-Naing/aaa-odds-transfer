@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import moment from "moment";
-import MyColor from '../config/color';
+import MyColor from "../config/color";
 
 const TeamData = [
   {
@@ -10,67 +10,67 @@ const TeamData = [
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Chelsea",
     teamId: 2,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Manchester United",
     teamId: 3,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Everton",
     teamId: 4,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Aston",
     teamId: 5,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Leeds",
     teamId: 6,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Fulham",
     teamId: 7,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Southomtam",
     teamId: 8,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Arsenal",
     teamId: 9,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Spurs",
     teamId: 10,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Liverpool",
     teamId: 11,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Crystal Palace",
     teamId: 12,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Nottenham",
     teamId: 13,
     isSelected: false,
   },
   {
-    teamName: "Manchester City",
+    teamName: "Wolves",
     teamId: 14,
     isSelected: false,
   },
@@ -85,17 +85,17 @@ const OddsData = [
     newBody: "1+50",
     newGoal: "3-70",
     isBodyChange: true,
-    isGoalChange: false
+    isGoalChange: false,
   },
   {
     teamName: "Chelsea",
     teamId: 2,
     oldBody: "1+50",
     oldGoal: "2-80",
-    newBody: "1+50",
-    newGoal: "2-80",
-    isBodyChange: false,
-    isGoalChange: false
+    newBody: "1+30",
+    newGoal: "2-30",
+    isBodyChange: true,
+    isGoalChange: true,
   },
   {
     teamName: "Manchester United",
@@ -105,27 +105,27 @@ const OddsData = [
     newBody: "1+80",
     newGoal: "3-40",
     isBodyChange: false,
-    isGoalChange: true
+    isGoalChange: true,
   },
   {
     teamName: "Everton",
     teamId: 4,
     oldBody: "1+80",
     oldGoal: "2-70",
-    newBody: "1+80",
-    newGoal: "2-70",
-    isBodyChange: false,
-    isGoalChange: false
+    newBody: "1+40",
+    newGoal: "2-90",
+    isBodyChange: true,
+    isGoalChange: true,
   },
   {
     teamName: "Aston Villa",
     teamId: 5,
     oldBody: "1+80",
     oldGoal: "2-70",
-    newBody: "1+80",
+    newBody: "=-90",
     newGoal: "2-70",
-    isBodyChange: false,
-    isGoalChange: false
+    isBodyChange: true,
+    isGoalChange: false,
   },
   {
     teamName: "Leeds",
@@ -133,19 +133,19 @@ const OddsData = [
     oldBody: "1+80",
     oldGoal: "2-70",
     newBody: "1+80",
-    newGoal: "2-70",
+    newGoal: "3+100",
     isBodyChange: false,
-    isGoalChange: false
+    isGoalChange: true,
   },
   {
     teamName: "Fulham",
     teamId: 7,
     oldBody: "1+80",
     oldGoal: "2-70",
-    newBody: "1+80",
+    newBody: "1+90",
     newGoal: "2-70",
-    isBodyChange: false,
-    isGoalChange: false
+    isBodyChange: true,
+    isGoalChange: false,
   },
   {
     teamName: "Southamton",
@@ -153,9 +153,9 @@ const OddsData = [
     oldBody: "1+80",
     oldGoal: "2-70",
     newBody: "1+80",
-    newGoal: "2-70",
+    newGoal: "3+90",
     isBodyChange: false,
-    isGoalChange: false
+    isGoalChange: true,
   },
   {
     teamName: "Arsenal",
@@ -165,17 +165,17 @@ const OddsData = [
     newBody: "1+90",
     newGoal: "2-90",
     isBodyChange: true,
-    isGoalChange: true
+    isGoalChange: true,
   },
   {
     teamName: "Spurs",
     teamId: 10,
     oldBody: "1+80",
     oldGoal: "2-70",
-    newBody: "1+80",
-    newGoal: "2-70",
-    isBodyChange: false,
-    isGoalChange: false
+    newBody: "2-10",
+    newGoal: "3-70",
+    isBodyChange: true,
+    isGoalChange: true,
   },
   {
     teamName: "Liverpool",
@@ -183,29 +183,39 @@ const OddsData = [
     oldBody: "1+80",
     oldGoal: "2-70",
     newBody: "1+80",
-    newGoal: "2-70",
+    newGoal: "3+50",
     isBodyChange: false,
-    isGoalChange: false
+    isGoalChange: true,
   },
   {
     teamName: "Crystal Palace",
     teamId: 12,
-    oldBody: "1+80",
+    oldBody: "=-50",
     oldGoal: "2-70",
-    newBody: "1+80",
+    newBody: "=-50",
     newGoal: "2-70",
     isBodyChange: false,
-    isGoalChange: false
+    isGoalChange: false,
   },
   {
-    teamName: "Nottenham",
+    teamName: "Nottinham",
     teamId: 13,
-    oldBody: "1+80",
+    oldBody: "=-70",
     oldGoal: "2-70",
-    newBody: "1+80",
+    newBody: "=-70",
     newGoal: "2-70",
     isBodyChange: false,
-    isGoalChange: false
+    isGoalChange: false,
+  },
+  {
+    teamName: "Wolves",
+    teamId: 14,
+    oldBody: "=-30",
+    oldGoal: "2-90",
+    newBody: "=-30",
+    newGoal: "2-90",
+    isBodyChange: false,
+    isGoalChange: false,
   },
 ];
 
@@ -213,86 +223,79 @@ const CopyData = [
   {
     teamName: "Manchester City",
     teamId: 1,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "1+50",
+    Goal: "3-70",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Chelsea",
     teamId: 2,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "1+30",
+    Goal: "2-30",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Manchester United",
     teamId: 3,
-    eventTime: "2022-08-18 16:00:00.000",
+    eventTime: "2022-08-18 09:00 PM",
     Body: "1+80",
-    Goal: "1-70",
+    Goal: "3-40",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Everton",
     teamId: 4,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "1+40",
+    Goal: "2-90",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Aston Villa",
     teamId: 5,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "=-90",
+    Goal: "2-70",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Leeds",
     teamId: 6,
-    eventTime: "2022-08-18 16:00:00.000",
+    eventTime: "2022-08-18 09:00 PM",
     Body: "1+80",
-    Goal: "1-70",
+    Goal: "3+100",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Fulham",
     teamId: 7,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "1+90",
+    Goal: "2-70",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Southamtom",
     teamId: 8,
-    eventTime: "2022-08-18 16:00:00.000",
+    eventTime: "2022-08-18 09:00 PM",
     Body: "1+80",
-    Goal: "1-70",
+    Goal: "3+90",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Arsenal",
     teamId: 9,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "1+90",
+    Goal: "2-90",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Spurs",
     teamId: 10,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    eventTime: "2022-08-18 09:00 PM",
+    Body: "2-10",
+    Goal: "3-70",
   },
   {
-    teamName: "Manchester City",
+    teamName: "Liverpool",
     teamId: 11,
-    eventTime: "2022-08-18 16:00:00.000",
+    eventTime: "2022-08-18 09:00 PM",
     Body: "1+80",
-    Goal: "1-70",
-  },
-  {
-    teamName: "Manchester City",
-    teamId: 12,
-    eventTime: "2022-08-18 16:00:00.000",
-    Body: "1+80",
-    Goal: "1-70",
+    Goal: "3+50",
   },
 ];
 
@@ -300,25 +303,37 @@ const CopyData = [
 function OddsTransfer() {
   const rowsPerPage = 10;
   const [items, setItems] = useState([]);
-  const [oddsitem, setOddsItem] = useState([]);
-  const [copyitem, setCopyItem] = useState([]);
   const [pageCount, setPageCount] = useState(0);
-  const [oddsPageCount, setOddsPageCount] = useState(0);
-  const [copyPageCount, setCopyPageCount] = useState(0);
   const [page, setPage] = useState(0);
+  const [searchText, setSearchText] = useState([]);
+  const [searchedTeam, setSearchedTeam] = useState([]);
+
+  const [oddsitem, setOddsItem] = useState([]);
+  const [oddsPageCount, setOddsPageCount] = useState(0);
   const [oddpage, setOddPage] = useState(0);
+  const [searchOdd, setSearchOdd] = useState([]);
+  const [searchedOdd, setSearchedOdd] = useState([]);
+
+  const [copyitem, setCopyItem] = useState([]);
+  const [copyPageCount, setCopyPageCount] = useState(0);
   const [copypage, setCopyPage] = useState(0);
+  const [searchCopy, setSearchCopy] = useState([]);
+  const [searchedCopy, setSearchedCopy] = useState([]); 
+
   const [selectedTeams, setSelectedTeam] = useState(0);
   const [isAllSelected, setIsAllSelected] = useState(false);
-
+  
   useEffect(() => {
     setItems(TeamData);
+    setSearchedTeam(TeamData);
     setOddsItem(OddsData);
+    setSearchedOdd(OddsData);
     setCopyItem(CopyData);
-    setPage(Math.ceil(TeamData.length / rowsPerPage))
-    setOddPage(Math.ceil(OddsData.length / rowsPerPage))
-    setCopyPage(Math.ceil(CopyData.length / rowsPerPage))
-  }, [])
+    setSearchedCopy(CopyData);
+    setPage(Math.ceil(TeamData.length / rowsPerPage));
+    setOddPage(Math.ceil(OddsData.length / rowsPerPage));
+    setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
+  }, []);
 
   const handlePageClick = async (data) => {
     // console.log(data.selected);
@@ -338,7 +353,7 @@ function OddsTransfer() {
   const handleChecked = (id) => {
     //console.log("id",id);
     //console.log("before",items);
-    const index = items.findIndex(v => {
+    const index = items.findIndex((v) => {
       return v.teamId == id;
     });
 
@@ -346,12 +361,12 @@ function OddsTransfer() {
 
     items[index].isSelected = !items[index].isSelected;
 
-    let isTrue = items.filter(e => e.isSelected == true);
+    let isTrue = items.filter((e) => e.isSelected == true);
     //setItems(items);
     setSelectedTeam(isTrue.length);
     setIsAllSelected(false);
     //console.log("after",items);
-  }
+  };
 
   const handleCheckedAll = () => {
     var newarr = [...items];
@@ -361,52 +376,113 @@ function OddsTransfer() {
     // console.log("check",isAllSelected)
     // console.log("data",newarr)
     setIsAllSelected(!isAllSelected);
-    console.log("check", isAllSelected)
+    console.log("check", isAllSelected);
     if (!isAllSelected) {
-      console.log("hey")
+      console.log("hey");
       setSelectedTeam(newarr.length);
     } else {
       setSelectedTeam(0);
     }
 
     setItems(newarr);
-  }
+  };
 
-  const teamsHandleSave = () => {
+  const teamsHandleSave = () => {};
 
-  }
+  const refreshOdds = () => {};
 
-  const refreshOdds = () => {
+  const handleCopy = () => {};
 
-  }
+  const onChangeTeam = (e) => {
+    setSearchText(e.target.value);
+    //console.log("eeee", e.target.value);
+    if (e.target.value.length != 0) {
+      const filteredRows = items.filter((row) => {
+        return row.teamName
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase());
+      });
+      setSearchedTeam(filteredRows);
+      //console.log("hhh",filteredRows);
+      setPage(Math.ceil(filteredRows.length / rowsPerPage));
+    } else {
+      setSearchedTeam([...items]);
+    }
+  };
 
-  const handleCopy = () => {
+  const cancelSearch = () => {
+    setSearchText("");
+    setSearchedTeam(items);
+    setPage(Math.ceil(items.length / rowsPerPage));
+  };
 
-  }
+  const onChangeOdds = (e) => {
+    setSearchOdd(e.target.value);    
+      const filteredRows = oddsitem.filter((row) => {
+        return row.teamName
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase());
+      });
+      setSearchedOdd(filteredRows);
+      setOddPage(Math.ceil(filteredRows.length / rowsPerPage));
+  };
+
+  const cancelOddsSearch = () => {
+    setSearchOdd("");
+    setSearchedOdd(oddsitem);
+    setOddPage(Math.ceil(items.length / rowsPerPage));
+  };
+
+  const onChangeCopy = (e) => {
+    setSearchCopy(e.target.value);    
+      const filteredRows = copyitem.filter((row) => {
+        return row.teamName
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase());
+      });
+      setSearchedCopy(filteredRows);
+      setCopyPage(Math.ceil(filteredRows.length / rowsPerPage));
+  };
+
+  const cancelCopySearch = () => {
+    setSearchCopy("");
+    setSearchedCopy(copyitem);
+    setCopyPage(Math.ceil(copyitem.length / rowsPerPage));
+  };
 
   return (
     <div className="main">
       {/* <div className="row"> */}
       <div className="right">
         <div className="table-title">
-          <div>
+          <div className="input-gp">
             <input
               type="email"
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="search ..."
+              value={searchText}
+              onChange={(e) => onChangeTeam(e)}
             />
+            <button
+              type="button"
+              class="btn btn-light"
+              onClick={() => cancelSearch()}
+            >
+              <i class="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+            </button>
           </div>
-          <button
-            type="button"
-            class="btn btn-success"
-          >Add <i class="fa-solid fa-plus"></i>
+          <button type="button" class="btn btn-success">
+            Add <i class="fa-solid fa-plus"></i>
           </button>
         </div>
         <div className="d-flex justify-content-between my-2">
-          <span style={{ fontSize: "15px" }}>Selected {selectedTeams} Teams</span>
+          <span style={{ fontSize: "15px" }}>
+            Selected {selectedTeams} Teams
+          </span>
           <div>
-            Check All &nbsp;<input
+            Check All &nbsp;
+            <input
               class="form-check-input"
               style={{ padding: "8px" }}
               type="checkbox"
@@ -418,18 +494,24 @@ function OddsTransfer() {
         </div>
         <table className="table table-hover table-bordered">
           <thead>
-            <tr style={{ backgroundColor: MyColor.headerbackground, color: MyColor.color }}>
+            <tr
+              style={{
+                backgroundColor: MyColor.headerbackground,
+                color: MyColor.color,
+              }}
+            >
               <th scope="col">NO</th>
               <th scope="col">Team</th>
-              <th scope="col">
-                Action
-              </th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            {items.length > 0 &&
-              items
-                .slice(pageCount * rowsPerPage, pageCount * rowsPerPage + rowsPerPage)
+            {searchedTeam.length > 0 &&
+              searchedTeam
+                .slice(
+                  pageCount * rowsPerPage,
+                  pageCount * rowsPerPage + rowsPerPage
+                )
                 .map((item) => {
                   return (
                     <tr key={item.teamId}>
@@ -468,29 +550,40 @@ function OddsTransfer() {
           breakClassName={"page-item"}
           breakLinkClassName={"page-link"}
           activeClassName={"active"}
-
         />
       </div>
       <div className="middle">
         <div className="table-title">
-          <div class="mb-3">
+          <div class="mb-3 input-gp">
             <input
               type="email"
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="search ..."
+              value={searchOdd}
+              onChange={(e)=>onChangeOdds(e)}
             />
+            <button
+              type="button"
+              class="btn btn-light"
+              onClick={() => cancelOddsSearch()}
+            >
+              <i class="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+            </button>
           </div>
-          <button
-            type="button"
-            class="btn btn-success mb-3"
-          >Refresh <i class="fa-solid fa-arrows-rotate"></i>
+          <button type="button" class="btn btn-success mb-3">
+            Refresh <i class="fa-solid fa-arrows-rotate"></i>
           </button>
         </div>
 
         <table className="table table-hover table-bordered">
           <thead>
-            <tr style={{ backgroundColor: MyColor.headerbackground, color: MyColor.color }}>
+            <tr
+              style={{
+                backgroundColor: MyColor.headerbackground,
+                color: MyColor.color,
+              }}
+            >
               <th scope="col" colSpan={2}>
                 Info
               </th>
@@ -501,7 +594,12 @@ function OddsTransfer() {
                 New Odds
               </th>
             </tr>
-            <tr style={{ backgroundColor: MyColor.secondarybackground, color: MyColor.color }}>
+            <tr
+              style={{
+                backgroundColor: MyColor.secondarybackground,
+                color: MyColor.color,
+              }}
+            >
               <th scope="col">No</th>
               <th scope="col">Team</th>
               <th scope="col">Body</th>
@@ -511,9 +609,12 @@ function OddsTransfer() {
             </tr>
           </thead>
           <tbody>
-            {oddsitem.length > 0 &&
-              oddsitem
-                .slice(oddsPageCount * rowsPerPage, oddsPageCount * rowsPerPage + rowsPerPage)
+            {searchedOdd.length > 0 &&
+              searchedOdd
+                .slice(
+                  oddsPageCount * rowsPerPage,
+                  oddsPageCount * rowsPerPage + rowsPerPage
+                )
                 .map((item) => {
                   return (
                     <tr key={item.teamId}>
@@ -521,8 +622,20 @@ function OddsTransfer() {
                       <td>{item.teamName}</td>
                       <td>{item.oldBody}</td>
                       <td>{item.oldGoal}</td>
-                      <td style={{ backgroundColor: item.isBodyChange ? "yellow" : null }}>{item.newBody}</td>
-                      <td style={{ backgroundColor: item.isGoalChange ? "yellow" : null }}>{item.newGoal}</td>
+                      <td
+                        style={{
+                          backgroundColor: item.isBodyChange ? "yellow" : null,
+                        }}
+                      >
+                        {item.newBody}
+                      </td>
+                      <td
+                        style={{
+                          backgroundColor: item.isGoalChange ? "yellow" : null,
+                        }}
+                      >
+                        {item.newGoal}
+                      </td>
                     </tr>
                   );
                 })}
@@ -550,13 +663,22 @@ function OddsTransfer() {
       </div>
       <div className="left">
         <div className="table-title">
-          <div class="mb-3">
+          <div class="mb-3 input-gp">
             <input
               type="email"
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="search ..."
+              value={searchCopy}
+              onChange={(e)=>onChangeCopy(e)}
             />
+             <button
+              type="button"
+              class="btn btn-light"
+              onClick={() => cancelCopySearch()}
+            >
+               <i class="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+            </button>
           </div>
           <button
             type="button"
@@ -568,7 +690,12 @@ function OddsTransfer() {
         </div>
         <table class="table table-hover table-bordered">
           <thead>
-            <tr style={{ backgroundColor: MyColor.headerbackground, color: MyColor.color }}>
+            <tr
+              style={{
+                backgroundColor: MyColor.headerbackground,
+                color: MyColor.color,
+              }}
+            >
               <th scope="col">No</th>
               <th scope="col">Time</th>
               <th scope="col">Team</th>
@@ -577,16 +704,19 @@ function OddsTransfer() {
             </tr>
           </thead>
           <tbody>
-            {copyitem.length > 0 &&
-              copyitem
-                .slice(copyPageCount * rowsPerPage, copyPageCount * rowsPerPage + rowsPerPage)
+            {searchedCopy.length > 0 &&
+              searchedCopy
+                .slice(
+                  copyPageCount * rowsPerPage,
+                  copyPageCount * rowsPerPage + rowsPerPage
+                )
                 .map((item) => {
                   return (
                     <tr key={item.teamId}>
                       <td>{item.teamId}</td>
-                      <td>{`${moment(item.eventTime).format("hh:mm:ss a")}/ ${moment(
-                        item.eventTime
-                      ).format("YYYY-MM-DD")}`}</td>
+                      <td>{`${moment(item.eventTime).format(
+                        "hh:mm:ss a"
+                      )}/ ${moment(item.eventTime).format("YYYY-MM-DD")}`}</td>
                       <td>{item.teamName}</td>
                       <td>{item.Body}</td>
                       <td>{item.Goal}</td>

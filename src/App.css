@@ -6,6 +6,7 @@
 
 nav{
   background-color: #00636E;
+  /* background-color: #303A52; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,6 +15,8 @@ nav{
 
 .title{
    color: white;
+   display: flex;
+   align-items: center;
 }
 
 .App{
@@ -44,4 +47,8 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.input-gp{
+    display: flex;
 }
