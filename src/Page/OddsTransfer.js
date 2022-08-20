@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import moment from "moment";
 import MyColor from "../config/color";
+import { toast } from "react-toastify";
+import { oddController } from "../controllers/oddsController/oddController";
 
 const TeamData = [
   {
@@ -223,77 +225,77 @@ const CopyData = [
   {
     teamName: "Manchester City",
     teamId: 1,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+50",
     Goal: "3-70",
   },
   {
     teamName: "Chelsea",
     teamId: 2,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+30",
     Goal: "2-30",
   },
   {
     teamName: "Manchester United",
     teamId: 3,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3-40",
   },
   {
     teamName: "Everton",
     teamId: 4,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+40",
     Goal: "2-90",
   },
   {
     teamName: "Aston Villa",
     teamId: 5,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "=-90",
     Goal: "2-70",
   },
   {
     teamName: "Leeds",
     teamId: 6,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+100",
   },
   {
     teamName: "Fulham",
     teamId: 7,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+90",
     Goal: "2-70",
   },
   {
     teamName: "Southamtom",
     teamId: 8,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+90",
   },
   {
     teamName: "Arsenal",
     teamId: 9,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+90",
     Goal: "2-90",
   },
   {
     teamName: "Spurs",
     teamId: 10,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "2-10",
     Goal: "3-70",
   },
   {
     teamName: "Liverpool",
     teamId: 11,
-    eventTime: "2022-08-18 09:00 PM",
+    eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+50",
   },
@@ -318,11 +320,11 @@ function OddsTransfer() {
   const [copyPageCount, setCopyPageCount] = useState(0);
   const [copypage, setCopyPage] = useState(0);
   const [searchCopy, setSearchCopy] = useState([]);
-  const [searchedCopy, setSearchedCopy] = useState([]); 
+  const [searchedCopy, setSearchedCopy] = useState([]);
 
   const [selectedTeams, setSelectedTeam] = useState(0);
   const [isAllSelected, setIsAllSelected] = useState(false);
-  
+
   useEffect(() => {
     setItems(TeamData);
     setSearchedTeam(TeamData);
@@ -334,6 +336,14 @@ function OddsTransfer() {
     setOddPage(Math.ceil(OddsData.length / rowsPerPage));
     setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
   }, []);
+
+  const getTeamFunction = () => {
+    oddController.getAllTeams((data) => {
+      setItems(data.data);
+      setSearchedTeam(data.data);
+      setPage(Math.ceil(TeamData.length / rowsPerPage));
+    });
+  }
 
   const handlePageClick = async (data) => {
     // console.log(data.selected);
@@ -387,11 +397,40 @@ function OddsTransfer() {
     setItems(newarr);
   };
 
-  const teamsHandleSave = () => {};
+  const teamsHandleSave = () => {
+    const filterResult = items.filter(function (x) { return x.isSelected == true; });
+    oddController.saveSelectedTeams(filterResult, (data) => {
+      setOddsItem(OddsData);
+      setSearchedOdd(OddsData);
+      setOddPage(Math.ceil(OddsData.length / rowsPerPage));
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_LEFT,
+      });
+    });
+  };
 
-  const refreshOdds = () => {};
+  const refreshOdds = () => {
+    oddController.updateResfreshOdds((data) => {
+      setOddsItem(OddsData);
+      setSearchedOdd(OddsData);
+      setCopyItem(CopyData);
+      setSearchedCopy(CopyData);
+      setOddPage(Math.ceil(OddsData.length / rowsPerPage));
+      setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    });
+  };
 
-  const handleCopy = () => {};
+  const handleCopy = () => {
+    const filterResult = copyitem.filter(function (x) { return x.rapidEventId; });
+    oddController.updateSelectedOdds(filterResult, (data) => {
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    });
+  };
 
   const onChangeTeam = (e) => {
     setSearchText(e.target.value);
@@ -417,14 +456,14 @@ function OddsTransfer() {
   };
 
   const onChangeOdds = (e) => {
-    setSearchOdd(e.target.value);    
-      const filteredRows = oddsitem.filter((row) => {
-        return row.teamName
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase());
-      });
-      setSearchedOdd(filteredRows);
-      setOddPage(Math.ceil(filteredRows.length / rowsPerPage));
+    setSearchOdd(e.target.value);
+    const filteredRows = oddsitem.filter((row) => {
+      return row.teamName
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+    });
+    setSearchedOdd(filteredRows);
+    setOddPage(Math.ceil(filteredRows.length / rowsPerPage));
   };
 
   const cancelOddsSearch = () => {
@@ -434,14 +473,14 @@ function OddsTransfer() {
   };
 
   const onChangeCopy = (e) => {
-    setSearchCopy(e.target.value);    
-      const filteredRows = copyitem.filter((row) => {
-        return row.teamName
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase());
-      });
-      setSearchedCopy(filteredRows);
-      setCopyPage(Math.ceil(filteredRows.length / rowsPerPage));
+    setSearchCopy(e.target.value);
+    const filteredRows = copyitem.filter((row) => {
+      return row.teamName
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+    });
+    setSearchedCopy(filteredRows);
+    setCopyPage(Math.ceil(filteredRows.length / rowsPerPage));
   };
 
   const cancelCopySearch = () => {
@@ -449,6 +488,13 @@ function OddsTransfer() {
     setSearchedCopy(copyitem);
     setCopyPage(Math.ceil(copyitem.length / rowsPerPage));
   };
+
+  const handleRemoveOdds = (id) => {
+    var filterResult = copyitem.filter(a => a.rapidEventId != id);
+
+    setSearchedCopy(filterResult);
+    setCopyPage(Math.ceil(filterResult.length / rowsPerPage));
+  }
 
   return (
     <div className="main">
@@ -458,22 +504,27 @@ function OddsTransfer() {
           <div className="input-gp">
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="exampleFormControlInput1"
               placeholder="search ..."
+              style={{ width: "10rem" }}
               value={searchText}
               onChange={(e) => onChangeTeam(e)}
             />
             <button
               type="button"
-              class="btn btn-light"
+              className="btn btn-light"
               onClick={() => cancelSearch()}
             >
-              <i class="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+              <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
             </button>
           </div>
-          <button type="button" class="btn btn-success">
-            Add <i class="fa-solid fa-plus"></i>
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={() => teamsHandleSave()}
+          >
+            Add <i className="fa-solid fa-plus"></i>
           </button>
         </div>
         <div className="d-flex justify-content-between my-2">
@@ -483,7 +534,7 @@ function OddsTransfer() {
           <div>
             Check All &nbsp;
             <input
-              class="form-check-input"
+              className="form-check-input"
               style={{ padding: "8px" }}
               type="checkbox"
               checked={isAllSelected}
@@ -492,46 +543,48 @@ function OddsTransfer() {
             />
           </div>
         </div>
-        <table className="table table-hover table-bordered">
-          <thead>
-            <tr
-              style={{
-                backgroundColor: MyColor.headerbackground,
-                color: MyColor.color,
-              }}
-            >
-              <th scope="col">NO</th>
-              <th scope="col">Team</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchedTeam.length > 0 &&
-              searchedTeam
-                .slice(
-                  pageCount * rowsPerPage,
-                  pageCount * rowsPerPage + rowsPerPage
-                )
-                .map((item) => {
-                  return (
-                    <tr key={item.teamId}>
-                      <td>{item.teamId}</td>
-                      <td>{item.teamName}</td>
-                      <td>
-                        <input
-                          class="form-check-input"
-                          style={{ padding: "8px" }}
-                          type="checkbox"
-                          checked={item.isSelected}
-                          onChange={() => handleChecked(item.teamId)}
-                          id="flexCheckDefault"
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-hover table-bordered">
+            <thead>
+              <tr
+                style={{
+                  backgroundColor: MyColor.headerbackground,
+                  color: MyColor.color,
+                }}
+              >
+                <th scope="col">NO</th>
+                <th scope="col">Team</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {searchedTeam.length > 0 &&
+                searchedTeam
+                  .slice(
+                    pageCount * rowsPerPage,
+                    pageCount * rowsPerPage + rowsPerPage
+                  )
+                  .map((item) => {
+                    return (
+                      <tr key={item.teamId}>
+                        <td>{item.teamId}</td>
+                        <td>{item.teamName}</td>
+                        <td>
+                          <input
+                            className="form-check-input"
+                            style={{ padding: "8px" }}
+                            type="checkbox"
+                            checked={item.isSelected}
+                            onChange={() => handleChecked(item.teamId)}
+                            id="flexCheckDefault"
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          </table>
+        </div>
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}
@@ -554,93 +607,79 @@ function OddsTransfer() {
       </div>
       <div className="middle">
         <div className="table-title">
-          <div class="mb-3 input-gp">
+          <div className="mb-3 input-gp">
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="exampleFormControlInput1"
               placeholder="search ..."
               value={searchOdd}
-              onChange={(e)=>onChangeOdds(e)}
+              onChange={(e) => onChangeOdds(e)}
             />
             <button
               type="button"
-              class="btn btn-light"
+              className="btn btn-light"
               onClick={() => cancelOddsSearch()}
             >
-              <i class="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+              <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
             </button>
           </div>
-          <button type="button" class="btn btn-success mb-3">
-            Refresh <i class="fa-solid fa-arrows-rotate"></i>
+          <button
+            type="button"
+            className="btn btn-success mb-3"
+            onClick={() => refreshOdds()}
+          >
+            Refresh <i className="fa-solid fa-arrows-rotate"></i>
           </button>
         </div>
-
-        <table className="table table-hover table-bordered">
-          <thead>
-            <tr
-              style={{
-                backgroundColor: MyColor.headerbackground,
-                color: MyColor.color,
-              }}
-            >
-              <th scope="col" colSpan={2}>
-                Info
-              </th>
-              <th scope="col" colSpan={2}>
-                Old Odds
-              </th>
-              <th scope="col" colSpan={2}>
-                New Odds
-              </th>
-            </tr>
-            <tr
-              style={{
-                backgroundColor: MyColor.secondarybackground,
-                color: MyColor.color,
-              }}
-            >
-              <th scope="col">No</th>
-              <th scope="col">Team</th>
-              <th scope="col">Body</th>
-              <th scope="col">Goal</th>
-              <th scope="col">Body</th>
-              <th scope="col">Goal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchedOdd.length > 0 &&
-              searchedOdd
-                .slice(
-                  oddsPageCount * rowsPerPage,
-                  oddsPageCount * rowsPerPage + rowsPerPage
-                )
-                .map((item) => {
-                  return (
-                    <tr key={item.teamId}>
-                      <td>{item.teamId}</td>
-                      <td>{item.teamName}</td>
-                      <td>{item.oldBody}</td>
-                      <td>{item.oldGoal}</td>
-                      <td
-                        style={{
-                          backgroundColor: item.isBodyChange ? "yellow" : null,
-                        }}
-                      >
-                        {item.newBody}
-                      </td>
-                      <td
-                        style={{
-                          backgroundColor: item.isGoalChange ? "yellow" : null,
-                        }}
-                      >
-                        {item.newGoal}
-                      </td>
-                    </tr>
-                  );
-                })}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-hover table-bordered">
+            <thead>
+              <tr
+                style={{
+                  backgroundColor: MyColor.headerbackground,
+                  color: MyColor.color,
+                }}
+              >
+                <th scope="col">No</th>
+                <th scope="col">Team</th>
+                <th scope="col">Old Odds</th>
+                <th scope="col">New Odds</th>
+              </tr>
+              <tr
+                style={{
+                  backgroundColor: MyColor.secondarybackground,
+                  color: MyColor.color,
+                }}
+              >
+              </tr>
+            </thead>
+            <tbody>
+              {searchedOdd.length > 0 &&
+                searchedOdd
+                  .slice(
+                    oddsPageCount * rowsPerPage,
+                    oddsPageCount * rowsPerPage + rowsPerPage
+                  )
+                  .map((item) => {
+                    return (
+                      <tr key={item.teamId}>
+                        <td>{item.teamId}</td>
+                        <td>{item.teamName}</td>
+                        <td>{item.oldBody} / {item.oldGoal}</td>
+                        <td
+                          style={{
+                            backgroundColor: item.isBodyChange ? "yellow" : null,
+                          }}
+                        >
+                          {item.newBody} / {item.newGoal}
+                        </td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          </table>
+        </div>
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}
@@ -663,68 +702,79 @@ function OddsTransfer() {
       </div>
       <div className="left">
         <div className="table-title">
-          <div class="mb-3 input-gp">
+          <div className="mb-3 input-gp">
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="exampleFormControlInput1"
               placeholder="search ..."
               value={searchCopy}
-              onChange={(e)=>onChangeCopy(e)}
+              onChange={(e) => onChangeCopy(e)}
             />
-             <button
+            <button
               type="button"
-              class="btn btn-light"
+              className="btn btn-light"
               onClick={() => cancelCopySearch()}
             >
-               <i class="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+              <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
             </button>
           </div>
           <button
             type="button"
-            class="btn btn-success mb-3"
+            className="btn btn-success mb-3"
             style={{ marginBottom: 5 }}
+            onClick={() => handleCopy()}
           >
-            Copy <i class="fa-solid fa-clipboard"></i>
+            Copy <i className="fa-solid fa-clipboard"></i>
           </button>
         </div>
-        <table class="table table-hover table-bordered">
-          <thead>
-            <tr
-              style={{
-                backgroundColor: MyColor.headerbackground,
-                color: MyColor.color,
-              }}
-            >
-              <th scope="col">No</th>
-              <th scope="col">Time</th>
-              <th scope="col">Team</th>
-              <th scope="col">Body</th>
-              <th scope="col">Goal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchedCopy.length > 0 &&
-              searchedCopy
-                .slice(
-                  copyPageCount * rowsPerPage,
-                  copyPageCount * rowsPerPage + rowsPerPage
-                )
-                .map((item) => {
-                  return (
-                    <tr key={item.teamId}>
-                      <td>{item.teamId}</td>
-                      <td>{`${moment(item.eventTime).format(
-                        "hh:mm:ss a"
-                      )}/ ${moment(item.eventTime).format("YYYY-MM-DD")}`}</td>
-                      <td>{item.teamName}</td>
-                      <td>{item.Body}</td>
-                      <td>{item.Goal}</td>
-                    </tr>
-                  );
-                })}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-hover table-bordered">
+            <thead>
+              <tr
+                style={{
+                  backgroundColor: MyColor.headerbackground,
+                  color: MyColor.color,
+                }}
+              >
+                <th scope="col">No</th>
+                <th scope="col">Time</th>
+                <th scope="col">Team</th>
+                <th scope="col">Body</th>
+                <th scope="col">Goal</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {searchedCopy.length > 0 &&
+                searchedCopy
+                  .slice(
+                    copyPageCount * rowsPerPage,
+                    copyPageCount * rowsPerPage + rowsPerPage
+                  )
+                  .map((item) => {
+                    return (
+                      <tr key={item.teamId}>
+                        <td>{item.teamId}</td>
+                        <td>{`${moment(item.eventTime).format("hh:mm:ss a")}`}</td>
+                        <td>{item.teamName}</td>
+                        <td>{item.Body}</td>
+                        <td>{item.Goal}</td>
+                        <td>
+                          <button
+                            type="button"
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleRemoveOdds()}
+                          >
+                            <i className="fa-regular fa-circle-xmark" style={{ fontSize: "15px" }}></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          </table>
+        </div>
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}
