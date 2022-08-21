@@ -669,7 +669,7 @@ function OddsTransfer() {
                         <td>{item.oldBody} / {item.oldGoal}</td>
                         <td
                           style={{
-                            backgroundColor: item.isBodyChange ? "yellow" : null,
+                            backgroundColor: item.IsOddsChange ? "yellow" : null,
                           }}
                         >
                           {item.newBody} / {item.newGoal}
