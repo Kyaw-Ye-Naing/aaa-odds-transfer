@@ -319,6 +319,7 @@ function OddsTransfer() {
   const [copyitem, setCopyItem] = useState([]);
   const [copyPageCount, setCopyPageCount] = useState(0);
   const [copypage, setCopyPage] = useState(0);
+  const [newcopyPage,setNewcopyPage] = useState([]);
   const [searchCopy, setSearchCopy] = useState([]);
   const [searchedCopy, setSearchedCopy] = useState([]);
 
@@ -326,22 +327,24 @@ function OddsTransfer() {
   const [isAllSelected, setIsAllSelected] = useState(false);
 
   useEffect(() => {
-    setItems(TeamData);
-    setSearchedTeam(TeamData);
-    setOddsItem(OddsData);
-    setSearchedOdd(OddsData);
-    setCopyItem(CopyData);
-    setSearchedCopy(CopyData);
-    setPage(Math.ceil(TeamData.length / rowsPerPage));
-    setOddPage(Math.ceil(OddsData.length / rowsPerPage));
-    setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
+    getTeamFunction();
+    //setItems(TeamData);
+    //setSearchedTeam(TeamData);
+    //setOddsItem(OddsData);
+    //setSearchedOdd(OddsData);
+    //setCopyItem(CopyData);
+    //setSearchedCopy(CopyData);
+    //setPage(Math.ceil(TeamData.length / rowsPerPage));
+    //setOddPage(Math.ceil(OddsData.length / rowsPerPage));
+    //setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
   }, []);
 
   const getTeamFunction = () => {
     oddController.getAllTeams((data) => {
+      console.log("dsta",data.data)
       setItems(data.data);
       setSearchedTeam(data.data);
-      setPage(Math.ceil(TeamData.length / rowsPerPage));
+      setPage(Math.ceil(data.data.length / rowsPerPage));
     });
   }
 
@@ -399,10 +402,22 @@ function OddsTransfer() {
 
   const teamsHandleSave = () => {
     const filterResult = items.filter(function (x) { return x.isSelected == true; });
-    oddController.saveSelectedTeams(filterResult, (data) => {
-      setOddsItem(OddsData);
-      setSearchedOdd(OddsData);
-      setOddPage(Math.ceil(OddsData.length / rowsPerPage));
+    const rapidEventList = [];
+
+    filterResult.map(x =>
+      rapidEventList.push(x.rapidEventId)
+    );
+
+    //console.log("selected data",rapidEventList);
+
+    oddController.saveSelectedTeams(rapidEventList, (data) => {
+      setOddsItem(data.data);
+      setSearchedOdd(data.data);
+      setCopyItem(data.datacc);
+      setSearchedCopy(data.datacc);
+      setNewcopyPage(data.datacc);
+      setOddPage(Math.ceil(data.data.length / rowsPerPage));
+      setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
       toast.success(data.message, {
         position: toast.POSITION.TOP_LEFT,
       });
@@ -411,12 +426,12 @@ function OddsTransfer() {
 
   const refreshOdds = () => {
     oddController.updateResfreshOdds((data) => {
-      setOddsItem(OddsData);
-      setSearchedOdd(OddsData);
-      setCopyItem(CopyData);
-      setSearchedCopy(CopyData);
-      setOddPage(Math.ceil(OddsData.length / rowsPerPage));
-      setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
+      setOddsItem(data.data);
+      setSearchedOdd(data.data);
+      setCopyItem(data.datacc);
+      setSearchedCopy(data.datacc);
+      setOddPage(Math.ceil(data.data.length / rowsPerPage));
+      setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -485,12 +500,14 @@ function OddsTransfer() {
 
   const cancelCopySearch = () => {
     setSearchCopy("");
-    setSearchedCopy(copyitem);
-    setCopyPage(Math.ceil(copyitem.length / rowsPerPage));
+    setSearchedCopy(newcopyPage);
+    setCopyPage(Math.ceil(newcopyPage.length / rowsPerPage));
   };
 
   const handleRemoveOdds = (id) => {
     var filterResult = copyitem.filter(a => a.rapidEventId != id);
+
+    setNewcopyPage(filterResult);
 
     setSearchedCopy(filterResult);
     setCopyPage(Math.ceil(filterResult.length / rowsPerPage));
@@ -740,8 +757,7 @@ function OddsTransfer() {
                 <th scope="col">No</th>
                 <th scope="col">Time</th>
                 <th scope="col">Team</th>
-                <th scope="col">Body</th>
-                <th scope="col">Goal</th>
+                <th scope="col">Odds</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -752,19 +768,19 @@ function OddsTransfer() {
                     copyPageCount * rowsPerPage,
                     copyPageCount * rowsPerPage + rowsPerPage
                   )
-                  .map((item) => {
+                  .map((item,index) => {
                     return (
                       <tr key={item.teamId}>
-                        <td>{item.teamId}</td>
+                        <td>{index + 1}</td>
+                        {/* <td>{item.teamId}</td> */}
                         <td>{`${moment(item.eventTime).format("hh:mm:ss a")}`}</td>
                         <td>{item.teamName}</td>
-                        <td>{item.Body}</td>
-                        <td>{item.Goal}</td>
+                        <td>{item.body} / {item.goal}</td>
                         <td>
                           <button
                             type="button"
                             className="btn btn-danger btn-sm"
-                            onClick={() => handleRemoveOdds()}
+                            onClick={() => handleRemoveOdds(item.rapidEventId)}
                           >
                             <i className="fa-regular fa-circle-xmark" style={{ fontSize: "15px" }}></i>
                           </button>
