@@ -581,10 +581,10 @@ function OddsTransfer() {
                     pageCount * rowsPerPage,
                     pageCount * rowsPerPage + rowsPerPage
                   )
-                  .map((item) => {
+                  .map((item,index) => {
                     return (
                       <tr key={item.teamId}>
-                        <td>{item.teamId}</td>
+                        <td>{(pageCount*rowsPerPage)+index+1}</td>
                         <td>{item.teamName}</td>
                         <td>
                           <input
@@ -678,10 +678,10 @@ function OddsTransfer() {
                     oddsPageCount * rowsPerPage,
                     oddsPageCount * rowsPerPage + rowsPerPage
                   )
-                  .map((item) => {
+                  .map((item,index) => {
                     return (
                       <tr key={item.teamId}>
-                        <td>{item.teamId}</td>
+                        <td>{(oddsPageCount*rowsPerPage)+index+1}</td>
                         <td>{item.teamName}</td>
                         <td>{item.oldBody} / {item.oldGoal}</td>
                         <td
@@ -771,7 +771,7 @@ function OddsTransfer() {
                   .map((item,index) => {
                     return (
                       <tr key={item.teamId}>
-                        <td>{index + 1}</td>
+                        <td>{(copyPageCount*rowsPerPage) +index + 1}</td>
                         {/* <td>{item.teamId}</td> */}
                         <td>{`${moment(item.eventTime).format("hh:mm:ss a")}`}</td>
                         <td>{item.teamName}</td>
