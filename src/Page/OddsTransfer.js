@@ -4,6 +4,8 @@ import moment from "moment";
 import MyColor from "../config/color";
 import { toast } from "react-toastify";
 import { oddController } from "../controllers/oddsController/oddController";
+import Loader from '../asset/loader';
+import Spinner from '../asset/spinner';
 
 const TeamData = [
   {
@@ -326,8 +328,13 @@ function OddsTransfer() {
   const [selectedTeams, setSelectedTeam] = useState(0);
   const [isAllSelected, setIsAllSelected] = useState(false);
 
+  const [isLoading,setLoading] = useState(false);
+  const [isLoading1,setLoading1] = useState(false);
+  const [isLoading2,setLoading2] = useState(false);
+
   useEffect(() => {
     getTeamFunction();
+    refreshOdds();
     //setItems(TeamData);
     //setSearchedTeam(TeamData);
     //setOddsItem(OddsData);
@@ -340,11 +347,15 @@ function OddsTransfer() {
   }, []);
 
   const getTeamFunction = () => {
+    setLoading1(true);
     oddController.getAllTeams((data) => {
-      console.log("dsta",data.data)
+      //console.log("dsta",data.data)
       setItems(data.data);
+      setSelectedTeam(data.count);
+      setIsAllSelected(data.isAll);
       setSearchedTeam(data.data);
       setPage(Math.ceil(data.data.length / rowsPerPage));
+      setLoading1(false);
     });
   }
 
@@ -401,6 +412,7 @@ function OddsTransfer() {
   };
 
   const teamsHandleSave = () => {
+    setLoading(true);
     const filterResult = items.filter(function (x) { return x.isSelected == true; });
     const rapidEventList = [];
 
@@ -418,13 +430,17 @@ function OddsTransfer() {
       setNewcopyPage(data.datacc);
       setOddPage(Math.ceil(data.data.length / rowsPerPage));
       setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
-      toast.success(data.message, {
-        position: toast.POSITION.TOP_LEFT,
-      });
+      // toast.success(data.message, {
+      //   position: toast.POSITION.TOP_LEFT,
+      // });
+      setLoading(false);
     });
+    
   };
 
   const refreshOdds = () => {
+    setLoading(true);
+    //console.log("ddd",isLoading)
     oddController.updateResfreshOdds((data) => {
       setOddsItem(data.data);
       setSearchedOdd(data.data);
@@ -432,19 +448,39 @@ function OddsTransfer() {
       setSearchedCopy(data.datacc);
       setOddPage(Math.ceil(data.data.length / rowsPerPage));
       setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
-      toast.success(data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      // toast.success(data.message, {
+      //   position: toast.POSITION.TOP_RIGHT,
+      // });
+      setLoading(false);
     });
+    
   };
 
   const handleCopy = () => {
-    const filterResult = copyitem.filter(function (x) { return x.rapidEventId; });
-    oddController.updateSelectedOdds(filterResult, (data) => {
-      toast.success(data.message, {
+    setLoading2(true);
+    const copyArray = [];
+    searchedCopy.map(data => {
+      return copyArray.push(`${moment(data.eventTime).format("hh:mm:ss a")} ${data.teamName} ${data.body}/${data.goal}`)
+    })
+   // console.log("dddd",copyArray);
+    navigator.clipboard.writeText(copyArray)
+
+    const rapidEventId = [];
+    copyitem.map(data => { 
+      return rapidEventId.push(data.rapidEventId);
+     });
+
+    //console.log("dddd",rapidEventId);
+    oddController.updateSelectedOdds(rapidEventId, (data) => {
+      toast.success("You can copy now", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setLoading2(false);
     });
+
+    setCopyItem([]);
+    setSearchedCopy([]);
+    setCopyPage(0);
   };
 
   const onChangeTeam = (e) => {
@@ -513,6 +549,7 @@ function OddsTransfer() {
     setCopyPage(Math.ceil(filterResult.length / rowsPerPage));
   }
 
+
   return (
     <div className="main">
       {/* <div className="row"> */}
@@ -539,6 +576,7 @@ function OddsTransfer() {
           <button
             type="button"
             className="btn btn-success"
+            disabled = {isLoading1 ? true : false}
             onClick={() => teamsHandleSave()}
           >
             Add <i className="fa-solid fa-plus"></i>
@@ -561,6 +599,8 @@ function OddsTransfer() {
           </div>
         </div>
         <div className="table-responsive">
+          {isLoading1 ? 
+        <Loader/>:  
           <table className="table table-hover table-bordered">
             <thead>
               <tr
@@ -601,6 +641,7 @@ function OddsTransfer() {
                   })}
             </tbody>
           </table>
+            }
         </div>
         <ReactPaginate
           previousLabel={"previous"}
@@ -644,12 +685,18 @@ function OddsTransfer() {
           <button
             type="button"
             className="btn btn-success mb-3"
+            disabled = {isLoading ? true : false}
             onClick={() => refreshOdds()}
           >
             Refresh <i className="fa-solid fa-arrows-rotate"></i>
           </button>
         </div>
         <div className="table-responsive">
+        {isLoading ?
+          <div style={{display:"flex",justifyContent:"center"}}>
+              <Loader/>
+          </div>
+           :
           <table className="table table-hover table-bordered">
             <thead>
               <tr
@@ -671,31 +718,33 @@ function OddsTransfer() {
               >
               </tr>
             </thead>
-            <tbody>
-              {searchedOdd.length > 0 &&
-                searchedOdd
-                  .slice(
-                    oddsPageCount * rowsPerPage,
-                    oddsPageCount * rowsPerPage + rowsPerPage
-                  )
-                  .map((item,index) => {
-                    return (
-                      <tr key={item.teamId}>
-                        <td>{(oddsPageCount*rowsPerPage)+index+1}</td>
-                        <td>{item.teamName}</td>
-                        <td>{item.oldBody} / {item.oldGoal}</td>
-                        <td
-                          style={{
-                            backgroundColor: item.IsOddsChange ? "yellow" : null,
-                          }}
-                        >
-                          {item.newBody} / {item.newGoal}
-                        </td>
-                      </tr>
-                    );
-                  })}
-            </tbody>
+          <tbody>
+          {searchedOdd.length > 0 &&
+            searchedOdd
+              .slice(
+                oddsPageCount * rowsPerPage,
+                oddsPageCount * rowsPerPage + rowsPerPage
+              )
+              .map((item,index) => {
+                return (
+                  <tr key={item.teamId}>
+                    <td>{(oddsPageCount*rowsPerPage)+index+1}</td>
+                    <td>{item.teamName}</td>
+                    <td>{item.oldBody} / {item.oldGoal}</td>
+                    <td
+                      style={{
+                        backgroundColor: item.isOddsChange ? "yellow" : null,
+                      }}
+                    >
+                      {item.newBody} / {item.newGoal}
+                    </td>
+                  </tr>
+                );
+              })}
+        </tbody>
+                 
           </table>
+           } 
         </div>
         <ReactPaginate
           previousLabel={"previous"}
@@ -736,14 +785,20 @@ function OddsTransfer() {
               <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
             </button>
           </div>
+          {/* <CopyToClipboard text={searchCopy}> */}
           <button
             type="button"
             className="btn btn-success mb-3"
             style={{ marginBottom: 5 }}
+            disabled = {isLoading2 || searchedCopy.length == 0 ? true : false}
             onClick={() => handleCopy()}
           >
-            Copy <i className="fa-solid fa-clipboard"></i>
+            <div style={{display:"flex",alignItems:"center"}}>
+            {isLoading2 ?<Spinner/>:null}
+            <span>Copy <i className="fa-solid fa-clipboard"></i></span>
+            </div>  
           </button>
+          {/* </CopyToClipboard> */}
         </div>
         <div className="table-responsive">
           <table className="table table-hover table-bordered">
@@ -760,7 +815,7 @@ function OddsTransfer() {
                 <th scope="col">Odds</th>
                 <th scope="col">Action</th>
               </tr>
-            </thead>
+            </thead>   
             <tbody>
               {searchedCopy.length > 0 &&
                 searchedCopy

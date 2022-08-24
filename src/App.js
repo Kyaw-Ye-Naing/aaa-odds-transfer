@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import OddsTransfer from './Page/OddsTransfer'
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
       </div>
       </nav>   
       <div className="App">
+      <ToastContainer />
       <OddsTransfer/>
       </div>
     </div>
