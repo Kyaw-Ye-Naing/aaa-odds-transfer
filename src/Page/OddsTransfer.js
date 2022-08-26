@@ -472,15 +472,18 @@ function OddsTransfer() {
 
     //console.log("dddd",rapidEventId);
     oddController.updateSelectedOdds(rapidEventId, (data) => {
+      setLoading2(false);
       toast.success("You can copy now", {
         position: toast.POSITION.TOP_RIGHT,
-      });
-      setLoading2(false);
+      }); 
     });
+
+    
 
     setCopyItem([]);
     setSearchedCopy([]);
     setCopyPage(0);
+    refreshOdds();
   };
 
   const onChangeTeam = (e) => {
@@ -729,7 +732,7 @@ function OddsTransfer() {
                 return (
                   <tr key={item.teamId}>
                     <td>{(oddsPageCount*rowsPerPage)+index+1}</td>
-                    <td>{item.teamName}</td>
+                    <td>{item.teamName} vs {item.underName}</td>
                     <td>{item.oldBody} / {item.oldGoal}</td>
                     <td
                       style={{
