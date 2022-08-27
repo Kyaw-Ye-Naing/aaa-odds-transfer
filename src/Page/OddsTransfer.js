@@ -228,12 +228,14 @@ const CopyData = [
     teamName: "Manchester City",
     teamId: 1,
     eventTime: "2022-08-20 23:00:00.000",
+    rapidEventId:11,
     Body: "1+50",
     Goal: "3-70",
   },
   {
     teamName: "Chelsea",
     teamId: 2,
+    rapidEventId:22,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+30",
     Goal: "2-30",
@@ -241,6 +243,7 @@ const CopyData = [
   {
     teamName: "Manchester United",
     teamId: 3,
+    rapidEventId:33,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3-40",
@@ -248,6 +251,7 @@ const CopyData = [
   {
     teamName: "Everton",
     teamId: 4,
+    rapidEventId:44,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+40",
     Goal: "2-90",
@@ -255,6 +259,7 @@ const CopyData = [
   {
     teamName: "Aston Villa",
     teamId: 5,
+    rapidEventId:55,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "=-90",
     Goal: "2-70",
@@ -262,6 +267,7 @@ const CopyData = [
   {
     teamName: "Leeds",
     teamId: 6,
+    rapidEventId:66,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+100",
@@ -269,6 +275,7 @@ const CopyData = [
   {
     teamName: "Fulham",
     teamId: 7,
+    rapidEventId:77,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+90",
     Goal: "2-70",
@@ -276,6 +283,7 @@ const CopyData = [
   {
     teamName: "Southamtom",
     teamId: 8,
+    rapidEventId:88,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+90",
@@ -283,6 +291,7 @@ const CopyData = [
   {
     teamName: "Arsenal",
     teamId: 9,
+    rapidEventId:99,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+90",
     Goal: "2-90",
@@ -290,6 +299,7 @@ const CopyData = [
   {
     teamName: "Spurs",
     teamId: 10,
+    rapidEventId:12,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "2-10",
     Goal: "3-70",
@@ -297,6 +307,7 @@ const CopyData = [
   {
     teamName: "Liverpool",
     teamId: 11,
+    rapidEventId:13,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+50",
@@ -460,13 +471,13 @@ function OddsTransfer() {
     setLoading2(true);
     const copyArray = [];
     searchedCopy.map(data => {
-      return copyArray.push(`${moment(data.eventTime).format("hh:mm:ss a")} ${data.teamName} ${data.body}/${data.goal}`)
+      return copyArray.push(`${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${data.body}/${data.goal}`)
     })
    // console.log("dddd",copyArray);
     navigator.clipboard.writeText(copyArray)
 
     const rapidEventId = [];
-    copyitem.map(data => { 
+    searchedCopy.map(data => { 
       return rapidEventId.push(data.rapidEventId);
      });
 
@@ -544,11 +555,13 @@ function OddsTransfer() {
   };
 
   const handleRemoveOdds = (id) => {
-    var filterResult = copyitem.filter(a => a.rapidEventId != id);
-
-    setNewcopyPage(filterResult);
+    var filterResult = searchedCopy.filter(a => a.rapidEventId != id);
+    var filterResultog = copyitem.filter(a => a.rapidEventId != id);
+    //console.log("sfsfsf",filterResult);
+    //setNewcopyPage(filterResult);
 
     setSearchedCopy(filterResult);
+    setCopyItem(filterResult);
     setCopyPage(Math.ceil(filterResult.length / rowsPerPage));
   }
 
