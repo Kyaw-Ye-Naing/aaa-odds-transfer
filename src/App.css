@@ -8,21 +8,34 @@ body{
 
 
 .App{
- padding: 2rem 0;
  overflow: hidden;
- background: linear-gradient(120deg,#3b7197,#00B3B3);
+ /* background: linear-gradient(120deg,#3b7197,#00B3B3); */
+ background-color: rgb(255, 255, 255);
  height: 100vh;
 }
 
-nav{
+.odds-nav{
     background-color: #00636E;
     /* background-color: #303A52; */
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 1.4rem;
+    padding: 1rem 4rem;
+    margin-bottom: 2rem;
   }
-  
+
+.profile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile span{
+    color: white;
+    margin-left: 1rem;
+    font-weight: 400;
+    font-size: larger;
+}
   .title{
      color: white;
      display: flex;

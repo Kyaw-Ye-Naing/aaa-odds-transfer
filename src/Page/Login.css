@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(120deg,#3b7197,#00B3B3);
 }
 
 .btn-lg {

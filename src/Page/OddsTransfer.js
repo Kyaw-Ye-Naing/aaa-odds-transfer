@@ -4,8 +4,8 @@ import moment from "moment";
 import MyColor from "../config/color";
 import { toast } from "react-toastify";
 import { oddController } from "../controllers/oddsController/oddController";
-import Loader from '../asset/loader';
-import Spinner from '../asset/spinner';
+import Loader from "../asset/loader";
+import Spinner from "../asset/spinner";
 
 const TeamData = [
   {
@@ -228,14 +228,14 @@ const CopyData = [
     teamName: "Manchester City",
     teamId: 1,
     eventTime: "2022-08-20 23:00:00.000",
-    rapidEventId:11,
+    rapidEventId: 11,
     Body: "1+50",
     Goal: "3-70",
   },
   {
     teamName: "Chelsea",
     teamId: 2,
-    rapidEventId:22,
+    rapidEventId: 22,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+30",
     Goal: "2-30",
@@ -243,7 +243,7 @@ const CopyData = [
   {
     teamName: "Manchester United",
     teamId: 3,
-    rapidEventId:33,
+    rapidEventId: 33,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3-40",
@@ -251,7 +251,7 @@ const CopyData = [
   {
     teamName: "Everton",
     teamId: 4,
-    rapidEventId:44,
+    rapidEventId: 44,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+40",
     Goal: "2-90",
@@ -259,7 +259,7 @@ const CopyData = [
   {
     teamName: "Aston Villa",
     teamId: 5,
-    rapidEventId:55,
+    rapidEventId: 55,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "=-90",
     Goal: "2-70",
@@ -267,7 +267,7 @@ const CopyData = [
   {
     teamName: "Leeds",
     teamId: 6,
-    rapidEventId:66,
+    rapidEventId: 66,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+100",
@@ -275,7 +275,7 @@ const CopyData = [
   {
     teamName: "Fulham",
     teamId: 7,
-    rapidEventId:77,
+    rapidEventId: 77,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+90",
     Goal: "2-70",
@@ -283,7 +283,7 @@ const CopyData = [
   {
     teamName: "Southamtom",
     teamId: 8,
-    rapidEventId:88,
+    rapidEventId: 88,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+90",
@@ -291,7 +291,7 @@ const CopyData = [
   {
     teamName: "Arsenal",
     teamId: 9,
-    rapidEventId:99,
+    rapidEventId: 99,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+90",
     Goal: "2-90",
@@ -299,7 +299,7 @@ const CopyData = [
   {
     teamName: "Spurs",
     teamId: 10,
-    rapidEventId:12,
+    rapidEventId: 12,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "2-10",
     Goal: "3-70",
@@ -307,7 +307,7 @@ const CopyData = [
   {
     teamName: "Liverpool",
     teamId: 11,
-    rapidEventId:13,
+    rapidEventId: 13,
     eventTime: "2022-08-20 23:00:00.000",
     Body: "1+80",
     Goal: "3+50",
@@ -332,16 +332,16 @@ function OddsTransfer() {
   const [copyitem, setCopyItem] = useState([]);
   const [copyPageCount, setCopyPageCount] = useState(0);
   const [copypage, setCopyPage] = useState(0);
-  const [newcopyPage,setNewcopyPage] = useState([]);
+  const [newcopyPage, setNewcopyPage] = useState([]);
   const [searchCopy, setSearchCopy] = useState([]);
   const [searchedCopy, setSearchedCopy] = useState([]);
 
   const [selectedTeams, setSelectedTeam] = useState(0);
   const [isAllSelected, setIsAllSelected] = useState(false);
 
-  const [isLoading,setLoading] = useState(false);
-  const [isLoading1,setLoading1] = useState(false);
-  const [isLoading2,setLoading2] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [isLoading1, setLoading1] = useState(false);
+  const [isLoading2, setLoading2] = useState(false);
 
   useEffect(() => {
     getTeamFunction();
@@ -368,7 +368,7 @@ function OddsTransfer() {
       setPage(Math.ceil(data.data.length / rowsPerPage));
       setLoading1(false);
     });
-  }
+  };
 
   const handlePageClick = async (data) => {
     // console.log(data.selected);
@@ -424,12 +424,12 @@ function OddsTransfer() {
 
   const teamsHandleSave = () => {
     setLoading(true);
-    const filterResult = items.filter(function (x) { return x.isSelected == true; });
+    const filterResult = items.filter(function (x) {
+      return x.isSelected == true;
+    });
     const rapidEventList = [];
 
-    filterResult.map(x =>
-      rapidEventList.push(x.rapidEventId)
-    );
+    filterResult.map((x) => rapidEventList.push(x.rapidEventId));
 
     //console.log("selected data",rapidEventList);
 
@@ -446,7 +446,6 @@ function OddsTransfer() {
       // });
       setLoading(false);
     });
-    
   };
 
   const refreshOdds = () => {
@@ -464,32 +463,33 @@ function OddsTransfer() {
       // });
       setLoading(false);
     });
-    
   };
 
   const handleCopy = () => {
     setLoading2(true);
     const copyArray = [];
-    searchedCopy.map(data => {
-      return copyArray.push(`${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${data.body}/${data.goal}`)
-    })
-   // console.log("dddd",copyArray);
-    navigator.clipboard.writeText(copyArray)
+    searchedCopy.map((data) => {
+      return copyArray.push(
+        `${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${
+          data.body
+        }/${data.goal}`
+      );
+    });
+    // console.log("dddd",copyArray);
+    navigator.clipboard.writeText(copyArray);
 
     const rapidEventId = [];
-    searchedCopy.map(data => { 
+    searchedCopy.map((data) => {
       return rapidEventId.push(data.rapidEventId);
-     });
+    });
 
     //console.log("dddd",rapidEventId);
     oddController.updateSelectedOdds(rapidEventId, (data) => {
       setLoading2(false);
       toast.success("You can copy now", {
         position: toast.POSITION.TOP_RIGHT,
-      }); 
+      });
     });
-
-    
 
     setCopyItem([]);
     setSearchedCopy([]);
@@ -523,9 +523,7 @@ function OddsTransfer() {
   const onChangeOdds = (e) => {
     setSearchOdd(e.target.value);
     const filteredRows = oddsitem.filter((row) => {
-      return row.teamName
-        .toLowerCase()
-        .includes(e.target.value.toLowerCase());
+      return row.teamName.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setSearchedOdd(filteredRows);
     setOddPage(Math.ceil(filteredRows.length / rowsPerPage));
@@ -540,9 +538,7 @@ function OddsTransfer() {
   const onChangeCopy = (e) => {
     setSearchCopy(e.target.value);
     const filteredRows = copyitem.filter((row) => {
-      return row.teamName
-        .toLowerCase()
-        .includes(e.target.value.toLowerCase());
+      return row.teamName.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setSearchedCopy(filteredRows);
     setCopyPage(Math.ceil(filteredRows.length / rowsPerPage));
@@ -555,339 +551,383 @@ function OddsTransfer() {
   };
 
   const handleRemoveOdds = (id) => {
-    var filterResult = searchedCopy.filter(a => a.rapidEventId != id);
-    var filterResultog = copyitem.filter(a => a.rapidEventId != id);
+    var filterResult = searchedCopy.filter((a) => a.rapidEventId != id);
+    var filterResultog = copyitem.filter((a) => a.rapidEventId != id);
     //console.log("sfsfsf",filterResult);
     //setNewcopyPage(filterResult);
 
     setSearchedCopy(filterResult);
     setCopyItem(filterResult);
     setCopyPage(Math.ceil(filterResult.length / rowsPerPage));
-  }
-
+  };
 
   return (
-    <div className="main">
-      <div className="title">
-      <i className="fa-solid fa-diamond" style={{fontSize:13}}></i>
-        <h3 className="px-2">Odds Trasfer Page</h3>
-      <i className="fa-solid fa-diamond" style={{fontSize:13}}></i>
-      </div>
-      {/* <div className="row"> */}
-      <div className="right">
-        <div className="table-title">
-          <div className="input-gp">
-            <input
-              type="email"
-              className="form-control"
-              id="exampleFormControlInput1"
-              placeholder="search ..."
-              style={{ width: "10rem" }}
-              value={searchText}
-              onChange={(e) => onChangeTeam(e)}
-            />
-            <button
-              type="button"
-              className="btn btn-light"
-              onClick={() => cancelSearch()}
-            >
-              <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
-            </button>
-          </div>
-          <button
-            type="button"
-            className="btn btn-success"
-            disabled = {isLoading1 ? true : false}
-            onClick={() => teamsHandleSave()}
-          >
-            Add <i className="fa-solid fa-plus"></i>
+    <div className="odds-page">
+      <div className="odds-nav">
+        <div className="profile">
+          <img
+            src="https://annedece.sirv.com/Images/user-vector.jpg"
+            className="img-thumbnail rounded-circle"
+            width={45}
+            height={45}
+          />
+          <span>BO BO</span>
+        </div>
+        <div className="title">
+          <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
+          <h3 className="px-2">Odds Trasfer Page</h3>
+          <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
+        </div>
+        <div className="logout">
+          <button href="" className="btn btn-warning">
+          <i class="fa-solid fa-right-from-bracket"></i>&nbsp;
+            Log Out
           </button>
         </div>
-        <div className="d-flex justify-content-between my-2">
-          <span style={{ fontSize: "15px" }}>
-            Selected {selectedTeams} Teams
-          </span>
-          <div>
-            Check All &nbsp;
-            <input
-              className="form-check-input"
-              style={{ padding: "8px" }}
-              type="checkbox"
-              checked={isAllSelected}
-              onChange={() => handleCheckedAll()}
-              id="flexCheckDefault"
-            />
-          </div>
-        </div>
-        <div className="table-responsive">
-          {isLoading1 ? 
-        <Loader/>:  
-          <table className="table table-hover table-bordered">
-            <thead>
-              <tr
-                style={{
-                  backgroundColor: MyColor.headerbackground,
-                  color: MyColor.color,
-                }}
-              >
-                <th scope="col">NO</th>
-                <th scope="col">Team</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchedTeam.length > 0 &&
-                searchedTeam
-                  .slice(
-                    pageCount * rowsPerPage,
-                    pageCount * rowsPerPage + rowsPerPage
-                  )
-                  .map((item,index) => {
-                    return (
-                      <tr key={item.teamId}>
-                        <td>{(pageCount*rowsPerPage)+index+1}</td>
-                        <td>{item.teamName}</td>
-                        <td>
-                          <input
-                            className="form-check-input"
-                            style={{ padding: "8px" }}
-                            type="checkbox"
-                            checked={item.isSelected}
-                            onChange={() => handleChecked(item.teamId)}
-                            id="flexCheckDefault"
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-            </tbody>
-          </table>
-            }
-        </div>
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          pageCount={page}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-        />
       </div>
-      <div className="middle">
-        <div className="table-title">
-          <div className="mb-3 input-gp">
-            <input
-              type="email"
-              className="form-control"
-              id="exampleFormControlInput1"
-              placeholder="search ..."
-              value={searchOdd}
-              onChange={(e) => onChangeOdds(e)}
-            />
+
+      <div className="main">
+        {/* <div className="row"> */}
+        <div className="right">
+          <div className="table-title">
+            <div className="input-gp">
+              <input
+                type="email"
+                className="form-control"
+                id="exampleFormControlInput1"
+                placeholder="search ..."
+                style={{ width: "10rem" }}
+                value={searchText}
+                onChange={(e) => onChangeTeam(e)}
+              />
+              <button
+                type="button"
+                className="btn btn-light"
+                onClick={() => cancelSearch()}
+              >
+                <i
+                  className="fa-solid fa-circle-xmark"
+                  style={{ fontSize: 15 }}
+                ></i>
+              </button>
+            </div>
             <button
               type="button"
-              className="btn btn-light"
-              onClick={() => cancelOddsSearch()}
+              className="btn btn-success"
+              disabled={isLoading1 ? true : false}
+              onClick={() => teamsHandleSave()}
             >
-              <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+              Add <i className="fa-solid fa-plus"></i>
             </button>
           </div>
-          <button
-            type="button"
-            className="btn btn-success mb-3"
-            disabled = {isLoading ? true : false}
-            onClick={() => refreshOdds()}
-          >
-            Refresh <i className="fa-solid fa-arrows-rotate"></i>
-          </button>
-        </div>
-        <div className="table-responsive">
-        {isLoading ?
-          <div style={{display:"flex",justifyContent:"center"}}>
-              <Loader/>
+          <div className="d-flex justify-content-between my-2">
+            <span style={{ fontSize: "15px" }}>
+              Selected {selectedTeams} Teams
+            </span>
+            <div>
+              Check All &nbsp;
+              <input
+                className="form-check-input"
+                style={{ padding: "8px" }}
+                type="checkbox"
+                checked={isAllSelected}
+                onChange={() => handleCheckedAll()}
+                id="flexCheckDefault"
+              />
+            </div>
           </div>
-           :
-          <table className="table table-hover table-bordered">
-            <thead>
-              <tr
-                style={{
-                  backgroundColor: MyColor.headerbackground,
-                  color: MyColor.color,
-                }}
-              >
-                <th scope="col">No</th>
-                <th scope="col">Team</th>
-                <th scope="col">Old Odds</th>
-                <th scope="col">New Odds</th>
-              </tr>
-              <tr
-                style={{
-                  backgroundColor: MyColor.secondarybackground,
-                  color: MyColor.color,
-                }}
-              >
-              </tr>
-            </thead>
-          <tbody>
-          {searchedOdd.length > 0 &&
-            searchedOdd
-              .slice(
-                oddsPageCount * rowsPerPage,
-                oddsPageCount * rowsPerPage + rowsPerPage
-              )
-              .map((item,index) => {
-                return (
-                  <tr key={item.teamId}>
-                    <td>{(oddsPageCount*rowsPerPage)+index+1}</td>
-                    <td>{item.teamName} vs {item.underName}</td>
-                    <td>{item.oldBody} / {item.oldGoal}</td>
-                    <td
-                      style={{
-                        backgroundColor: item.isOddsChange ? "yellow" : null,
-                      }}
-                    >
-                      {item.newBody} / {item.newGoal}
-                    </td>
+          <div className="table-responsive">
+            {isLoading1 ? (
+              <Loader />
+            ) : (
+              <table className="table table-hover table-bordered">
+                <thead>
+                  <tr
+                    style={{
+                      backgroundColor: MyColor.headerbackground,
+                      color: MyColor.color,
+                    }}
+                  >
+                    <th scope="col">NO</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Action</th>
                   </tr>
-                );
-              })}
-        </tbody>
-                 
-          </table>
-           } 
+                </thead>
+                <tbody>
+                  {searchedTeam.length > 0 &&
+                    searchedTeam
+                      .slice(
+                        pageCount * rowsPerPage,
+                        pageCount * rowsPerPage + rowsPerPage
+                      )
+                      .map((item, index) => {
+                        return (
+                          <tr key={item.teamId}>
+                            <td>{pageCount * rowsPerPage + index + 1}</td>
+                            <td>{item.teamName}</td>
+                            <td>
+                              <input
+                                className="form-check-input"
+                                style={{ padding: "8px" }}
+                                type="checkbox"
+                                checked={item.isSelected}
+                                onChange={() => handleChecked(item.teamId)}
+                                id="flexCheckDefault"
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                </tbody>
+              </table>
+            )}
+          </div>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            pageCount={page}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          pageCount={oddpage}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={4}
-          onPageChange={handleOddsPageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-        />
-      </div>
-      <div className="left">
-        <div className="table-title">
-          <div className="mb-3 input-gp">
-            <input
-              type="email"
-              className="form-control"
-              id="exampleFormControlInput1"
-              placeholder="search ..."
-              value={searchCopy}
-              onChange={(e) => onChangeCopy(e)}
-            />
+        <div className="middle">
+          <div className="table-title">
+            <div className="mb-3 input-gp">
+              <input
+                type="email"
+                className="form-control"
+                id="exampleFormControlInput1"
+                placeholder="search ..."
+                value={searchOdd}
+                onChange={(e) => onChangeOdds(e)}
+              />
+              <button
+                type="button"
+                className="btn btn-light"
+                onClick={() => cancelOddsSearch()}
+              >
+                <i
+                  className="fa-solid fa-circle-xmark"
+                  style={{ fontSize: 15 }}
+                ></i>
+              </button>
+            </div>
             <button
               type="button"
-              className="btn btn-light"
-              onClick={() => cancelCopySearch()}
+              className="btn btn-success mb-3"
+              disabled={isLoading ? true : false}
+              onClick={() => refreshOdds()}
             >
-              <i className="fa-solid fa-circle-xmark" style={{ fontSize: 15 }}></i>
+              Refresh <i className="fa-solid fa-arrows-rotate"></i>
             </button>
           </div>
-          {/* <CopyToClipboard text={searchCopy}> */}
-          <button
-            type="button"
-            className="btn btn-success mb-3"
-            style={{ marginBottom: 5 }}
-            disabled = {isLoading2 || searchedCopy.length == 0 ? true : false}
-            onClick={() => handleCopy()}
-          >
-            <div style={{display:"flex",alignItems:"center"}}>
-            {isLoading2 ?<Spinner/>:null}
-            <span>Copy <i className="fa-solid fa-clipboard"></i></span>
-            </div>  
-          </button>
-          {/* </CopyToClipboard> */}
+          <div className="table-responsive">
+            {isLoading ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Loader />
+              </div>
+            ) : (
+              <table className="table table-hover table-bordered">
+                <thead>
+                  <tr
+                    style={{
+                      backgroundColor: MyColor.headerbackground,
+                      color: MyColor.color,
+                    }}
+                  >
+                    <th scope="col">No</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Old Odds</th>
+                    <th scope="col">New Odds</th>
+                  </tr>
+                  <tr
+                    style={{
+                      backgroundColor: MyColor.secondarybackground,
+                      color: MyColor.color,
+                    }}
+                  ></tr>
+                </thead>
+                <tbody>
+                  {searchedOdd.length > 0 &&
+                    searchedOdd
+                      .slice(
+                        oddsPageCount * rowsPerPage,
+                        oddsPageCount * rowsPerPage + rowsPerPage
+                      )
+                      .map((item, index) => {
+                        return (
+                          <tr key={item.teamId}>
+                            <td>{oddsPageCount * rowsPerPage + index + 1}</td>
+                            <td>
+                              {item.teamName} vs {item.underName}
+                            </td>
+                            <td>
+                              {item.oldBody} / {item.oldGoal}
+                            </td>
+                            <td
+                              style={{
+                                backgroundColor: item.isOddsChange
+                                  ? "yellow"
+                                  : null,
+                              }}
+                            >
+                              {item.newBody} / {item.newGoal}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                </tbody>
+              </table>
+            )}
+          </div>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            pageCount={oddpage}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={4}
+            onPageChange={handleOddsPageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
-        <div className="table-responsive">
-          <table className="table table-hover table-bordered">
-            <thead>
-              <tr
-                style={{
-                  backgroundColor: MyColor.headerbackground,
-                  color: MyColor.color,
-                }}
+        <div className="left">
+          <div className="table-title">
+            <div className="mb-3 input-gp">
+              <input
+                type="email"
+                className="form-control"
+                id="exampleFormControlInput1"
+                placeholder="search ..."
+                value={searchCopy}
+                onChange={(e) => onChangeCopy(e)}
+              />
+              <button
+                type="button"
+                className="btn btn-light"
+                onClick={() => cancelCopySearch()}
               >
-                <th scope="col">No</th>
-                <th scope="col">Time</th>
-                <th scope="col">Team</th>
-                <th scope="col">Odds</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>   
-            <tbody>
-              {searchedCopy.length > 0 &&
-                searchedCopy
-                  .slice(
-                    copyPageCount * rowsPerPage,
-                    copyPageCount * rowsPerPage + rowsPerPage
-                  )
-                  .map((item,index) => {
-                    return (
-                      <tr key={item.teamId}>
-                        <td>{(copyPageCount*rowsPerPage) +index + 1}</td>
-                        {/* <td>{item.teamId}</td> */}
-                        <td>{`${moment(item.eventTime).format("hh:mm:ss a")}`}</td>
-                        <td>{item.teamName}</td>
-                        <td>{item.body} / {item.goal}</td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-danger btn-sm"
-                            onClick={() => handleRemoveOdds(item.rapidEventId)}
-                          >
-                            <i className="fa-regular fa-circle-xmark" style={{ fontSize: "15px" }}></i>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-            </tbody>
-          </table>
+                <i
+                  className="fa-solid fa-circle-xmark"
+                  style={{ fontSize: 15 }}
+                ></i>
+              </button>
+            </div>
+            {/* <CopyToClipboard text={searchCopy}> */}
+            <button
+              type="button"
+              className="btn btn-success mb-3"
+              style={{ marginBottom: 5 }}
+              disabled={isLoading2 || searchedCopy.length == 0 ? true : false}
+              onClick={() => handleCopy()}
+            >
+              <div style={{ display: "flex", alignItems: "center" }}>
+                {isLoading2 ? <Spinner /> : null}
+                <span>
+                  Copy <i className="fa-solid fa-clipboard"></i>
+                </span>
+              </div>
+            </button>
+            {/* </CopyToClipboard> */}
+          </div>
+          <div className="table-responsive">
+            <table className="table table-hover table-bordered">
+              <thead>
+                <tr
+                  style={{
+                    backgroundColor: MyColor.headerbackground,
+                    color: MyColor.color,
+                  }}
+                >
+                  <th scope="col">No</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Team</th>
+                  <th scope="col">Odds</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {searchedCopy.length > 0 &&
+                  searchedCopy
+                    .slice(
+                      copyPageCount * rowsPerPage,
+                      copyPageCount * rowsPerPage + rowsPerPage
+                    )
+                    .map((item, index) => {
+                      return (
+                        <tr key={item.teamId}>
+                          <td>{copyPageCount * rowsPerPage + index + 1}</td>
+                          {/* <td>{item.teamId}</td> */}
+                          <td>{`${moment(item.eventTime).format(
+                            "hh:mm:ss a"
+                          )}`}</td>
+                          <td>{item.teamName}</td>
+                          <td>
+                            {item.body} / {item.goal}
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-danger btn-sm"
+                              onClick={() =>
+                                handleRemoveOdds(item.rapidEventId)
+                              }
+                            >
+                              <i
+                                className="fa-regular fa-circle-xmark"
+                                style={{ fontSize: "15px" }}
+                              ></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+              </tbody>
+            </table>
+          </div>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            pageCount={copypage}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={4}
+            onPageChange={handleCopyPageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          pageCount={copypage}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={4}
-          onPageChange={handleCopyPageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-        />
+        {/* </div> */}
       </div>
-      {/* </div> */}
     </div>
   );
 }
