@@ -3,34 +3,52 @@ import { getApi } from "../_apiHelper/getApi";
 import { postApi } from "../_apiHelper/postApi";
 import { putApi } from "../_apiHelper/putApi";
 
-const getAllTeams = (setResponse) => {
-    getApi(`${apiList.getTeamApi}`,
+const getAllTeams = (userId,setResponse) => {
+    postApi(`${apiList.getTeamApi}`,{
+        userId : userId
+    },
     (data) => {
         setResponse(data);
     });
 };
 
-const saveSelectedTeams = (rapidEventIdList,setResponse) => {
+const saveSelectedTeams = (userId,rapidEventIdList,setResponse) => {
     postApi(`${apiList.postSelectedTeamApi}`,
     {
-        rapidEventId : rapidEventIdList
+        rapidEventId : rapidEventIdList,
+        userId : userId
     },
     (data) =>{
         setResponse(data);
     });
 };
 
-const updateResfreshOdds = (setResponse) => {
-    getApi(`${apiList.updateOddsApi}`,
+const checkLogIn = (name,password,setResponse) => {
+    postApi(`${apiList.loginApi}`,
+    {
+        username : name,
+        password : password
+    },
+    (data) =>{
+        setResponse(data);
+    });
+};
+
+const updateResfreshOdds = (userId,setResponse) => {
+    postApi(`${apiList.updateOddsApi}`,
+    {
+        userId : userId
+    },
     (data) => {
         setResponse(data);
     });
 };
 
-const updateSelectedOdds = (rapidEventIdList,setResponse) => {
+const updateSelectedOdds = (userId,rapidEventIdList,setResponse) => {
     putApi(`${apiList.copyTeamApi}`,
     {
-        rapidEventId : rapidEventIdList
+        rapidEventId : rapidEventIdList,
+        userId : userId
     },
     (data) => {
         setResponse(data);
@@ -41,5 +59,6 @@ export const oddController = {
     getAllTeams,
     saveSelectedTeams,
     updateResfreshOdds,
-    updateSelectedOdds
+    updateSelectedOdds,
+    checkLogIn
 }

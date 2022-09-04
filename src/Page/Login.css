@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(120deg,#3b7197,#00B3B3);
+    background: linear-gradient(120deg,#007C64,#4EB197);
 }
 
 .btn-lg {
@@ -59,13 +59,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 2.4rem;
     margin-right: -3px;
     /* border: 1px solid #000; */
     /* border-radius: 50%; */
     padding: 6px 15px;
     margin-bottom: 1rem;
-    background-color: #3b7197;
+    background-color: #007C64;
     color: #fff;
    }
 
@@ -77,12 +77,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 2.4rem;
     margin-right: -3px;
     /* border: 1px solid #000; */
     /* border-radius: 50%; */
     padding: 6px 15px;
     /* margin-bottom: 1rem; */
-    background-color: #3b7197;
+    background-color: #007C64;
     color: #fff;
    }

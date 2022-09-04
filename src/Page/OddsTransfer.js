@@ -314,6 +314,7 @@ const CopyData = [
   },
 ];
 
+
 // Example items, to simulate f
 function OddsTransfer() {
   const rowsPerPage = 10;
@@ -343,9 +344,14 @@ function OddsTransfer() {
   const [isLoading1, setLoading1] = useState(false);
   const [isLoading2, setLoading2] = useState(false);
 
+  // const saved = localStorage.getItem("info");
+  // const initialValue = JSON.parse(saved);
+  // console.log("userInfo",initialValue);
+
   useEffect(() => {
     getTeamFunction();
     refreshOdds();
+
     //setItems(TeamData);
     //setSearchedTeam(TeamData);
     //setOddsItem(OddsData);
@@ -359,7 +365,7 @@ function OddsTransfer() {
 
   const getTeamFunction = () => {
     setLoading1(true);
-    oddController.getAllTeams((data) => {
+    oddController.getAllTeams(1, (data) => {
       //console.log("dsta",data.data)
       setItems(data.data);
       setSelectedTeam(data.count);
@@ -433,7 +439,7 @@ function OddsTransfer() {
 
     //console.log("selected data",rapidEventList);
 
-    oddController.saveSelectedTeams(rapidEventList, (data) => {
+    oddController.saveSelectedTeams(1, rapidEventList, (data) => {
       setOddsItem(data.data);
       setSearchedOdd(data.data);
       setCopyItem(data.datacc);
@@ -451,8 +457,10 @@ function OddsTransfer() {
   const refreshOdds = () => {
     setLoading(true);
     //console.log("ddd",isLoading)
-    oddController.updateResfreshOdds((data) => {
+    oddController.updateResfreshOdds(1, (data) => {
       setOddsItem(data.data);
+      console.log("ddd", data.data)
+      console.log("ccc", data.datacc)
       setSearchedOdd(data.data);
       setCopyItem(data.datacc);
       setSearchedCopy(data.datacc);
@@ -470,8 +478,7 @@ function OddsTransfer() {
     const copyArray = [];
     searchedCopy.map((data) => {
       return copyArray.push(
-        `${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${
-          data.body
+        `/n${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${data.body
         }/${data.goal}`
       );
     });
@@ -484,7 +491,7 @@ function OddsTransfer() {
     });
 
     //console.log("dddd",rapidEventId);
-    oddController.updateSelectedOdds(rapidEventId, (data) => {
+    oddController.updateSelectedOdds(1, rapidEventId, (data) => {
       setLoading2(false);
       toast.success("You can copy now", {
         position: toast.POSITION.TOP_RIGHT,
@@ -579,10 +586,14 @@ function OddsTransfer() {
           <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
         </div>
         <div className="logout">
-          <button href="" className="btn btn-warning">
-          <i class="fa-solid fa-right-from-bracket"></i>&nbsp;
+          <a
+            href="/"
+            className="btn btn-warning"
+            onClick={localStorage.clear()}
+          >
+            <i className="fa-solid fa-right-from-bracket"></i>&nbsp;
             Log Out
-          </button>
+          </a>
         </div>
       </div>
 
@@ -771,7 +782,28 @@ function OddsTransfer() {
                           <tr key={item.teamId}>
                             <td>{oddsPageCount * rowsPerPage + index + 1}</td>
                             <td>
-                              {item.teamName} vs {item.underName}
+                              {item.isOverHome == true
+                                ? (<div>
+                                  <span style={{ color: 'red' }}>
+                                    {item.teamName} 
+                                    </span>
+                                  &nbsp;vs&nbsp;
+                                  <span>
+                                    {item.underName}
+                                    </span>
+                                </div>)
+                                : (
+                                  <div>
+                                    <span>
+                                      {item.underName}
+                                    </span>
+                                    &nbsp;vs&nbsp;
+                                    <span style={{ color: 'red' }}>
+                                      {item.teamName}
+                                    </span>
+                                  </div>
+                                )
+                              }
                             </td>
                             <td>
                               {item.oldBody} / {item.oldGoal}
