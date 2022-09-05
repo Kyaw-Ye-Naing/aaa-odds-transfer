@@ -30,7 +30,7 @@ body{
     align-items: center;
 }
 
-.profile span{
+.profile .info{
     color: white;
     margin-left: 1rem;
     font-weight: 400;
@@ -42,6 +42,14 @@ body{
      align-items: center;
   }
 
+  .title span{
+    font-size: 2rem;
+  }
+
+.logLink{
+    display: flex;
+    align-items: center;
+}
   .main{
     display: flex;
     justify-content: space-around;
@@ -81,3 +89,32 @@ body{
     font-family: 'Roboto', sans-serif;
 background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 } */
+
+@media screen and (max-width: 600px) {
+    .title span{
+        font-size: 1.0rem;
+      }
+
+      .profile .info{
+        font-weight: 400;
+        font-size: medium;
+    }
+
+    .profile img{
+        width: 20px;
+        height: 20px;
+    }
+
+    .logout span{
+        display: none;
+    }
+    .odds-nav{      
+        padding: 1rem 2rem;     
+      }
+  }
+
+  @media screen and (min-width: 600px) {
+    .logout span{
+        display: block;
+    }
+  }

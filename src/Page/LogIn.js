@@ -30,12 +30,15 @@ function LogIn() {
             setLoading(false);
             localStorage.setItem("userId", data.userId);
             localStorage.setItem("userName", data.userName);
+            console.log("uuyuy",data.userId);
             toast.success(data.message, {
                 position: toast.POSITION.TOP_RIGHT,
             });
-            
+            if(data.status == 2){
+                history.push("/odds");
+            }  
         });
-        history.push("/odds");
+       
     }
 
     return (
@@ -75,6 +78,7 @@ function LogIn() {
                                 </div>
                                 <p className="m-0 py-3"><a href="" className="text-muted"></a></p>
                                 <button
+                                type="button"
                                 disabled = {isLoading}
                                     style={{ backgroundColor: MyColor.headerbackground, color: "#fff" }}
                                     className="btn btn-lg w-100 shadow-lg"

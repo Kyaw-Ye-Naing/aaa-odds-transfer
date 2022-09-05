@@ -10,7 +10,7 @@ function App() {
     <div>
     <div className="App">
       <ToastContainer />
-      <Router>
+      <Router forceRefresh={true}>
         <Switch>
           <Route exact path="/" component={LogIn} />
           <Route path={"/odds"} component={OddsTransfer} />
