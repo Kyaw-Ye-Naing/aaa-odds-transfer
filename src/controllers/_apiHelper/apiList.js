@@ -1,6 +1,6 @@
 export const apiList = {
     getTeamApi : "Odd/get-teams",
-    postSelectedTeamApi : "Odd",
+    postSelectedTeamApi : "Odd/save-teams",
     updateOddsApi : "Odd/get-refresh-odd",
     copyTeamApi : "Odd",
     loginApi :"Odd/login",

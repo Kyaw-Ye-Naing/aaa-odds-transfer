@@ -353,7 +353,7 @@ function OddsTransfer() {
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
-    console.log("kokok",userName);
+    //console.log("kokok",userName);
     if(userName == undefined){
       history.push('/');
     }
@@ -375,7 +375,7 @@ function OddsTransfer() {
   const getTeamFunction = () => {
     setLoading1(true);
     const userId = localStorage.getItem("userId");
-     console.log("session storage",userId)
+     //console.log("session storage",userId)
     oddController.getAllTeams(parseInt(userId), (data) => {
       //console.log("dsta",data.data)
       setItems(data.data);
@@ -470,7 +470,7 @@ function OddsTransfer() {
     setLoading(true);
     //console.log("ddd",isLoading)
     const userId = localStorage.getItem("userId");
-    console.log("session storage",userId)
+   // console.log("session storage",userId)
     oddController.updateResfreshOdds(parseInt(userId), (data) => {
       setOddsItem(data.data);
       //console.log("ddd", data.data)
@@ -504,9 +504,9 @@ function OddsTransfer() {
       return rapidEventId.push(data.rapidEventId);
     });
     const userId = localStorage.getItem("userId");
-    console.log("session storage",userId)
-    //console.log("dddd",rapidEventId);
-    oddController.updateSelectedOdds(userId, rapidEventId, (data) => {
+    //console.log("session storage",userId)
+    //console.log("copy",rapidEventId);
+    oddController.updateSelectedOdds(parseInt(userId), rapidEventId, (data) => {
       setLoading2(false);
       toast.success("You can copy now", {
         position: toast.POSITION.TOP_RIGHT,

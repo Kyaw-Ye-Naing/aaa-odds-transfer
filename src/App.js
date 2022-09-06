@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 function App() {
   return (
     <div>
-    <div className="App">
+    <div className="App container-fluid">
       <ToastContainer />
       <Router forceRefresh={true}>
         <Switch>

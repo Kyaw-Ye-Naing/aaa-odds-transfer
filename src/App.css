@@ -8,7 +8,7 @@ body{
 
 
 .App{
- overflow: hidden;
+  overflow-x: hidden; 
  /* background: linear-gradient(120deg,#3b7197,#00B3B3); */
  background-color: rgb(255, 255, 255);
  height: 100vh;
