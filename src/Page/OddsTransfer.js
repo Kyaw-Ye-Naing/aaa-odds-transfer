@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import { oddController } from "../controllers/oddsController/oddController";
 import Loader from "../asset/loader";
 import Spinner from "../asset/spinner";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const TeamData = [
   {
@@ -315,7 +316,6 @@ const CopyData = [
   },
 ];
 
-
 // Example items, to simulate f
 function OddsTransfer() {
   const rowsPerPage = 10;
@@ -345,7 +345,7 @@ function OddsTransfer() {
   const [isLoading1, setLoading1] = useState(false);
   const [isLoading2, setLoading2] = useState(false);
 
-  const [username,setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const history = useHistory();
   // const saved = localStorage.getItem("info");
   // const initialValue = JSON.parse(saved);
@@ -354,8 +354,8 @@ function OddsTransfer() {
   useEffect(() => {
     const userName = localStorage.getItem("userName");
     //console.log("kokok",userName);
-    if(userName == undefined){
-      history.push('/');
+    if (userName == undefined) {
+      history.push("/");
     }
     setUsername(userName);
     getTeamFunction();
@@ -375,7 +375,7 @@ function OddsTransfer() {
   const getTeamFunction = () => {
     setLoading1(true);
     const userId = localStorage.getItem("userId");
-     //console.log("session storage",userId)
+    //console.log("session storage",userId)
     oddController.getAllTeams(parseInt(userId), (data) => {
       //console.log("dsta",data.data)
       setItems(data.data);
@@ -450,27 +450,31 @@ function OddsTransfer() {
 
     //console.log("selected data",rapidEventList);
     const userId = localStorage.getItem("userId");
-    console.log("session storage",userId)
-    oddController.saveSelectedTeams(parseFloat(userId), rapidEventList, (data) => {
-      setOddsItem(data.data);
-      setSearchedOdd(data.data);
-      setCopyItem(data.datacc);
-      setSearchedCopy(data.datacc);
-      setNewcopyPage(data.datacc);
-      setOddPage(Math.ceil(data.data.length / rowsPerPage));
-      setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
-      // toast.success(data.message, {
-      //   position: toast.POSITION.TOP_LEFT,
-      // });
-      setLoading(false);
-    });
+    console.log("session storage", userId);
+    oddController.saveSelectedTeams(
+      parseFloat(userId),
+      rapidEventList,
+      (data) => {
+        setOddsItem(data.data);
+        setSearchedOdd(data.data);
+        setCopyItem(data.datacc);
+        setSearchedCopy(data.datacc);
+        setNewcopyPage(data.datacc);
+        setOddPage(Math.ceil(data.data.length / rowsPerPage));
+        setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
+        // toast.success(data.message, {
+        //   position: toast.POSITION.TOP_LEFT,
+        // });
+        setLoading(false);
+      }
+    );
   };
 
   const refreshOdds = () => {
     setLoading(true);
     //console.log("ddd",isLoading)
     const userId = localStorage.getItem("userId");
-   // console.log("session storage",userId)
+    // console.log("session storage",userId)
     oddController.updateResfreshOdds(parseInt(userId), (data) => {
       setOddsItem(data.data);
       //console.log("ddd", data.data)
@@ -492,7 +496,8 @@ function OddsTransfer() {
     const copyArray = [];
     searchedCopy.map((data) => {
       return copyArray.push(
-        `\n${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${data.body
+        `\n${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${
+          data.body
         }/${data.goal}`
       );
     });
@@ -585,33 +590,7 @@ function OddsTransfer() {
 
   return (
     <div className="odds-page">
-      <div className="odds-nav">
-        <div className="profile">
-          <img
-            src="https://annedece.sirv.com/Images/user-vector.jpg"
-            className="img-thumbnail rounded-circle"
-            width={45}
-            height={45}
-          />
-          <span className="info">{username}</span>
-        </div>
-        <div className="title">
-          <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
-          <span className="px-2">Odds Trasfer Page</span>
-          <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
-        </div>
-        <div className="logout">
-          <a
-            href="/"
-            className="btn btn-warning logLink"
-            onClick={()=>localStorage.clear()}
-          >
-            <i className="fa-solid fa-right-from-bracket"></i>
-            <span>&nbsp;Log Out</span>
-          </a>
-        </div>
-      </div>
-
+    <NavBar username={username}/>
       <div className="main">
         {/* <div className="row"> */}
         <div className="right">
@@ -797,28 +776,23 @@ function OddsTransfer() {
                           <tr key={item.teamId}>
                             <td>{oddsPageCount * rowsPerPage + index + 1}</td>
                             <td>
-                              {item.isOverHome == true
-                                ? (<div>
-                                  <span style={{ color: 'red' }}>
-                                    {item.teamName} 
-                                    </span>
+                              {item.isOverHome == true ? (
+                                <div>
+                                  <span style={{ color: "red" }}>
+                                    {item.teamName}
+                                  </span>
                                   &nbsp;vs&nbsp;
-                                  <span>
-                                    {item.underName}
-                                    </span>
-                                </div>)
-                                : (
-                                  <div>
-                                    <span>
-                                      {item.underName}
-                                    </span>
-                                    &nbsp;vs&nbsp;
-                                    <span style={{ color: 'red' }}>
-                                      {item.teamName}
-                                    </span>
-                                  </div>
-                                )
-                              }
+                                  <span>{item.underName}</span>
+                                </div>
+                              ) : (
+                                <div>
+                                  <span>{item.underName}</span>
+                                  &nbsp;vs&nbsp;
+                                  <span style={{ color: "red" }}>
+                                    {item.teamName}
+                                  </span>
+                                </div>
+                              )}
                             </td>
                             <td>
                               {item.oldBody} / {item.oldGoal}

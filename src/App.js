@@ -1,7 +1,10 @@
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import OddsTransfer from './Page/OddsTransfer'
-import LogIn from './Page/LogIn'
+import Betting from './Page/Betting';
+import LogIn from './Page/LogIn';
+import Report from './Page/Report';
+import Calculate from './Page/Calculate';
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
@@ -14,6 +17,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={LogIn} />
           <Route path={"/odds"} component={OddsTransfer} />
+          <Route path={"/betting"} component={Betting}/>
+          <Route path={"/report"} component={Report}/>
+          <Route path={"/calculate"} component={Calculate}/>
           <Redirect to="/" />
         </Switch>
       </Router>
