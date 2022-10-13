@@ -54,18 +54,28 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
-.group-list button{
+.group-list .link-btn{
     margin-left: .5rem;
     background-color: #00636E;
     color:white;
 }
 
-.group-list button:hover{
-    margin-left: .5rem;
-    background-color: #00636E;
+.group-list .link-btn:hover{
+    background-color: #237e88;
     color:whitesmoke;
+}
+
+.group-list .link-btn-active{
+    margin-left: .5rem;
+    background-color: #ffc107;
+    color:black;
+}
+
+.group-list .link-btn-active:hover{
+    background-color: hsl(45, 77%, 64%);
+    color:black;
 }
 
   .main{
@@ -97,24 +107,30 @@ body{
      display: flex;
  }
 
-.bet-container{
+.site-header{
+    color:green;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .bet-container .event{
     margin: 0 .3rem;
-    height: 60vh;
+    height: 70vh;
     overflow-y: scroll;
     overflow-x: none; 
     scroll-behavior: smooth;
 }
 
 .bet-container .event table{
-   font-size: x-large;
+   font-size: larger;
 }
 
 .bet-container .event table td,.bet-container .event table th{
     text-align: left;
-    padding: 1rem 0;
+    padding: 1rem 0.2rem;
  }
 
 .bet-container .event table .team{
@@ -150,8 +166,11 @@ body{
 }
 
 .bet-container .panel button{
-    text-align: center;
-    clear: left;
+    margin-top: 23px;
+ }
+
+ .bet-container .panel button span{
+    font-size: 1.1rem;
  }
 
 .bet-container .event::-webkit-scrollbar-track
@@ -173,6 +192,31 @@ body{
     border-radius: 10px;
 }
 
+.report-container{
+display:flex;
+justify-content: space-between;
+flex-wrap: wrap;
+}
+
+.search-txt{
+   width: 200px;
+  }
+
+.date-search{
+    display:flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+  }
+
+  .date-search input{
+    width: 200px;
+    margin-bottom: 1rem;
+  }
+
+  .report-table{
+    font-size: 1.3rem;
+    overflow-x: scroll;
+}
 
  html, body {
     height: 100%;
@@ -204,6 +248,14 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
     .odds-nav{      
         padding: 1rem 2rem;     
       }
+
+      .bet-container .event table{
+        font-size: 1rem;
+     }
+
+     .bet-container .panel table{
+        font-size: 1.1rem;
+     }
   }
 
   @media screen and (min-width: 600px) {

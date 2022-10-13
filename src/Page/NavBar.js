@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import {useHistory} from "react-router-dom";
 
-function NavBar({ username }) {
+function NavBar({ username,homecolor='link-btn',bettingcolor='link-btn',reportcolor='link-btn',calculatecolor='link-btn'}) {
     const history = useHistory();
+
   const handleButtonLink = (type) => {
     if (type === 1) {
       history.push("/odds");
@@ -51,31 +52,31 @@ function NavBar({ username }) {
       >
         <button
           type="button"
-          className="btn"
+          className={`btn ${homecolor}`}
           onClick={() => handleButtonLink(1)}
         >
           Home
         </button>
         <button
           type="button"
-          className="btn"
+          className={`btn ${bettingcolor}`}
           onClick={() => handleButtonLink(2)}
         >
-          Body Betting
+          Betting
         </button>
         <button
           type="button"
-          className="btn"
+          className={`btn ${reportcolor}`}
           onClick={() => handleButtonLink(3)}
         >
-          Win/Lose Report
+          Report
         </button>
         <button
           type="button"
-          className="btn"
+          className={`btn ${calculatecolor}`}
           onClick={() => handleButtonLink(4)}
         >
-          Calculate Voucher
+          Calculate
         </button>
       </div>
 

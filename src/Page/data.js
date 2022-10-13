@@ -1,10 +1,10 @@
 const data =[{
     "rapidEventId":1,
- "time":"2022-10-20",
- "homeTeam":"Man U",
- "awayTeam":"Man City",
- "goalOdds":"4+90",
- "bodyOdds":"2-40"
+    "time":"2022-10-20",
+    "homeTeam":"Man U",
+    "awayTeam":"Man City",
+     "goalOdds":"4+90",
+     "bodyOdds":"2-40"
 },
 {
     "rapidEventId":2,

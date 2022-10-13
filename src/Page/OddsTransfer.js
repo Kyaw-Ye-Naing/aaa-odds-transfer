@@ -590,7 +590,12 @@ function OddsTransfer() {
 
   return (
     <div className="odds-page">
-    <NavBar username={username}/>
+    <NavBar username={username} homecolor={'link-btn-active'}/>
+    <span
+        className="site-header"
+        >
+          Selected Events Site
+        </span>
       <div className="main">
         {/* <div className="row"> */}
         <div className="right">
