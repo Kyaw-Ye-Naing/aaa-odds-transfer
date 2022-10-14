@@ -12,7 +12,7 @@ function Betting() {
         <span
         className="site-header"
         >
-          User Betting Site
+          User Betting Page
         </span>
         <div className="row bet-container">
           <div className="col-12 col-lg-8 col-md-8">

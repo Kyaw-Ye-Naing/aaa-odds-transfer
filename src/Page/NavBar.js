@@ -30,7 +30,7 @@ function NavBar({ username,homecolor='link-btn',bettingcolor='link-btn',reportco
         </div>
         <div className="title">
           <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
-          <span className="px-2">Odds Trasfer Page</span>
+          <span className="px-2">Odds Trasfer Site</span>
           <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
         </div>
         <div className="logout">

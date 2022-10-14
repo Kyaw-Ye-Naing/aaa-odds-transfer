@@ -1,5 +1,6 @@
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import OddsTransfer from './Page/OddsTransfer'
 import Betting from './Page/Betting';
 import LogIn from './Page/LogIn';

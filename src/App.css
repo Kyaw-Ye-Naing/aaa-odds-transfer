@@ -13,6 +13,11 @@ body{
  height: 100vh;
 }
 
+html, body {
+    height: 100%;
+}
+
+/*----------- Start Nav Bar Section --------*/
 .odds-nav{
     background-color: #00636E;
     /* background-color: #303A52; */
@@ -35,27 +40,31 @@ body{
     font-weight: 400;
     font-size: larger;
 }
-  .title{
+  
+.title{
      color: white;
      display: flex;
      align-items: center;
-  }
+}
 
-  .title span{
+.title span{
     font-size: 2rem;
-  }
+}
 
 .logLink{
     display: flex;
     align-items: center;
 }
+/*----------- End Nav Bar Section --------*/
 
+/*----------- Start Link Button Group Section --------*/
 .group-list{
     display: flex;
     justify-content: center;
     align-items: center;
     /* margin-bottom: 1rem; */
 }
+
 .group-list .link-btn{
     margin-left: .5rem;
     background-color: #00636E;
@@ -77,35 +86,37 @@ body{
     background-color: hsl(45, 77%, 64%);
     color:black;
 }
+/*----------- End Link Button Group Section --------*/
 
-  .main{
+/*----------- Start Events Section --------*/
+.main{
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
  }
  
- .right{
+.right{
      width: 300px;
- }
+}
  
- .middle{
+.middle{
     width: 500px; 
- }
+}
  
- .left{
+.left{
      width: 500px; 
- }
+}
  
- .table-title{
+.table-title{
      display: flex;
      justify-content: space-between;
      align-items: center;
- }
+}
  
- .input-gp{
+.input-gp{
      display: flex;
- }
+}
 
 .site-header{
     color:green;
@@ -192,40 +203,30 @@ body{
     border-radius: 10px;
 }
 
-.report-container{
-display:flex;
-justify-content: space-between;
-flex-wrap: wrap;
+/*--------Start Report Site-------------------*/
+.search-btn{
+    margin-top: 2rem;
 }
+
 
 .search-txt{
    width: 200px;
-  }
+   margin-top: 5px;
+}
 
-.date-search{
-    display:flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
-  }
-
-  .date-search input{
-    width: 200px;
-    margin-bottom: 1rem;
-  }
-
-  .report-table{
+.report-table{
     font-size: 1.3rem;
     overflow-x: scroll;
 }
 
- html, body {
-    height: 100%;
-}
+/*--------end report -------------------*/
 
 /* body {
     font-family: 'Roboto', sans-serif;
 background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 } */
+
+/*------ media query ---------*/
 
 @media screen and (max-width: 600px) {
     .title span{
@@ -258,8 +259,8 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
      }
   }
 
-  @media screen and (min-width: 600px) {
+@media screen and (min-width: 600px) {
     .logout span{
         display: block;
     }
-  }
+}
