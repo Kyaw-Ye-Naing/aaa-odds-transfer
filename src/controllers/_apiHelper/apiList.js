@@ -4,4 +4,5 @@ export const apiList = {
     updateOddsApi : "Odd/get-refresh-odd",
     copyTeamApi : "Odd",
     loginApi :"Odd/login",
+    bettingEvent : "Odd/get-betting-events"
 };

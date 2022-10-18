@@ -1,14 +1,47 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 import { data } from "./data";
+import moment from "moment";
+import { useEffect } from "react";
+import Loader from "../asset/loader";
+import { oddController } from "../controllers/oddsController/oddController";
 
 function Betting() {
-  const [slipdata,setSlipData]=useState([]);
+  const [slipdata,setSlipData] = useState([]);
+  const [eventsData,setEventsData] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const userId = localStorage.getItem("userId");
+    //console.log("session storage",userId)
+    oddController.getBettingEvents(parseInt(userId), (data) => {
+      console.log("dsta",data.events)
+      setEventsData(data.events);
+      setLoading(false);
+    });
+  }, []);
+
+const handleTeamAdd = (type,data) => {
+if(type == "home"){
+
+}else if(type == "away"){
+
+}else if(type == "over"){
+
+}else{
+
+}
+}
 
   return (
     <div>
       <NavBar username={"Bo Bo"} bettingcolor={'link-btn-active'}/>
-      <div>
+      {
+        isLoading 
+        ? (<div style={{textAlign:'center'}}><Loader /></div>) 
+        :
+      (<div>
         <span
         className="site-header"
         >
@@ -44,22 +77,31 @@ function Betting() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data &&
-                    data.map((d, i) => {
+                  {eventsData.length == 0 ?
+                  <tr>
+                    <td colSpan={7} style={{textAlign:'center',fontWeight:'bold'}}>No Data</td>
+                  </tr> 
+                  : eventsData &&
+                    eventsData.map((d, i) => {
                       return (
                         <tr>
                           <th scope="row">{i + 1}</th>
-                          <td>{d.time}</td>
+                          <td>{`${moment(d.date).format(
+                            "hh:mm:ss a"
+                          )}`}</td>
                           <td>
                             {/* <button type="button" class="btn btn-outline-success"> */}
-                            <a className="team">
-                              {d.homeTeam}({d.bodyOdds})
+                            <a className="team" onClick={() => handleTeamAdd("home",d)}>
+                              {d.homeTeamId == d.overTeamId ?
+                             <span>{d.homeTeam}({d.bodyOdds})</span>  : <span>{d.homeTeam}</span>
+                            }
                             </a>
                             {/* </button> */}
                           </td>
                           <td>
                             <button
                               type="button"
+                              onClick={() => handleTeamAdd("over",d)}
                               className="btn btn-outline-success"
                               style={{ padding: "0.3rem 1rem" }}
                             >
@@ -70,6 +112,7 @@ function Betting() {
                           <td>
                             <button
                               type="button"
+                              onClick={() => handleTeamAdd("under",d)}
                               className="btn btn-outline-success"
                               style={{ padding: "0.3rem 1rem" }}
                             >
@@ -77,9 +120,11 @@ function Betting() {
                             </button>
                           </td>
                           <td>
-                            {/* <button type="button" class="btn btn-outline-success"> */}
-                            <a className="team"> {d.awayTeam}</a>
-                            {/* </button> */}
+                          <a className="team" onClick={() => handleTeamAdd("away",d)}>
+                              {d.awayTeamId == d.overTeamId ?
+                             <span>{d.awayTeam}({d.bodyOdds})</span>  : <span>{d.awayTeam}</span>
+                            }
+                          </a>
                           </td>
                         </tr>
                       );
@@ -171,7 +216,8 @@ function Betting() {
             </div>
           </div>
         </div>
-      </div>
+      </div>)
+}
     </div>
   );
 }

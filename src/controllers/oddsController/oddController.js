@@ -55,10 +55,21 @@ const updateSelectedOdds = (userId,rapidEventIdList,setResponse) => {
     });
 };
 
+const getBettingEvents = (userId,setResponse) => {
+    postApi(`${apiList.bettingEvent}`,
+    {
+        userId : userId
+    },
+    (data) =>{
+        setResponse(data);
+    });
+};
+
 export const oddController = {
     getAllTeams,
     saveSelectedTeams,
     updateResfreshOdds,
     updateSelectedOdds,
-    checkLogIn
+    checkLogIn,
+    getBettingEvents
 }
