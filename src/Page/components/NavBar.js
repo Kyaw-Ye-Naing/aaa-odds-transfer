@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import {useHistory} from "react-router-dom";
 
-function NavBar({ username,homecolor='link-btn',bettingcolor='link-btn',reportcolor='link-btn',calculatecolor='link-btn'}) {
+function NavBar({ 
+  username,
+  homecolor='link-btn',
+  bettingcolor='link-btn',
+  reportcolor='link-btn',
+  calculatecolor='link-btn',
+  historycolor = 'link-btn',
+  customercolor = 'link-btn'
+}) {
     const history = useHistory();
 
   const handleButtonLink = (type) => {
@@ -11,8 +19,12 @@ function NavBar({ username,homecolor='link-btn',bettingcolor='link-btn',reportco
       history.push("/betting");
     } else if (type === 3) {
       history.push("/report");
-    } else {
+    } else if(type === 4){
       history.push("/calculate");
+    }else if(type === 5){
+      history.push("/history")
+    }else{
+      history.push("/customer")
     }
   };
 
@@ -77,6 +89,20 @@ function NavBar({ username,homecolor='link-btn',bettingcolor='link-btn',reportco
           onClick={() => handleButtonLink(4)}
         >
           <span className="btn-label">Calculate</span>
+        </button>
+        <button
+          type="button"
+          className={`btn ${historycolor}`}
+          onClick={() => handleButtonLink(5)}
+        >
+          <span className="btn-label">History</span>
+        </button>
+        <button
+          type="button"
+          className={`btn ${customercolor}`}
+          onClick={() => handleButtonLink(6)}
+        >
+          <span className="btn-label">Customer</span>
         </button>
       </div>
 

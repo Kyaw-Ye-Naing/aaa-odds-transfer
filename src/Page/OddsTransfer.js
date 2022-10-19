@@ -7,7 +7,7 @@ import { oddController } from "../controllers/oddsController/oddController";
 import Loader from "../asset/loader";
 import Spinner from "../asset/spinner";
 import { useHistory } from "react-router-dom";
-import NavBar from "./NavBar";
+import NavBar from "./components/NavBar";
 
 const TeamData = [
   {
