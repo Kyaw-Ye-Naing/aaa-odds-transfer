@@ -55,28 +55,28 @@ function NavBar({ username,homecolor='link-btn',bettingcolor='link-btn',reportco
           className={`btn ${homecolor}`}
           onClick={() => handleButtonLink(1)}
         >
-          Home
+         <span className="btn-label">Home</span> 
         </button>
         <button
           type="button"
           className={`btn ${bettingcolor}`}
           onClick={() => handleButtonLink(2)}
         >
-          Betting
+          <span className="btn-label">Betting</span>
         </button>
         <button
           type="button"
           className={`btn ${reportcolor}`}
           onClick={() => handleButtonLink(3)}
         >
-          Report
+          <span className="btn-label">Report</span>
         </button>
         <button
           type="button"
           className={`btn ${calculatecolor}`}
           onClick={() => handleButtonLink(4)}
         >
-          Calculate
+          <span className="btn-label">Calculate</span>
         </button>
       </div>
 

@@ -477,8 +477,8 @@ function OddsTransfer() {
     // console.log("session storage",userId)
     oddController.updateResfreshOdds(parseInt(userId), (data) => {
       setOddsItem(data.data);
-      //console.log("ddd", data.data)
-      //console.log("ccc", data.datacc)
+      console.log("ddd", data.data)
+      console.log("ccc", data.datacc)
       setSearchedOdd(data.data);
       setCopyItem(data.datacc);
       setSearchedCopy(data.datacc);
@@ -760,7 +760,7 @@ function OddsTransfer() {
                     <th scope="col">No</th>
                     <th scope="col">Team</th>
                     <th scope="col">Old Odds</th>
-                    <th scope="col">New Odds</th>
+                    <th scope="col" >New Odds</th>
                   </tr>
                   <tr
                     style={{

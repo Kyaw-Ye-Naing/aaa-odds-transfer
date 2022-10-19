@@ -17,6 +17,10 @@ html, body {
     height: 100%;
 }
 
+hr{
+    margin: 0.5rem 0;
+}
+
 /*----------- Start Nav Bar Section --------*/
 .odds-nav{
     background-color: #00636E;
@@ -25,7 +29,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 4rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
 .profile{
@@ -86,6 +90,7 @@ html, body {
     background-color: hsl(45, 77%, 64%);
     color:black;
 }
+
 /*----------- End Link Button Group Section --------*/
 
 /*----------- Start Events Section --------*/
@@ -120,7 +125,7 @@ html, body {
 
 .site-header{
     color:green;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
@@ -262,5 +267,12 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 @media screen and (min-width: 600px) {
     .logout span{
         display: block;
+    }
+}
+
+@media screen and (max-width:360px){
+    .group-list .btn-label{
+        font-size: 0.8rem;
+        font-weight: bold;
     }
 }
