@@ -5,9 +5,17 @@ function Calculate() {
   return (
     <div>
       <NavBar username={"Bo Bo"} calculatecolor={"link-btn-active"} />
-      <span className="site-header">Voucher Calculation Page</span>
+      <span className="site-header">Voucher Calculation</span>
+     <div className="text-center mb-1">
+     <button
+          type="button"
+          className="btn btn-success"
+        >
+          <i className="fas fa-file-signature"></i>&nbsp;Calculate Voucher</button>
+      </div> 
+     
       <div className="cal-container">
-        <table class="table table-light">
+        <table className="table table-light">
           <thead className="table-secondary">
             <tr>
               <th scope="col">No</th>

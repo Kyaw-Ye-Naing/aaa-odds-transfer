@@ -594,7 +594,7 @@ function OddsTransfer() {
     <span
         className="site-header"
         >
-          Selected Events Site
+          Odds Transfer
         </span>
       <div className="main">
         {/* <div className="row"> */}

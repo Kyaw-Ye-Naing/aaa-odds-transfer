@@ -2,59 +2,49 @@ import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import Loader from "../asset/loader";
 import moment from "moment";
-import MyModal from "./components/MyModal";
+import MyModal from "./components/HistoryModal";
+import DeleteAlertModal from "./components/DeleteAlertModal";
 
 const data = [
   {
     voucher: "GB0988434545",
     username: "bo paing gyi",
     amount: 90000,
-    status: "Win",
     gamblingId: 3,
   },
   {
     voucher: "GB0988434545",
     username: "bo paing gyi",
     amount: 90000,
-    status: "Win",
     gamblingId: 4,
   },
   {
     voucher: "GB0988434545",
     username: "bo paing gyi",
     amount: 90000,
-    status: "Win",
     gamblingId: 6,
   },
 ];
 
 function History() {
   const [isLoading, setLoading] = useState(false);
-  const [isEdit,setIsEdit] = useState(false);
-
-  const handleOpenModal = (type) =>{
-    if(type == "edit"){
-        setIsEdit(true);
-    }else{
-        setIsEdit(false);
-    }
-   
-  }
+  const [isEdit,setIsEdit] = useState("");
 
   return (
     <div>
-      <MyModal />
+      <DeleteAlertModal/>
+      <MyModal isEdit={isEdit} historydata={data}/>
       <NavBar username={"Bo Bo"} historycolor={"link-btn-active"} />
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
-          <Loader isEdit={isEdit}/>
+          <Loader/>
         </div>
       ) : (
         <div>
-          <span className="site-header">History Page</span>
+          <span className="site-header">Member Outstanding</span>
           <div className="wrapper">
             <div className="table-responsive">
-              <table class="table table-light">
+              <table className="table table-light">
                 <thead>
                   <tr className="table-secondary">
                     <th scope="col">No</th>
@@ -62,7 +52,6 @@ function History() {
                     <th scope="col">Betted Date</th>
                     <th scope="col">Username</th>
                     <th scope="col">Amount</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -76,24 +65,32 @@ function History() {
                           <td>2022-10-19 07:00:00</td>
                           <td>{d.username}</td>
                           <td>{d.amount}</td>
-                          <td>{d.status}</td>
                           <td>
                             <button
                               className="btn btn-outline-success"
                               style={{ marginRight: "5px" }}
                               data-bs-toggle="modal"
                               data-bs-target="#myModal"  
-                              onClick={()=>handleOpenModal("view")}
+                              onClick={()=>setIsEdit("View")}
                             >
-                              <i class="fas fa-eye"></i>
+                              <i className="fas fa-eye"></i>&nbsp;View
                             </button>
                             <button
                               className="btn btn-outline-success"
                               data-bs-toggle="modal"
+                              style={{ marginRight: "5px" }}
                               data-bs-target="#myModal"
-                              onClick={()=>handleOpenModal("edit")}
+                              onClick={()=>setIsEdit("Edit")}
                             >
-                              <i class="fas fa-edit"></i>
+                              <i className="fas fa-edit"></i>&nbsp;Edit
+                            </button>
+                            <button
+                              className="btn btn-outline-success"
+                              data-bs-toggle="modal"
+                              data-bs-target="#deletealertModal"
+                              onClick={()=>setIsEdit("Edit")}
+                            >
+                              <i className="fas fa-trash"></i>&nbsp;Delete
                             </button>
                           </td>
                         </tr>

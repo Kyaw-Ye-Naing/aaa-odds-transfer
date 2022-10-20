@@ -21,6 +21,13 @@ hr{
     margin: 0.5rem 0;
 }
 
+.modal-content{
+    border-left: 5px solid green;
+}
+
+#deletealertModal .modal-content{
+    border-left: 5px solid red;
+}
 /*----------- Start Nav Bar Section --------*/
 .odds-nav{
     background-color: #00636E;
@@ -223,7 +230,7 @@ hr{
 }
 
 .report-table{
-    font-size: 1.3rem;
+    /* font-size: 1.3rem; */
     overflow-x: scroll;
 }
 
@@ -231,6 +238,18 @@ hr{
 
 /*--------start history section -------------------*/
 
+/*--------end history section -------------------*/
+
+/*--------start history section -------------------*/
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.customer-header .customer-txt{
+    width: 200px;
+}
 /*--------end history section -------------------*/
 
 /*--------start modal section -------------------*/
@@ -243,6 +262,37 @@ hr{
 .event-details .league{
     font-weight: bolder;
     font-size: 1.2rem;
+}
+
+.amt-edit {
+    display: flex;
+    align-items: center;
+}
+.amt-edit input{
+    width: 100px;
+    margin-left: 5px;
+}
+
+.delete-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-body span{
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.delete-body span i{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: red;
+    margin-right: 5px;
+}
+
+.delete-body .delete-btn-gp{
+    display: flex;
+    justify-content: flex-end;
 }
 /*--------end modal section -------------------*/
 

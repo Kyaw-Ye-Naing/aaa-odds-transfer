@@ -67,7 +67,7 @@ function NavBar({
           className={`btn ${homecolor}`}
           onClick={() => handleButtonLink(1)}
         >
-         <span className="btn-label">Home</span> 
+         <span className="btn-label">Transfer</span> 
         </button>
         <button
           type="button"
@@ -95,7 +95,7 @@ function NavBar({
           className={`btn ${historycolor}`}
           onClick={() => handleButtonLink(5)}
         >
-          <span className="btn-label">History</span>
+          <span className="btn-label">Outstanding</span>
         </button>
         <button
           type="button"

@@ -231,7 +231,7 @@ const handleRemove = (id) => {
                                 className="btn btn-outline-success"
                                 style={{ padding: "0.3rem 1rem" }}
                               >
-                                <i class="fas fa-arrow-up"></i>
+                                <i className="fas fa-arrow-up"></i>
                               </button>
                             </td>
                             <td>{d.goalOdds}</td>
@@ -242,7 +242,7 @@ const handleRemove = (id) => {
                                 className="btn btn-outline-success"
                                 style={{ padding: "0.3rem 1rem" }}
                               >
-                                <i class="fas fa-arrow-down"></i>
+                                <i className="fas fa-arrow-down"></i>
                               </button>
                             </td>
                             <td>
@@ -317,7 +317,7 @@ const handleRemove = (id) => {
                                 />
                               </td>
                               <td className="text-center">
-                              <i class="fas fa-trash-alt" style={{color:"red"}} onClick={()=>handleRemove(b.rapidEventId)}></i>
+                              <i className="fas fa-trash-alt" style={{color:"red"}} onClick={()=>handleRemove(b.rapidEventId)}></i>
                               </td>
                             </tr>
                           );
