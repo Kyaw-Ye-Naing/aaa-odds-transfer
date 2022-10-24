@@ -5,22 +5,24 @@ import moment from "moment";
 import { useEffect } from "react";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
+import { toast } from "react-toastify";
 
 function Betting() {
   const [eventsData, setEventsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [bettingData, setBettingData] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [customer, setCustomer] = useState([]);
+  const [selectedCustomer,setSelectdCustomer] = useState(0);
+  const [finalSaveData,setFinalSaveData] = useState({
+    "userId":0,
+    "customerId":0,
+    "bettingDetails":[]
+  })
 
   useEffect(() => {
-    setLoading(true);
-    const userId = localStorage.getItem("userId");
-    //console.log("session storage",userId)
-    oddController.getBettingEvents(parseInt(userId), (data) => {
-      console.log("dsta", data.events);
-      setEventsData(data.events);
-      setLoading(false);
-    });
+    getBettingEvents();
+    getCustomer();
   }, []);
 
   const handleTeamAdd = (type, data) => {
@@ -108,15 +110,58 @@ function Betting() {
       newdata.push(obj);
     }
 
+    console.log("final bar",newdata)
+    console.log("final customer",selectedCustomer)
+
     setBettingData(newdata);
   };
+
+  const handleSave = () => {
+    const userId = localStorage.getItem("userId");
+
+    const newdata = {...finalSaveData};
+    newdata["userId"] = parseInt(userId);
+    newdata["customerId"] = parseInt(selectedCustomer);
+    newdata["bettingDetails"] = bettingData.map((eventDetail) => {
+      // delete eventDetail.check;
+      return eventDetail;
+    });
+setFinalSaveData(newdata);
+console.log("kyaw data",newdata);
+
+    oddController.saveBettingEvents(newdata, (data) => {
+      //console.log("dsta",data.data)
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    });
+  }
+
+  const getBettingEvents = () => {
+    setLoading(true);
+    const userId = localStorage.getItem("userId");
+    //console.log("session storage",userId)
+    oddController.getBettingEvents(parseInt(userId), (data) => {
+      console.log("dsta", data.events);
+      setEventsData(data.events);
+      setLoading(false);
+    });
+  }
+
+  const getCustomer = () => {
+    const userId = localStorage.getItem("userId");
+    oddController.getCustomer(parseInt(userId), (data) => {
+      //console.log("dsta", data.events);
+      setCustomer(data.customer);
+    });
+  }
 
   const calculate = (list) => {
     let sum = list.map((v) => Number(v.amount)).reduce((p, c) => p + c);
     setTotalAmount(sum);
   };
 
-  const handleTextChange = (index,amount) => {
+  const handleTextChange = (index, amount) => {
     //const newdata = parseInt(totalAmount) + parseInt(amount);
     //setTotalAmount(newdata);
 
@@ -127,18 +172,18 @@ function Betting() {
     // //console.log(bettingData)
     // let newBetting = [...bettingData];
 
-  //   const index = bettingData.findIndex(
-  //       (a) => a.rapidEventId == data.rapidEventId
-  //      );
+    //   const index = bettingData.findIndex(
+    //       (a) => a.rapidEventId == data.rapidEventId
+    //      );
 
-  //      console.log("original",i);
+    //      console.log("original",i);
 
-  //      console.log("finding",index);
-  //   let newBetting = [...bettingData];
-  //  newBetting[index].amount = amount;
+    //      console.log("finding",index);
+    //   let newBetting = [...bettingData];
+    //  newBetting[index].amount = amount;
 
-  let newBetting = [...bettingData];
-   newBetting[index].amount = amount;
+    let newBetting = [...bettingData];
+    newBetting[index].amount = amount;
 
     setBettingData(newBetting);
     calculate(newBetting);
@@ -146,11 +191,11 @@ function Betting() {
     // console.log("45 result---",result);
   };
 
-const handleRemove = (id) => {
-  const result = bettingData.filter(a=>a.rapidEventId != id);
+  const handleRemove = (id) => {
+    const result = bettingData.filter(a => a.rapidEventId != id);
 
-   setBettingData(result);
-}
+    setBettingData(result);
+  }
 
   return (
     <div>
@@ -272,11 +317,19 @@ const handleRemove = (id) => {
                 <select
                   className="form-select form-select-lg mb-3"
                   aria-label=".form-select-lg example"
+                  value={selectedCustomer}
+                  onChange={(e)=>setSelectdCustomer(e.target.value)}
                 >
-                  <option selected>Select User</option>
-                  <option value="1">Ko Ko</option>
-                  <option value="2">Nyi Nyi</option>
-                  <option value="3">Oo Oo</option>
+                  <option defaultValue={0}>
+                   --- Please Select ---
+                </option>
+                  {
+                    customer && customer.map((data, i) => {
+                      return (
+                        <option key={data.customerId} value={data.customerId}>{data.customerName}</option>
+                      )
+                    })
+                  } 
                 </select>
 
                 <div className="panel-details">
@@ -317,7 +370,7 @@ const handleRemove = (id) => {
                                 />
                               </td>
                               <td className="text-center">
-                              <i className="fas fa-trash-alt" style={{color:"red"}} onClick={()=>handleRemove(b.rapidEventId)}></i>
+                                <i className="fas fa-trash-alt" style={{ color: "red" }} onClick={() => handleRemove(b.rapidEventId)}></i>
                               </td>
                             </tr>
                           );
@@ -327,7 +380,7 @@ const handleRemove = (id) => {
                 </div>
 
                 <div className=" total-txt mb-3">
-                  <label for="exampleFormControlInput1" className="form-label">
+                  <label htmlFor="exampleFormControlInput1" className="form-label">
                     Total
                   </label>
                   <input
@@ -339,7 +392,7 @@ const handleRemove = (id) => {
                   />
                 </div>
 
-                <button type="button" className="btn btn-success">
+                <button type="button" className="btn btn-success" onClick={() => handleSave()}>
                   <i className="fas fa-save"></i>&nbsp;
                   <span>Save</span>
                 </button>
