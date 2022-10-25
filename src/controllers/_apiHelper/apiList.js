@@ -8,5 +8,10 @@ export const apiList = {
 
     bettingEventApi : "Odd/get-betting-events",
     saveBettingEventApi : "Odd/save-betting-voucher",
-    getCustomerApi : "Odd/get-customers"
+    getCustomerApi : "Odd/get-customers",
+
+    updateCustomerApi : "Odd/update-customers",
+    saveCustomerApi : "Odd/add-customers",
+
+    
 };

@@ -74,13 +74,15 @@ const getBettingEvents = (userId,setResponse) => {
 };
 
 //--save betting events
-const saveBettingEvents = (bettingInfo,setResponse) => {
+const saveBettingEvents = (userId,customerId,bettingInfo,setResponse) => {
+    console.log("customer id",customerId);
+    console.log("user id",userId);
     console.log("api data",bettingInfo);
     postApi(`${apiList.saveBettingEventApi}`,
     {
-        userId : bettingInfo.userId,
-        customerId : bettingInfo.customerId,
-        bettingDetails : bettingInfo.bettingDetails
+        userId : userId,
+        customerId : customerId,
+        bettingDetails : bettingInfo
     },
     (data) => {
         setResponse(data);
@@ -98,6 +100,35 @@ const getCustomer = (userId,setResponse) => {
     });
 };
 
+//--------------------- Customer Page -------------------------------
+//--update customer's info
+const updateCustomer = (customerInfo,setResponse) => {
+    console.log("final api",customerInfo)
+    postApi(`${apiList.updateCustomerApi}`,
+    {
+        customerId : customerInfo.customerId,
+        customerName : customerInfo.customerName,
+        commission : customerInfo.commission,
+        active : customerInfo.active
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
+//--insert new customer
+const saveCustomer = (userId,customerInfo,setResponse) => {
+    postApi(`${apiList.saveCustomerApi}`,
+    {
+        customerName : customerInfo.customerName,
+        commission : customerInfo.commission,
+        userId : userId
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
 export const oddController = {
     getAllTeams,
     saveSelectedTeams,
@@ -106,5 +137,7 @@ export const oddController = {
     checkLogIn,
     getBettingEvents,
     saveBettingEvents,
-    getCustomer
+    getCustomer,
+    updateCustomer,
+    saveCustomer
 }

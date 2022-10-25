@@ -1,6 +1,8 @@
 import React from "react";
+import { oddController } from "../../controllers/oddsController/oddController";
+import { toast } from "react-toastify";
 
-function CustomerEditModal({ customerdata, setCustomerData }) {
+function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoading }) {
   const OnChangeText = (text, value) => {
     const newcustomer = { ...customerdata };
     newcustomer[text] = value;
@@ -8,13 +10,16 @@ function CustomerEditModal({ customerdata, setCustomerData }) {
   };
 
   const EditSave = () => {
+    setLoading(true);
     console.log("final data", customerdata);
-    // cityController.updateCity(editCity, (data) => {
-    //   toast.success(data.message, {
-    //     position: toast.POSITION.BOTTOM_RIGHT,
-    //   });
-      // getAllCity();
-   // });
+    oddController.updateCustomer(customerdata,(data) => {
+    //console.log("dsta", data.events);
+    toast.success(data.message, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    setLoading(false);
+    getCustomer();
+  });
   };
 
   return (
@@ -69,7 +74,7 @@ function CustomerEditModal({ customerdata, setCustomerData }) {
                     className="form-control"
                     required
                     onChange={(value) =>
-                      OnChangeText("commission", value.target.value)
+                      OnChangeText("commission", parseInt(value.target.value))
                     }
                     id="exampleInputPassword1"
                   />
@@ -86,8 +91,19 @@ function CustomerEditModal({ customerdata, setCustomerData }) {
                     Active
                   </label>
                 </div>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" style={{marginRight:5}}>Close</button>
-                <button type="button" className="btn btn-primary" onClick={()=>EditSave()}>
+                <button 
+                type="button" 
+                className="btn btn-secondary" 
+                data-bs-dismiss="modal" 
+                style={{marginRight:5}}>
+                  Close
+                  </button>
+                <button 
+                type="button" 
+                data-bs-dismiss="modal" 
+                className="btn btn-primary" 
+                onClick={()=>EditSave()} 
+                >
                   Save
                 </button>
               </form>

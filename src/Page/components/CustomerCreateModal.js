@@ -1,6 +1,12 @@
 import React from "react";
+import { oddController } from "../../controllers/oddsController/oddController";
+import { toast } from "react-toastify";
 
-function CustomerCreateModal({ newcustomerData, setNewCustomerData }) {
+function CustomerCreateModal({
+  newcustomerData,
+  setNewCustomerData,
+  getCustomer,
+}) {
   const OnChangeText = (text, value) => {
     const newcustomer = { ...newcustomerData };
     newcustomer[text] = value;
@@ -8,21 +14,33 @@ function CustomerCreateModal({ newcustomerData, setNewCustomerData }) {
   };
 
   const Save = () => {
-    console.log("final data", newcustomerData);
-    // cityController.updateCity(editCity, (data) => {
-    //   toast.success(data.message, {
-    //     position: toast.POSITION.BOTTOM_RIGHT,
-    //   });
-    // getAllCity();
-    // });
+   // console.log("final data", newcustomerData);
+    const userId = localStorage.getItem("userId");
+    oddController.saveCustomer(parseInt(userId), newcustomerData, (data) => {
+      //console.log("dsta", data.events);
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      getCustomer();
+    });
   };
+
+const Cancel = () => {
+  const newcustomer = { ...newcustomerData };
+  newcustomer["customerName"] = "";
+  newcustomer["commission"] = 0;
+  newcustomer["active"] =true;
+
+  setNewCustomerData(newcustomer);
+}
 
   return (
     <div>
       <div
         className="modal fade"
         id="customeraddModal"
-        data-bs-backdrop="static" data-bs-keyboard="false"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
         tabIndex="-1"
         aria-labelledby="customeraddModalLabel"
         aria-hidden="true"
@@ -69,7 +87,7 @@ function CustomerCreateModal({ newcustomerData, setNewCustomerData }) {
                     className="form-control"
                     required
                     onChange={(value) =>
-                      OnChangeText("commission", value.target.value)
+                      OnChangeText("commission", parseInt(value.target.value))
                     }
                     id="exampleInputPassword1"
                   />
@@ -91,6 +109,7 @@ function CustomerCreateModal({ newcustomerData, setNewCustomerData }) {
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                   style={{ marginRight: 5 }}
+                  onClick={() => Cancel()}
                 >
                   Close
                 </button>

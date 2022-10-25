@@ -14,11 +14,6 @@ function Betting() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [selectedCustomer,setSelectdCustomer] = useState(0);
-  const [finalSaveData,setFinalSaveData] = useState({
-    "userId":0,
-    "customerId":0,
-    "bettingDetails":[]
-  })
 
   useEffect(() => {
     getBettingEvents();
@@ -119,17 +114,17 @@ function Betting() {
   const handleSave = () => {
     const userId = localStorage.getItem("userId");
 
-    const newdata = {...finalSaveData};
-    newdata["userId"] = parseInt(userId);
-    newdata["customerId"] = parseInt(selectedCustomer);
-    newdata["bettingDetails"] = bettingData.map((eventDetail) => {
-      // delete eventDetail.check;
-      return eventDetail;
-    });
-setFinalSaveData(newdata);
-console.log("kyaw data",newdata);
+//     const newdata = {...finalSaveData};
+//     newdata["userId"] = parseInt(userId);
+//     newdata["customerId"] = parseInt(selectedCustomer);
+//     newdata["bettingDetails"] = bettingData.map((eventDetail) => {
+//       // delete eventDetail.check;
+//       return eventDetail;
+//     });
+//     setFinalSaveData(newdata);
+//     console.log("kyaw data",newdata);
 
-    oddController.saveBettingEvents(newdata, (data) => {
+    oddController.saveBettingEvents(parseInt(userId),parseInt(selectedCustomer),bettingData,(data) => {
       //console.log("dsta",data.data)
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -162,6 +157,7 @@ console.log("kyaw data",newdata);
   };
 
   const handleTextChange = (index, amount) => {
+     console.log("result---",amount);
     //const newdata = parseInt(totalAmount) + parseInt(amount);
     //setTotalAmount(newdata);
 
@@ -187,7 +183,7 @@ console.log("kyaw data",newdata);
 
     setBettingData(newBetting);
     calculate(newBetting);
-    // console.log("result---",result);
+     console.log("result---",bettingData);
     // console.log("45 result---",result);
   };
 
