@@ -11,10 +11,10 @@ function DeleteAlertModal() {
         
        
       </div> */}
-      <div class="modal-body">
+      <div className="modal-body">
       <button type="button" className="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
       <div className="delete-body">
-            <span> <i class="fas fa-trash-alt"></i>Are you sure you want to delete?</span>
+            <span> <i className="fas fa-trash-alt"></i>Are you sure you want to delete?</span>
             <div className="delete-btn-gp"> 
             <button type="button" className="btn btn-secondary" style={{marginRight:5}} data-bs-dismiss="modal">Cancel</button>
             <button type="button" className="btn btn-danger">Delete</button>

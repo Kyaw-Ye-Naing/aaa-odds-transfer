@@ -13,5 +13,7 @@ export const apiList = {
     updateCustomerApi : "Odd/update-customers",
     saveCustomerApi : "Odd/add-customers",
 
-    
+    getMemberOutstandingApi:"Odd/get-memberoutstanding",
+    updateMemberVoucherApi:"Odd/update-voucher",
+    removeMemberVoucherApi:"Odd/remove-voucher",
 };

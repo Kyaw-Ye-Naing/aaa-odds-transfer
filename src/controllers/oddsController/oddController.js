@@ -129,6 +129,43 @@ const saveCustomer = (userId,customerInfo,setResponse) => {
     });
 };
 
+//--------------------- Member Outstanding Page -------------------------------
+//--get member outstanding data
+const getOutstanding = (userId,setResponse) => {
+    postApi(`${apiList.getMemberOutstandingApi}`,
+    {
+        userId : userId
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
+//--update member outstanding voucher(only amount) data
+const updateOutstanding = (bettingId,amount,setResponse) => {
+    console.log("dfdfdfd",amount)
+    console.log("dfdfdfd",bettingId)
+    postApi(`${apiList.updateMemberVoucherApi}`,
+    {
+        bettingId : bettingId,
+        amount : parseInt(amount)
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
+//--delete member outstanding voucher data
+const removeOutstanding = (userId,setResponse) => {
+    postApi(`${apiList.removeMemberVoucherApi}`,
+    {
+        userId : userId
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
 export const oddController = {
     getAllTeams,
     saveSelectedTeams,
@@ -139,5 +176,8 @@ export const oddController = {
     saveBettingEvents,
     getCustomer,
     updateCustomer,
-    saveCustomer
+    saveCustomer,
+    updateOutstanding,
+    removeOutstanding,
+    getOutstanding
 }

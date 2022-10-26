@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect, Fragment } from "react";
 import NavBar from "./components/NavBar";
 import Loader from "../asset/loader";
 import moment from "moment";
+import { toast } from "react-toastify";
 import MyModal from "./components/HistoryModal";
 import DeleteAlertModal from "./components/DeleteAlertModal";
+import { oddController } from "../controllers/oddsController/oddController";
 
 const data = [
   {
@@ -46,8 +48,42 @@ const data1 = [
 
 function History() {
   const [isLoading, setLoading] = useState(false);
-  const [item, setItem] = useState(data1);
+  const [item, setItem] = useState([]);
+  const [itemdetails,setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
+  const [amount,setAmount] = useState(0);
+  const [itemview,setItemview] = useState({
+    "voucher" : "",
+    "amount" : 0,
+    "status" : "",
+    "event" : "",
+    "color" : "",
+    "bettingId" : 0,
+    "eventTime" : "",
+    "leagueName" : "",
+    "result" : "",
+    "odds" : "",
+    "customerId" : 0,
+    "customerName" : "",
+    "bet" : "",
+    "bettedDate" : ""
+  })
+
+  useEffect(() => {
+    getMemberOutstanding();
+  }, []);
+
+  const getMemberOutstanding = () => {
+    setLoading(true);
+    const userId = localStorage.getItem("userId");
+    //console.log("session storage",userId)
+    oddController.getOutstanding(parseInt(userId), (data) => {
+      console.log("dsta",data)
+      setItem(data.historydata);
+      setItemdetails(data.historydetails);
+      setLoading(false);
+    });
+  };
 
   const handleClick = (index) => {
     let newitem = [...item];
@@ -55,10 +91,28 @@ function History() {
 
     setItem(newitem);
   };
+
+  const handleUpdate = (bettingid) =>{
+   // console.log("dfdfdfd",id)
+   // console.log("dfdfdfd",amount)
+    oddController.updateOutstanding(bettingid,amount, (data) => {
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      getMemberOutstanding();
+    });
+  }
+  
   return (
     <div>
       <DeleteAlertModal />
-      <MyModal isEdit={isEdit} historydata={data} />
+      <MyModal 
+      isEdit={isEdit} 
+      historydata={itemview} 
+      amount={amount}
+      setAmount={setAmount}
+      handleUpdate={handleUpdate}
+      />
       <NavBar username={"Bo Bo"} historycolor={"link-btn-active"} />
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
@@ -72,8 +126,8 @@ function History() {
               <table className="table table-light">
                 <thead>
                   <tr className="table-secondary">
+                    <th scope="col"></th>
                     <th scope="col">No</th>
-                    <th scope="col">Voucher</th>
                     <th scope="col"></th>
                     <th scope="col">Username</th>
                     <th scope="col">Amount</th>
@@ -127,26 +181,33 @@ function History() {
                   {item &&
                     item.map((d, i) => {
                       return (
-                        <>
-                          <tr key={d.gamblingId}>
-                            <th scope="row">{i + 1}</th>
+                        <Fragment key={i}>
+                          <tr > 
                             <td>
-                              <a onClick={() => handleClick(i)}>
+                              <a onClick={() => handleClick(i)} style={{marginLeft:'5%'}}>
                               {d.isExpand ? (
-                             <i class="fas fa-chevron-up"></i>
-                              ) : <i class="fas fa-chevron-down"></i>}   
+                             <i className="fas fa-chevron-up"></i>
+                              ) : <i className="fas fa-chevron-down"></i>}   
                               </a>
                             </td>
+                            <th scope="row">{i + 1}</th>
                             <td></td>
-                            <td>{d.userName}</td>
-                            <td>{d.amount}</td>
+                            <td>{d.customerName}</td>
+                            <td>{d.totalAmount}</td>
                             <td></td>
                             <td></td>
+                            
                           </tr>
                           {d.isExpand ? (
-                            <ExpandRow userId={d.userId} data={data} setIsEdit={setIsEdit} />
+                            <ExpandRow 
+                            setItemview={setItemview} 
+                            customerId={d.customerId} 
+                            itemview={itemview}
+                            itemdetails={itemdetails} 
+                            setAmount={setAmount}
+                            setIsEdit={setIsEdit} />
                           ) : null}
-                        </>
+                        </Fragment>
                       );
                     })}
                 </tbody>
@@ -161,8 +222,45 @@ function History() {
 
 export default History;
 
-export function ExpandRow({ data,userId, setIsEdit }) {
-const result = data.filter(a=>a.userId == userId);
+export function ExpandRow({ itemdetails,customerId, setIsEdit,setItemview,itemview,setAmount }) {
+//const result = data.filter(a=>a.CustomerId == customerId);
+
+var result = itemdetails.filter((el)=>
+{
+  return el.customerId == customerId
+}
+);
+
+console.log("expand data",result);
+console.log("expand data id",customerId);
+console.log("expand data data",itemdetails);
+const handleViewModal = (type,result) =>{
+  const newdata = {...itemview};
+
+  newdata["voucher"] = result.voucher;
+  newdata["amount"] = result.amount;
+  newdata["status"] = result.status;
+  newdata["event"] = result.event;
+  newdata["color"] = result.color;
+  newdata["bettingId"] = result.bettingId;
+  newdata["eventTime"] = result.eventTime;
+  newdata["leagueName"] = result.leagueName;
+  newdata["result"] = result.result;
+  newdata["odds"] = result.odds;
+  newdata["customerId"] = result.customerId;
+  newdata["customerName"] = result.customerName;
+  newdata["bet"] = result.bet;
+  newdata["bettedDate"] = result.bettedDate;
+  setItemview(newdata);
+
+  if(type == "View"){
+    setIsEdit("View");
+  }else{
+    setIsEdit("Edit")
+  }
+
+  setAmount(result.amount);
+}
 
   return (
     <>
@@ -171,19 +269,18 @@ const result = data.filter(a=>a.userId == userId);
         <th scope="col">No</th>
         <th scope="col">Voucher</th>
         <th scope="col">Betted Date</th>
-        <th scope="col">Username</th>
         <th scope="col">Amount</th>
         <th scope="col">Action</th>
       </tr>
       {result &&
         result.map((d, i) => {
           return (
-            <tr key={d.gamblingId} className="table-secondary">
+            <Fragment key={d.bettingId}>
+            <tr className="table-secondary">
               <td></td>
               <th scope="row">{i + 1}</th>
               <td>{d.voucher}</td>
-              <td>2022-10-19 07:00:00</td>
-              <td>{d.username}</td>
+              <td>{d.bettedDate}</td>
               <td>{d.amount}</td>
               <td>
                 <div className="d-flex">
@@ -192,7 +289,7 @@ const result = data.filter(a=>a.userId == userId);
                     style={{ marginRight: "5px" }}
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
-                    onClick={() => setIsEdit("View")}
+                    onClick={() => handleViewModal("View",d)}
                   >
                     <i className="fas fa-eye"></i>&nbsp;View
                   </button>
@@ -201,7 +298,7 @@ const result = data.filter(a=>a.userId == userId);
                     data-bs-toggle="modal"
                     style={{ marginRight: "5px" }}
                     data-bs-target="#myModal"
-                    onClick={() => setIsEdit("Edit")}
+                    onClick={() => handleViewModal("Edit",d)}
                   >
                     <i className="fas fa-edit"></i>&nbsp;Edit
                   </button>
@@ -216,6 +313,7 @@ const result = data.filter(a=>a.userId == userId);
                 </div>
               </td>
             </tr>
+            </Fragment>
           );
         })}
     </>
