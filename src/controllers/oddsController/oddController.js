@@ -166,6 +166,42 @@ const removeOutstanding = (userId,setResponse) => {
     });
 };
 
+//--------------------- Member Win Lose Report Page -------------------------------
+//--get member win lose report
+const getwinloseReport = (userId,startDate,endDate,setResponse) => {
+    postApi(`${apiList.getWinLoseReportApi}`,
+    {
+        userId : userId,
+        startDate : startDate,
+        endDate : endDate
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
+//--------------------- Event Calculation Page -------------------------------
+//--get event results
+const getEventResult = (userId,setResponse) => {
+    postApi(`${apiList.getEventResult}`,
+    {
+        userId : userId,
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
+
+//--calculate event result
+const calculateEventResult = (userId,setResponse) => {
+    postApi(`${apiList.calculateVoucherApi}`,
+    {
+        userId : userId,
+    },
+    (data) => {
+        setResponse(data);
+    });
+};
 export const oddController = {
     getAllTeams,
     saveSelectedTeams,
@@ -179,5 +215,8 @@ export const oddController = {
     saveCustomer,
     updateOutstanding,
     removeOutstanding,
-    getOutstanding
+    getOutstanding,
+    getwinloseReport,
+    getEventResult,
+    calculateEventResult
 }

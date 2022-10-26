@@ -6,14 +6,16 @@ import { useEffect } from "react";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
+import Spinner from "../asset/spinner";
 
 function Betting() {
   const [eventsData, setEventsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [isSpinner, setIsSpinner] = useState(false);
   const [bettingData, setBettingData] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
-  const [selectedCustomer,setSelectdCustomer] = useState(0);
+  const [selectedCustomer, setSelectdCustomer] = useState(0);
 
   useEffect(() => {
     getBettingEvents();
@@ -105,30 +107,35 @@ function Betting() {
       newdata.push(obj);
     }
 
-    console.log("final bar",newdata)
-    console.log("final customer",selectedCustomer)
+    console.log("final bar", newdata)
+    console.log("final customer", selectedCustomer)
 
     setBettingData(newdata);
   };
 
   const handleSave = () => {
+    setIsSpinner(true);
     const userId = localStorage.getItem("userId");
 
-//     const newdata = {...finalSaveData};
-//     newdata["userId"] = parseInt(userId);
-//     newdata["customerId"] = parseInt(selectedCustomer);
-//     newdata["bettingDetails"] = bettingData.map((eventDetail) => {
-//       // delete eventDetail.check;
-//       return eventDetail;
-//     });
-//     setFinalSaveData(newdata);
-//     console.log("kyaw data",newdata);
+    //     const newdata = {...finalSaveData};
+    //     newdata["userId"] = parseInt(userId);
+    //     newdata["customerId"] = parseInt(selectedCustomer);
+    //     newdata["bettingDetails"] = bettingData.map((eventDetail) => {
+    //       // delete eventDetail.check;
+    //       return eventDetail;
+    //     });
+    //     setFinalSaveData(newdata);
+    //     console.log("kyaw data",newdata);
 
-    oddController.saveBettingEvents(parseInt(userId),parseInt(selectedCustomer),bettingData,(data) => {
+    oddController.saveBettingEvents(parseInt(userId), parseInt(selectedCustomer), bettingData, (data) => {
       //console.log("dsta",data.data)
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setBettingData([]);
+      setSelectdCustomer(0);
+      setTotalAmount(0);
+      setIsSpinner(false);
     });
   }
 
@@ -157,7 +164,7 @@ function Betting() {
   };
 
   const handleTextChange = (index, amount) => {
-     console.log("result---",amount);
+    console.log("result---", amount);
     //const newdata = parseInt(totalAmount) + parseInt(amount);
     //setTotalAmount(newdata);
 
@@ -183,7 +190,7 @@ function Betting() {
 
     setBettingData(newBetting);
     calculate(newBetting);
-     console.log("result---",bettingData);
+    console.log("result---", bettingData);
     // console.log("45 result---",result);
   };
 
@@ -314,18 +321,18 @@ function Betting() {
                   className="form-select form-select-lg mb-3"
                   aria-label=".form-select-lg example"
                   value={selectedCustomer}
-                  onChange={(e)=>setSelectdCustomer(e.target.value)}
+                  onChange={(e) => setSelectdCustomer(e.target.value)}
                 >
                   <option defaultValue={0}>
-                   --- Please Select ---
-                </option>
+                    --- Please Select ---
+                  </option>
                   {
                     customer && customer.map((data, i) => {
                       return (
                         <option key={data.customerId} value={data.customerId}>{data.customerName}</option>
                       )
                     })
-                  } 
+                  }
                 </select>
 
                 <div className="panel-details">
@@ -388,9 +395,24 @@ function Betting() {
                   />
                 </div>
 
-                <button type="button" className="btn btn-success" onClick={() => handleSave()}>
-                  <i className="fas fa-save"></i>&nbsp;
-                  <span>Save</span>
+                <button 
+                type="button" 
+                className="btn btn-success"
+                 onClick={() => handleSave()}
+                 disabled={isSpinner}
+                 >
+                  {isSpinner ?
+                    (
+                      <>
+                        <Spinner />  <span>Saving......</span>
+                      </>
+                    )
+                    :
+                    <>
+                      <i className="fas fa-save"></i>&nbsp;
+                      <span>Save</span>
+                    </>
+                  }
                 </button>
               </div>
             </div>

@@ -16,4 +16,9 @@ export const apiList = {
     getMemberOutstandingApi:"Odd/get-memberoutstanding",
     updateMemberVoucherApi:"Odd/update-voucher",
     removeMemberVoucherApi:"Odd/remove-voucher",
+
+    getWinLoseReportApi:"Odd/get-winlose-report",
+
+    getEventResult :"",
+    calculateVoucherApi:""
 };

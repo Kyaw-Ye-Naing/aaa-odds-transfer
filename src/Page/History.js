@@ -1,4 +1,4 @@
-import React, { useState,useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import NavBar from "./components/NavBar";
 import Loader from "../asset/loader";
 import moment from "moment";
@@ -49,24 +49,24 @@ const data1 = [
 function History() {
   const [isLoading, setLoading] = useState(false);
   const [item, setItem] = useState([]);
-  const [itemdetails,setItemdetails] = useState([]);
+  const [itemdetails, setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
-  const [amount,setAmount] = useState(0);
-  const [itemview,setItemview] = useState({
-    "voucher" : "",
-    "amount" : 0,
-    "status" : "",
-    "event" : "",
-    "color" : "",
-    "bettingId" : 0,
-    "eventTime" : "",
-    "leagueName" : "",
-    "result" : "",
-    "odds" : "",
-    "customerId" : 0,
-    "customerName" : "",
-    "bet" : "",
-    "bettedDate" : ""
+  const [amount, setAmount] = useState(0);
+  const [itemview, setItemview] = useState({
+    "voucher": "",
+    "amount": 0,
+    "status": "",
+    "event": "",
+    "color": "",
+    "bettingId": 0,
+    "eventTime": "",
+    "leagueName": "",
+    "result": "",
+    "odds": "",
+    "customerId": 0,
+    "customerName": "",
+    "bet": "",
+    "bettedDate": ""
   })
 
   useEffect(() => {
@@ -78,7 +78,7 @@ function History() {
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.getOutstanding(parseInt(userId), (data) => {
-      console.log("dsta",data)
+      console.log("dsta", data)
       setItem(data.historydata);
       setItemdetails(data.historydetails);
       setLoading(false);
@@ -92,26 +92,26 @@ function History() {
     setItem(newitem);
   };
 
-  const handleUpdate = (bettingid) =>{
-   // console.log("dfdfdfd",id)
-   // console.log("dfdfdfd",amount)
-    oddController.updateOutstanding(bettingid,amount, (data) => {
+  const handleUpdate = (bettingid) => {
+    // console.log("dfdfdfd",id)
+    // console.log("dfdfdfd",amount)
+    oddController.updateOutstanding(bettingid, amount, (data) => {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       getMemberOutstanding();
     });
   }
-  
+
   return (
     <div>
       <DeleteAlertModal />
-      <MyModal 
-      isEdit={isEdit} 
-      historydata={itemview} 
-      amount={amount}
-      setAmount={setAmount}
-      handleUpdate={handleUpdate}
+      <MyModal
+        isEdit={isEdit}
+        historydata={itemview}
+        amount={amount}
+        setAmount={setAmount}
+        handleUpdate={handleUpdate}
       />
       <NavBar username={"Bo Bo"} historycolor={"link-btn-active"} />
       {isLoading ? (
@@ -178,16 +178,17 @@ function History() {
                     })}
                 </tbody> */}
                 <tbody>
-                  {item &&
+                  {item.length != 0 ?
+                    item &&
                     item.map((d, i) => {
                       return (
                         <Fragment key={i}>
-                          <tr > 
+                          <tr >
                             <td>
-                              <a onClick={() => handleClick(i)} style={{marginLeft:'5%'}}>
-                              {d.isExpand ? (
-                             <i className="fas fa-chevron-up"></i>
-                              ) : <i className="fas fa-chevron-down"></i>}   
+                              <a onClick={() => handleClick(i)} style={{ marginLeft: '5%' }}>
+                                {d.isExpand ? (
+                                  <i className="fas fa-chevron-up"></i>
+                                ) : <i className="fas fa-chevron-down"></i>}
                               </a>
                             </td>
                             <th scope="row">{i + 1}</th>
@@ -196,20 +197,25 @@ function History() {
                             <td>{d.totalAmount}</td>
                             <td></td>
                             <td></td>
-                            
+
                           </tr>
                           {d.isExpand ? (
-                            <ExpandRow 
-                            setItemview={setItemview} 
-                            customerId={d.customerId} 
-                            itemview={itemview}
-                            itemdetails={itemdetails} 
-                            setAmount={setAmount}
-                            setIsEdit={setIsEdit} />
+                            <ExpandRow
+                              setItemview={setItemview}
+                              customerId={d.customerId}
+                              itemview={itemview}
+                              itemdetails={itemdetails}
+                              setAmount={setAmount}
+                              setIsEdit={setIsEdit} />
                           ) : null}
                         </Fragment>
                       );
-                    })}
+                    })
+                    :
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
+                    </tr>
+                  }
                 </tbody>
               </table>
             </div>
@@ -222,45 +228,45 @@ function History() {
 
 export default History;
 
-export function ExpandRow({ itemdetails,customerId, setIsEdit,setItemview,itemview,setAmount }) {
-//const result = data.filter(a=>a.CustomerId == customerId);
+export function ExpandRow({ itemdetails, customerId, setIsEdit, setItemview, itemview, setAmount }) {
+  //const result = data.filter(a=>a.CustomerId == customerId);
 
-var result = itemdetails.filter((el)=>
-{
-  return el.customerId == customerId
-}
-);
-
-console.log("expand data",result);
-console.log("expand data id",customerId);
-console.log("expand data data",itemdetails);
-const handleViewModal = (type,result) =>{
-  const newdata = {...itemview};
-
-  newdata["voucher"] = result.voucher;
-  newdata["amount"] = result.amount;
-  newdata["status"] = result.status;
-  newdata["event"] = result.event;
-  newdata["color"] = result.color;
-  newdata["bettingId"] = result.bettingId;
-  newdata["eventTime"] = result.eventTime;
-  newdata["leagueName"] = result.leagueName;
-  newdata["result"] = result.result;
-  newdata["odds"] = result.odds;
-  newdata["customerId"] = result.customerId;
-  newdata["customerName"] = result.customerName;
-  newdata["bet"] = result.bet;
-  newdata["bettedDate"] = result.bettedDate;
-  setItemview(newdata);
-
-  if(type == "View"){
-    setIsEdit("View");
-  }else{
-    setIsEdit("Edit")
+  var result = itemdetails.filter((el) => {
+    return el.customerId == customerId
   }
+  );
 
-  setAmount(result.amount);
-}
+  console.log("expand data", result);
+  console.log("expand data id", customerId);
+  console.log("expand data data", itemdetails);
+
+  const handleViewModal = (type, result) => {
+    const newdata = { ...itemview };
+
+    newdata["voucher"] = result.voucher;
+    newdata["amount"] = result.amount;
+    newdata["status"] = result.status;
+    newdata["event"] = result.event;
+    newdata["color"] = result.color;
+    newdata["bettingId"] = result.bettingId;
+    newdata["eventTime"] = result.eventTime;
+    newdata["leagueName"] = result.leagueName;
+    newdata["result"] = result.result;
+    newdata["odds"] = result.odds;
+    newdata["customerId"] = result.customerId;
+    newdata["customerName"] = result.customerName;
+    newdata["bet"] = result.bet;
+    newdata["bettedDate"] = result.bettedDate;
+    setItemview(newdata);
+
+    if (type == "View") {
+      setIsEdit("View");
+    } else {
+      setIsEdit("Edit")
+    }
+
+    setAmount(result.amount);
+  }
 
   return (
     <>
@@ -276,43 +282,43 @@ const handleViewModal = (type,result) =>{
         result.map((d, i) => {
           return (
             <Fragment key={d.bettingId}>
-            <tr className="table-secondary">
-              <td></td>
-              <th scope="row">{i + 1}</th>
-              <td>{d.voucher}</td>
-              <td>{d.bettedDate}</td>
-              <td>{d.amount}</td>
-              <td>
-                <div className="d-flex">
-                  <button
-                    className="btn btn-outline-success"
-                    style={{ marginRight: "5px" }}
-                    data-bs-toggle="modal"
-                    data-bs-target="#myModal"
-                    onClick={() => handleViewModal("View",d)}
-                  >
-                    <i className="fas fa-eye"></i>&nbsp;View
-                  </button>
-                  <button
-                    className="btn btn-outline-success"
-                    data-bs-toggle="modal"
-                    style={{ marginRight: "5px" }}
-                    data-bs-target="#myModal"
-                    onClick={() => handleViewModal("Edit",d)}
-                  >
-                    <i className="fas fa-edit"></i>&nbsp;Edit
-                  </button>
-                  <button
-                    className="btn btn-outline-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deletealertModal"
-                    onClick={() => setIsEdit("Edit")}
-                  >
-                    <i className="fas fa-trash"></i>&nbsp;Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
+              <tr className="table-secondary">
+                <td></td>
+                <th scope="row">{i + 1}</th>
+                <td>{d.voucher}</td>
+                <td>{d.bettedDate}</td>
+                <td>{d.amount}</td>
+                <td>
+                  <div className="d-flex">
+                    <button
+                      className="btn btn-outline-success"
+                      style={{ marginRight: "5px" }}
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModal"
+                      onClick={() => handleViewModal("View", d)}
+                    >
+                      <i className="fas fa-eye"></i>&nbsp;View
+                    </button>
+                    <button
+                      className="btn btn-outline-success"
+                      data-bs-toggle="modal"
+                      style={{ marginRight: "5px" }}
+                      data-bs-target="#myModal"
+                      onClick={() => handleViewModal("Edit", d)}
+                    >
+                      <i className="fas fa-edit"></i>&nbsp;Edit
+                    </button>
+                    <button
+                      className="btn btn-outline-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deletealertModal"
+                      onClick={() => setIsEdit("Edit")}
+                    >
+                      <i className="fas fa-trash"></i>&nbsp;Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
             </Fragment>
           );
         })}

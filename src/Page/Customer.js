@@ -28,7 +28,7 @@ const data = [
 ];
 
 function Customer() {
-  const rowsPerPage = 10;
+  const rowsPerPage = 8;
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
   const [searchText, setSearchText] = useState([]);
@@ -176,7 +176,8 @@ function Customer() {
                 </tr>
               </thead>
               <tbody>
-                {searchCustomer &&
+                {searchCustomer.length != 0 ?
+                searchCustomer &&
                   searchCustomer
                     .slice(
                       pageCount * rowsPerPage,
@@ -207,7 +208,12 @@ function Customer() {
                           </td>
                         </tr>
                       );
-                    })}
+                    })
+                  :
+                  <tr>
+              <td colSpan={4} style={{textAlign:'center'}}>no data</td>
+            </tr>
+                  }
               </tbody>
             </table>
           </div>
