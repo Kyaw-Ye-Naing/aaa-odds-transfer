@@ -1,6 +1,8 @@
 import React from 'react'
 
-function DeleteAlertModal() {
+function DeleteAlertModal({handleRemoveVoucher,deleteId}) {
+
+
   return (
     <div>
 <div className="modal fade" id="deletealertModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -16,8 +18,18 @@ function DeleteAlertModal() {
       <div className="delete-body">
             <span> <i className="fas fa-trash-alt"></i>Are you sure you want to delete?</span>
             <div className="delete-btn-gp"> 
-            <button type="button" className="btn btn-secondary" style={{marginRight:5}} data-bs-dismiss="modal">Cancel</button>
-            <button type="button" className="btn btn-danger">Delete</button>
+            <button 
+            type="button" 
+            className="btn btn-secondary" 
+            style={{marginRight:5}} 
+            data-bs-dismiss="modal">
+              Cancel
+              </button>
+            <button 
+            type="button" 
+            onClick={()=>handleRemoveVoucher(deleteId)}
+            className="btn btn-danger">
+              Delete</button>
             </div>
            
         </div>

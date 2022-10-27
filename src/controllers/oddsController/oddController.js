@@ -156,10 +156,10 @@ const updateOutstanding = (bettingId,amount,setResponse) => {
 };
 
 //--delete member outstanding voucher data
-const removeOutstanding = (userId,setResponse) => {
+const removeOutstanding = (bettingId,setResponse) => {
     postApi(`${apiList.removeMemberVoucherApi}`,
     {
-        userId : userId
+        bettingId : bettingId
     },
     (data) => {
         setResponse(data);

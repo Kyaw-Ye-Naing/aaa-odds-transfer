@@ -37,7 +37,12 @@ function HistoryModal({isEdit,historydata,amount,setAmount,handleUpdate}) {
           ( <span>Amount : {historydata.amount}</span>)
         }
        
-        <span>Status : <span className="badge rounded-pill bg-success">{historydata.status}</span></span>
+        <span>Status : {historydata.status == "Pending" 
+        ?<span className="badge rounded-pill bg-warning">{historydata.status}</span>
+        :historydata.status == "Win"
+        ?<span className="badge rounded-pill bg-success">{historydata.status}</span>
+        :<span className="badge rounded-pill bg-danger">{historydata.status}</span>
+          }</span>
         </div>      
       </div>
       

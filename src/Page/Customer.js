@@ -130,6 +130,7 @@ function Customer() {
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
+          <p>Loading .....</p>
         </div>
       ) : (
         <div>

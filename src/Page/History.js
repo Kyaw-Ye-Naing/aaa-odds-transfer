@@ -52,6 +52,7 @@ function History() {
   const [itemdetails, setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
   const [amount, setAmount] = useState(0);
+  const [deleteId,setDeleteId] = useState(0);
   const [itemview, setItemview] = useState({
     "voucher": "",
     "amount": 0,
@@ -66,7 +67,7 @@ function History() {
     "customerId": 0,
     "customerName": "",
     "bet": "",
-    "bettedDate": ""
+    "bettedDate": "",
   })
 
   useEffect(() => {
@@ -103,9 +104,20 @@ function History() {
     });
   }
 
+  const handleRemoveVoucher = (bettingid) => {
+    // console.log("dfdfdfd",id)
+    // console.log("dfdfdfd",amount)
+    oddController.removeOutstanding(bettingid, amount, (data) => {
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      getMemberOutstanding();
+    });
+  }
+
   return (
     <div>
-      <DeleteAlertModal />
+      <DeleteAlertModal handleRemoveVoucher={handleRemoveVoucher} deleteId={deleteId}/>
       <MyModal
         isEdit={isEdit}
         historydata={itemview}
@@ -117,6 +129,7 @@ function History() {
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
+          <p>Loading .....</p>
         </div>
       ) : (
         <div>
@@ -185,7 +198,7 @@ function History() {
                         <Fragment key={i}>
                           <tr >
                             <td>
-                              <a onClick={() => handleClick(i)} style={{ marginLeft: '5%' }}>
+                              <a onClick={() => handleClick(i)} style={{ marginLeft: '5%',cursor:'pointer' }}>
                                 {d.isExpand ? (
                                   <i className="fas fa-chevron-up"></i>
                                 ) : <i className="fas fa-chevron-down"></i>}
@@ -206,6 +219,7 @@ function History() {
                               itemview={itemview}
                               itemdetails={itemdetails}
                               setAmount={setAmount}
+                              setDeleteId={setDeleteId}
                               setIsEdit={setIsEdit} />
                           ) : null}
                         </Fragment>
@@ -228,7 +242,14 @@ function History() {
 
 export default History;
 
-export function ExpandRow({ itemdetails, customerId, setIsEdit, setItemview, itemview, setAmount }) {
+export function ExpandRow({
+   itemdetails, 
+   customerId,
+    setIsEdit, 
+    setItemview,
+    itemview,
+     setAmount,
+     setDeleteId }) {
   //const result = data.filter(a=>a.CustomerId == customerId);
 
   var result = itemdetails.filter((el) => {
@@ -236,9 +257,9 @@ export function ExpandRow({ itemdetails, customerId, setIsEdit, setItemview, ite
   }
   );
 
-  console.log("expand data", result);
-  console.log("expand data id", customerId);
-  console.log("expand data data", itemdetails);
+  //console.log("expand data", result);
+  //console.log("expand data id", customerId);
+  //console.log("expand data data", itemdetails);
 
   const handleViewModal = (type, result) => {
     const newdata = { ...itemview };
@@ -286,7 +307,9 @@ export function ExpandRow({ itemdetails, customerId, setIsEdit, setItemview, ite
                 <td></td>
                 <th scope="row">{i + 1}</th>
                 <td>{d.voucher}</td>
-                <td>{d.bettedDate}</td>
+                <td>{`${moment(d.bettedDate).format(
+                            "DD-MM-YYYY hh:mm:ss a"
+                             )}`}</td>
                 <td>{d.amount}</td>
                 <td>
                   <div className="d-flex">
@@ -312,7 +335,7 @@ export function ExpandRow({ itemdetails, customerId, setIsEdit, setItemview, ite
                       className="btn btn-outline-success"
                       data-bs-toggle="modal"
                       data-bs-target="#deletealertModal"
-                      onClick={() => setIsEdit("Edit")}
+                      onClick={() => setDeleteId(d.bettingId)}
                     >
                       <i className="fas fa-trash"></i>&nbsp;Delete
                     </button>

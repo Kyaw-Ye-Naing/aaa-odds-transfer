@@ -19,6 +19,6 @@ export const apiList = {
 
     getWinLoseReportApi:"Odd/get-winlose-report",
 
-    getEventResult :"",
-    calculateVoucherApi:""
+    getEventResult :"Odd/get-event-result",
+    calculateVoucherApi:"Odd/calculate-event-result"
 };

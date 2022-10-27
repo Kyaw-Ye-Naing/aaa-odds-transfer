@@ -1,20 +1,74 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import NavBar from "./components/NavBar";
+import moment from "moment";
+import Loader from "../asset/loader";
+import { oddController } from "../controllers/oddsController/oddController";
+import { toast } from "react-toastify";
 
 function Calculate() {
+  const [events, setEvents] = useState([]);
+  const [isAllFinished,setIsAllFinished] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getEventResult();
+  }, []);
+
+  const getEventResult = () => {
+    setLoading(true);
+    const userId = localStorage.getItem("userId");
+    //console.log("session storage",userId)
+    oddController.getEventResult(parseInt(userId), (data) => {
+      console.log("dsta", data)
+      setEvents(data.results);
+      setIsAllFinished(data.allFinish);
+      setLoading(false);
+    });
+  };
+
+const handleCalculate=()=>{
+  setLoading(true);
+  if(isAllFinished == true){
+    const userId = localStorage.getItem("userId");
+    //console.log("session storage",userId)
+    oddController.calculateEventResult(parseInt(userId), (data) => {
+      console.log("dsta", data)
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      getEventResult();
+      setLoading(false);
+    });
+  }else{
+    toast.success("Event is not ended!!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  
+}
+
   return (
     <div>
       <NavBar username={"Bo Bo"} calculatecolor={"link-btn-active"} />
       <span className="site-header">Voucher Calculation</span>
+      {isLoading ? (
+        <div style={{ textAlign: "center" }}>
+          <Loader />
+          <p>Loading .....</p>
+        </div>
+      ) : (
+        <>
      <div className="text-center mb-1">
      <button
           type="button"
           className="btn btn-success"
+          onClick={()=>handleCalculate()}
         >
           <i className="fas fa-file-signature"></i>&nbsp;Calculate Voucher</button>
       </div> 
      
       <div className="cal-container">
+        <div className="table-responsive">
         <table className="table table-light">
           <thead className="table-secondary">
             <tr>
@@ -27,33 +81,34 @@ function Calculate() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>2022-10-13 10:00 PM</td>
-              <td>Premier League</td>
-              <td>Man U</td>
-              <td>1 - 2</td>
-              <td>Chelsea</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2022-10-13 10:00 PM</td>
-              <td>Premier League</td>
-              <td>Everton</td>
-              <td>4 - 2</td>
-              <td>Wolves</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>2022-10-13 10:00 PM</td>
-              <td>Premier League</td>
-              <td>Arsenal</td>
-              <td>1 - 2</td>
-              <td>Spurs</td>
-            </tr>
+          {events.length != 0 ?
+                    events &&
+                    events.map((d, i) => {
+                      return (
+                          <tr key={i}>
+                            <th scope="row">{i + 1}</th>
+                            <td>{`${moment(d.eventTime).format(
+                            "hh:mm:ss a"
+                             )}`}</td>
+                            <td>{d.leagueName}</td>
+                            <td>{d.homeName}</td>
+                            <td>{d.homeResult} - {d.awayResult}</td>
+                            <td>{d.awayName}</td>
+
+                          </tr>
+                      );
+                    })
+                    :
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
+                    </tr>
+                  }
           </tbody>
         </table>
+        </div> 
       </div>
+      </>
+      )}
     </div>
   );
 }

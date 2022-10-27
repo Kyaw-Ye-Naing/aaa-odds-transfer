@@ -63,6 +63,7 @@ function Report() {
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
+          <p>Loading .....</p>
         </div>
       ) : (
         <div>
@@ -127,7 +128,7 @@ function Report() {
               <th scope="col">No</th>
               <th scope="col"></th>
               <th scope="col">Username</th>
-              <th scope="col">Amount</th>
+              <th scope="col">W/L Amount</th>
               <th scope="col"></th>
               <th scope="col"></th>
               </tr>
@@ -140,7 +141,7 @@ function Report() {
                         <Fragment key={i}>
                           <tr > 
                             <td>
-                              <a onClick={() => handleClick(i)} style={{marginLeft:'5%'}}>
+                              <a onClick={() => handleClick(i)} style={{marginLeft:'5%',cursor:'pointer'}}>
                               {d.isExpand ? (
                              <i className="fas fa-chevron-up"></i>
                               ) : <i className="fas fa-chevron-down"></i>}   
@@ -149,7 +150,10 @@ function Report() {
                             <th scope="row">{i + 1}</th>
                             <td></td>
                             <td>{d.customerName}</td>
-                            <td>{d.totalAmount}</td>
+                            <td>{d.totalAmount >= 0 
+                            ?<span>{d.totalAmount}</span>
+                            :<span style={{color:'red'}}>{d.totalAmount}</span>
+                          }</td>
                             <td></td>
                             <td></td>
                             
@@ -190,9 +194,9 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
   }
   );
   
-  console.log("expand data",result);
-  console.log("expand data id",customerId);
-  console.log("expand data data",itemdetails);
+  //console.log("expand data",result);
+  //console.log("expand data id",customerId);
+  //console.log("expand data data",itemdetails);
   
   const handleViewModal = (result) =>{
     const newdata = {...itemview};
@@ -213,7 +217,7 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
     newdata["bettedDate"] = result.bettedDate;
     
     setItemview(newdata);
-    setIsEdit("Edit")
+    setIsEdit("View")
   }
 
     return (
@@ -223,7 +227,8 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
           <th scope="col">No</th>
           <th scope="col">Voucher</th>
           <th scope="col">Betted Date</th>
-          <th scope="col">Amount</th>
+          <th scope="col">W/L Amount</th>
+          <th scope="col">Status</th>
           <th scope="col">Action</th>
         </tr>
         {result &&
@@ -234,8 +239,21 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
                 <td></td>
                 <th scope="row">{i + 1}</th>
                 <td>{d.voucher}</td>
-                <td>{d.bettedDate}</td>
-                <td>{d.amount}</td>
+                <td>{`${moment(d.bettedDate).format(
+                            "DD-MM-YYYY hh:mm:ss a"
+                             )}`}</td>
+                <td>{d.status == "Win" 
+                            ?<span>{d.amount}</span>
+                            :<span style={{color:'red'}}>{d.amount}</span>
+                          }</td>
+                <td> 
+                  {
+                    d.status == "Win" 
+                    ? <span className="badge rounded-pill bg-success">{d.status}</span>
+                    : <span className="badge rounded-pill bg-danger">{d.status}</span>
+                  }
+                 
+                </td>
                 <td>
                   <div className="d-flex">
                     {/* <button

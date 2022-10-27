@@ -36,8 +36,8 @@ function Betting() {
         footballTeamId: data.homeTeamId,
         unders: false,
         overs: false,
-        bodyOdd: data.goalOdds,
-        goalOdd: data.bodyOdds,
+        bodyOdd: data.bodyOdds,
+        goalOdd: data.goalOdds,
         home: true,
         away: false,
         isHome: true,
@@ -55,8 +55,8 @@ function Betting() {
         footballTeamId: data.awayTeamId,
         unders: false,
         overs: false,
-        bodyOdd: data.goalOdds,
-        goalOdd: data.bodyOdds,
+        bodyOdd: data.bodyOdds,
+        goalOdd: data.goalOdds,
         home: false,
         away: true,
         isHome: false,
@@ -74,14 +74,14 @@ function Betting() {
         footballTeamId: data.homeTeamId,
         unders: false,
         overs: true,
-        bodyOdd: data.goalOdds,
-        goalOdd: data.bodyOdds,
+        bodyOdd: data.bodyOdds,
+        goalOdd: data.goalOdds,
         home: false,
         away: false,
         isHome: false,
         oppositeNameId: data.awayTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
-        choice: data.homeTeam + " (⬆)",
+        choice: data.homeTeam + " (GP Over)",
         choiceOdds: data.goalOdds,
         amount: 0,
       };
@@ -93,22 +93,22 @@ function Betting() {
         footballTeamId: data.awayTeamId,
         unders: true,
         overs: false,
-        bodyOdd: data.goalOdds,
-        goalOdd: data.bodyOdds,
+        bodyOdd: data.bodyOdds,
+        goalOdd: data.goalOdds,
         home: false,
         away: false,
         isHome: false,
         oppositeNameId: data.homeTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
-        choice: data.homeTeam + " (⬇)",
+        choice: data.homeTeam + " (GA Under)",
         choiceOdds: data.goalOdds,
         amount: 0,
       };
       newdata.push(obj);
     }
 
-    console.log("final bar", newdata)
-    console.log("final customer", selectedCustomer)
+    //console.log("final bar", newdata)
+    //console.log("final customer", selectedCustomer)
 
     setBettingData(newdata);
   };
@@ -126,17 +126,36 @@ function Betting() {
     //     });
     //     setFinalSaveData(newdata);
     //     console.log("kyaw data",newdata);
+    if(selectedCustomer != 0){
 
-    oddController.saveBettingEvents(parseInt(userId), parseInt(selectedCustomer), bettingData, (data) => {
-      //console.log("dsta",data.data)
-      toast.success(data.message, {
+      var tempresilt = bettingData.filter(a=>a.amount == 0);
+      console.log("count",tempresilt);
+      if(tempresilt.length > 0){
+        toast.error("Please enter bet amount!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setIsSpinner(false);
+      }else{
+        oddController.saveBettingEvents(parseInt(userId), parseInt(selectedCustomer), bettingData, (data) => {
+          //console.log("dsta",data.data)
+          toast.success(data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setBettingData([]);
+          setSelectdCustomer(0);
+          setTotalAmount(0);
+          setIsSpinner(false);
+        });
+      }
+
+      
+    }else{
+      toast.error("Please select user!", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setBettingData([]);
-      setSelectdCustomer(0);
-      setTotalAmount(0);
       setIsSpinner(false);
-    });
+    }
+    
   }
 
   const getBettingEvents = () => {
@@ -164,7 +183,7 @@ function Betting() {
   };
 
   const handleTextChange = (index, amount) => {
-    console.log("result---", amount);
+    //console.log("result---", amount);
     //const newdata = parseInt(totalAmount) + parseInt(amount);
     //setTotalAmount(newdata);
 
@@ -206,13 +225,14 @@ function Betting() {
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
+          <p>Loading .....</p>
         </div>
       ) : (
         <div>
           <span className="site-header">User Betting Page</span>
           <div className="row bet-container">
             <div className="col-12 col-lg-8 col-md-8">
-              <div className="event">
+              <div className="event mb-1">
                 <table className="table">
                   <thead>
                     <tr className="table-secondary">
@@ -355,7 +375,8 @@ function Betting() {
                       </tr>
                     </thead>
                     <tbody>
-                      {bettingData &&
+                      { bettingData.length != 0 ?
+                        bettingData &&
                         bettingData.map((b, i) => {
                           return (
                             <tr key={i}>
@@ -377,7 +398,10 @@ function Betting() {
                               </td>
                             </tr>
                           );
-                        })}
+                        })
+                      :<tr>
+                        <td colSpan={4} style={{textAlign:'center'}}>no data</td>
+                        </tr>}
                     </tbody>
                   </table>
                 </div>
@@ -404,7 +428,7 @@ function Betting() {
                   {isSpinner ?
                     (
                       <>
-                        <Spinner />  <span>Saving......</span>
+                        <span>Saving......</span>
                       </>
                     )
                     :
