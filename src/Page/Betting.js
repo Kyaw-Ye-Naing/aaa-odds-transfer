@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NavBar from "./components/NavBar";
 import { data } from "./data";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
@@ -15,9 +16,17 @@ function Betting() {
   const [bettingData, setBettingData] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
+  const [username, setUsername] = useState("");
+  const history = useHistory();
   const [selectedCustomer, setSelectdCustomer] = useState(0);
 
   useEffect(() => {
+    const userName = localStorage.getItem("userName");
+    //console.log("kokok",userName);
+    if (userName == undefined || userName != "Bo Bo") {
+      history.push("/");
+    }
+    setUsername(userName);
     getBettingEvents();
     getCustomer();
   }, []);
@@ -129,7 +138,7 @@ function Betting() {
     if(selectedCustomer != 0){
 
       var tempresilt = bettingData.filter(a=>a.amount == 0);
-      console.log("count",tempresilt);
+      //console.log("count",tempresilt);
       if(tempresilt.length > 0){
         toast.error("Please enter bet amount!", {
           position: toast.POSITION.TOP_RIGHT,
@@ -163,7 +172,7 @@ function Betting() {
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.getBettingEvents(parseInt(userId), (data) => {
-      console.log("dsta", data.events);
+      //console.log("dsta", data.events);
       setEventsData(data.events);
       setLoading(false);
     });
@@ -209,7 +218,7 @@ function Betting() {
 
     setBettingData(newBetting);
     calculate(newBetting);
-    console.log("result---", bettingData);
+    //console.log("result---", bettingData);
     // console.log("45 result---",result);
   };
 
@@ -221,7 +230,7 @@ function Betting() {
 
   return (
     <div>
-      <NavBar username={"Bo Bo"} bettingcolor={"link-btn-active"} />
+      <NavBar username={username} bettingcolor={"link-btn-active"} />
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />

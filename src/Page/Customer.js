@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Loader from "../asset/loader";
 import CustomerModal from "./components/CustomerEditModal";
+import { useHistory } from "react-router-dom";
 import CustomerCreateModal from "./components/CustomerCreateModal";
 import { oddController } from "../controllers/oddsController/oddController";
 import ReactPaginate from "react-paginate";
@@ -31,6 +32,8 @@ function Customer() {
   const rowsPerPage = 8;
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
+  const history = useHistory();
+  const [username, setUsername] = useState("");
   const [searchText, setSearchText] = useState([]);
 
   const [customerInfo, setCustomerInfo] = useState([]);
@@ -50,6 +53,12 @@ function Customer() {
   });
 
   useEffect(() => {
+    const userName = localStorage.getItem("userName");
+    //console.log("kokok",userName);
+    if (userName == undefined || userName != "Bo Bo") {
+      history.push("/");
+    }
+    setUsername(userName);
     getCustomer();
   }, []);
 
@@ -74,7 +83,7 @@ function Customer() {
           .includes(e.target.value.toLowerCase());
       });
       setSearchCustomer(filteredRows);
-      console.log("hhh",filteredRows);
+      //console.log("hhh",filteredRows);
       setPage(Math.ceil(filteredRows.length / rowsPerPage));
     } else {
       setSearchCustomer([...customerInfo]);
@@ -126,7 +135,7 @@ function Customer() {
         getCustomer={getCustomer}
         setLoading={setLoading}
       />
-      <NavBar username={"Bo Bo"} customercolor={"link-btn-active"} />
+       <NavBar username={username} customercolor={"link-btn-active"} />
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />

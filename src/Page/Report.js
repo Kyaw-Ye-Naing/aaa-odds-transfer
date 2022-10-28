@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import moment from "moment";
 import Loader from "../asset/loader";
 import MyModal from "./components/HistoryModal";
+import { useHistory } from "react-router-dom";
 import { oddController } from "../controllers/oddsController/oddController";
 
 function Report() {
@@ -11,8 +12,10 @@ function Report() {
   const [startDate, setStartDate] = useState(defaultDate);
   const [endDate, setEndDate] = useState(defaultDate);
   const [item, setItem] = useState([]);
+  const [username, setUsername] = useState("");
   const [itemdetails,setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
+  const history = useHistory();
   const [itemview,setItemview] = useState({
     "voucher" : "",
     "amount" : 0,
@@ -31,6 +34,12 @@ function Report() {
   })
 
   useEffect(() => {
+    const userName = localStorage.getItem("userName");
+    //console.log("kokok",userName);
+    if (userName == undefined || userName != "Bo Bo") {
+      history.push("/");
+    }
+    setUsername(userName);
     getWinLoseReport();
   }, []);
 
@@ -38,10 +47,10 @@ function Report() {
     setLoading(true);
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
-    console.log("start date",startDate)
-    console.log("end date",endDate)
+    //console.log("start date",startDate)
+    //console.log("end date",endDate)
     oddController.getwinloseReport(parseInt(userId),startDate,endDate,(data) => {
-      console.log("dsta",data)
+      //console.log("dsta",data)
       setItem(data.historydata);
       setItemdetails(data.historydetails);
       setLoading(false);
@@ -58,8 +67,9 @@ function Report() {
   return (
     <div>
       <MyModal isEdit={isEdit} historydata={itemview} />
-      <NavBar username={"Bo Bo"} reportcolor={"link-btn-active"} />
-
+     
+      <NavBar username={username} reportcolor={"link-btn-active"} />
+       
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
@@ -234,7 +244,7 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
         {result &&
           result.map((d, i) => {
             return (
-              <Fragment key={d.bettingId}>
+              <Fragment key={i}>
               <tr className="table-secondary">
                 <td></td>
                 <th scope="row">{i + 1}</th>

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import {useHistory} from "react-router-dom";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-function NavBar({ 
+function NavBar({
   username,
-  homecolor='link-btn',
-  bettingcolor='link-btn',
-  reportcolor='link-btn',
-  calculatecolor='link-btn',
-  historycolor = 'link-btn',
-  customercolor = 'link-btn'
+  homecolor = "link-btn",
+  bettingcolor = "link-btn",
+  reportcolor = "link-btn",
+  calculatecolor = "link-btn",
+  historycolor = "link-btn",
+  customercolor = "link-btn",
 }) {
-    const history = useHistory();
+  const history = useHistory();
 
   const handleButtonLink = (type) => {
     if (type === 1) {
@@ -19,12 +19,12 @@ function NavBar({
       history.push("/betting");
     } else if (type === 3) {
       history.push("/report");
-    } else if(type === 4){
+    } else if (type === 4) {
       history.push("/calculate");
-    }else if(type === 5){
-      history.push("/history")
-    }else{
-      history.push("/customer")
+    } else if (type === 5) {
+      history.push("/history");
+    } else {
+      history.push("/customer");
     }
   };
 
@@ -57,56 +57,59 @@ function NavBar({
         </div>
       </div>
 
-      <div
-        className="group-list"
-        role="group"
-        aria-label="Basic mixed styles example"
-      >
-        <button
-          type="button"
-          className={`btn ${homecolor}`}
-          onClick={() => handleButtonLink(1)}
+      {username == "Bo Bo" ? (
+        <>
+        <div
+          className="group-list"
+          role="group"
+          aria-label="Basic mixed styles example"
         >
-         <span className="btn-label">Transfer</span> 
-        </button>
-        <button
-          type="button"
-          className={`btn ${bettingcolor}`}
-          onClick={() => handleButtonLink(2)}
-        >
-          <span className="btn-label">Betting</span>
-        </button>
-        <button
-          type="button"
-          className={`btn ${reportcolor}`}
-          onClick={() => handleButtonLink(3)}
-        >
-          <span className="btn-label">Report</span>
-        </button>
-        <button
-          type="button"
-          className={`btn ${calculatecolor}`}
-          onClick={() => handleButtonLink(4)}
-        >
-          <span className="btn-label">Calculate</span>
-        </button>
-        <button
-          type="button"
-          className={`btn ${historycolor}`}
-          onClick={() => handleButtonLink(5)}
-        >
-          <span className="btn-label">Outstanding</span>
-        </button>
-        <button
-          type="button"
-          className={`btn ${customercolor}`}
-          onClick={() => handleButtonLink(6)}
-        >
-          <span className="btn-label">Customer</span>
-        </button>
-      </div>
-
-      <hr />
+          <button
+            type="button"
+            className={`btn ${homecolor}`}
+            onClick={() => handleButtonLink(1)}
+          >
+            <span className="btn-label">Transfer</span>
+          </button>
+          <button
+            type="button"
+            className={`btn ${bettingcolor}`}
+            onClick={() => handleButtonLink(2)}
+          >
+            <span className="btn-label">Betting</span>
+          </button>
+          <button
+            type="button"
+            className={`btn ${reportcolor}`}
+            onClick={() => handleButtonLink(3)}
+          >
+            <span className="btn-label">Report</span>
+          </button>
+          <button
+            type="button"
+            className={`btn ${calculatecolor}`}
+            onClick={() => handleButtonLink(4)}
+          >
+            <span className="btn-label">Calculate</span>
+          </button>
+          <button
+            type="button"
+            className={`btn ${historycolor}`}
+            onClick={() => handleButtonLink(5)}
+          >
+            <span className="btn-label">Outstanding</span>
+          </button>
+          <button
+            type="button"
+            className={`btn ${customercolor}`}
+            onClick={() => handleButtonLink(6)}
+          >
+            <span className="btn-label">Customer</span>
+          </button>
+        </div>
+         <hr />
+         </>
+      ) : null} 
     </div>
   );
 }

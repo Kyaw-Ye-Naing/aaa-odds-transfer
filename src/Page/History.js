@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import NavBar from "./components/NavBar";
 import Loader from "../asset/loader";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import MyModal from "./components/HistoryModal";
 import DeleteAlertModal from "./components/DeleteAlertModal";
@@ -49,6 +50,8 @@ const data1 = [
 function History() {
   const [isLoading, setLoading] = useState(false);
   const [item, setItem] = useState([]);
+  const history = useHistory();
+  const [username, setUsername] = useState("");
   const [itemdetails, setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
   const [amount, setAmount] = useState(0);
@@ -71,6 +74,12 @@ function History() {
   })
 
   useEffect(() => {
+    const userName = localStorage.getItem("userName");
+    //console.log("kokok",userName);
+    if (userName == undefined || userName != "Bo Bo") {
+      history.push("/");
+    }
+    setUsername(userName);
     getMemberOutstanding();
   }, []);
 
@@ -79,7 +88,7 @@ function History() {
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.getOutstanding(parseInt(userId), (data) => {
-      console.log("dsta", data)
+      //console.log("dsta", data)
       setItem(data.historydata);
       setItemdetails(data.historydetails);
       setLoading(false);
@@ -125,7 +134,8 @@ function History() {
         setAmount={setAmount}
         handleUpdate={handleUpdate}
       />
-      <NavBar username={"Bo Bo"} historycolor={"link-btn-active"} />
+     <NavBar username={username} historycolor={"link-btn-active"} />
+      
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />

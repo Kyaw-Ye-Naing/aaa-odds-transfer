@@ -1,16 +1,25 @@
 import React,{useState, useEffect} from "react";
 import NavBar from "./components/NavBar";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
 
 function Calculate() {
   const [events, setEvents] = useState([]);
+  const history = useHistory();
+  const [username, setUsername] = useState("");
   const [isAllFinished,setIsAllFinished] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    const userName = localStorage.getItem("userName");
+    //console.log("kokok",userName);
+    if (userName == undefined || userName != "Bo Bo") {
+      history.push("/");
+    }
+    setUsername(userName);
     getEventResult();
   }, []);
 
@@ -19,7 +28,7 @@ function Calculate() {
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.getEventResult(parseInt(userId), (data) => {
-      console.log("dsta", data)
+      //console.log("dsta", data)
       setEvents(data.results);
       setIsAllFinished(data.allFinish);
       setLoading(false);
@@ -32,7 +41,7 @@ const handleCalculate=()=>{
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.calculateEventResult(parseInt(userId), (data) => {
-      console.log("dsta", data)
+      //console.log("dsta", data)
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -49,7 +58,7 @@ const handleCalculate=()=>{
 
   return (
     <div>
-      <NavBar username={"Bo Bo"} calculatecolor={"link-btn-active"} />
+    <NavBar username={username} calculatecolor={"link-btn-active"} />
       <span className="site-header">Voucher Calculation</span>
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
