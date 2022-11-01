@@ -222,9 +222,10 @@ function Betting() {
     // console.log("45 result---",result);
   };
 
-  const handleRemove = (id) => {
-    const result = bettingData.filter(a => a.rapidEventId != id);
-
+  const handleRemove = (index) => {
+    console.log("before",bettingData)
+    const result = bettingData.filter((_, i) => i !== index);
+console.log("after",result)
     setBettingData(result);
   }
 
@@ -403,7 +404,9 @@ function Betting() {
                                 />
                               </td>
                               <td className="text-center">
-                                <i className="fas fa-trash-alt" style={{ color: "red" }} onClick={() => handleRemove(b.rapidEventId)}></i>
+                                <i className="fas fa-trash-alt" 
+                                style={{ color: "red" }}
+                                 onClick={() => handleRemove(i)}></i>
                               </td>
                             </tr>
                           );

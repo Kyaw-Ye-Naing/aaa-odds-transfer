@@ -253,8 +253,8 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
                             "DD-MM-YYYY hh:mm:ss a"
                              )}`}</td>
                 <td>{d.status == "Win" 
-                            ?<span>{d.amount}</span>
-                            :<span style={{color:'red'}}>{d.amount}</span>
+                            ?<span>{d.winLoseAmount}</span>
+                            :<span style={{color:'red'}}>{d.winLoseAmount}</span>
                           }</td>
                 <td> 
                   {

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 function Calculate() {
   const [events, setEvents] = useState([]);
+  const [loadingText,setLoadingText] = useState("Loading .....");
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [isAllFinished,setIsAllFinished] = useState(false);
@@ -25,6 +26,7 @@ function Calculate() {
 
   const getEventResult = () => {
     setLoading(true);
+    setLoadingText("Loading .....");
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.getEventResult(parseInt(userId), (data) => {
@@ -38,6 +40,7 @@ function Calculate() {
 const handleCalculate=()=>{
   setLoading(true);
   if(isAllFinished == true){
+    setLoadingText("Calculating ......");
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.calculateEventResult(parseInt(userId), (data) => {
@@ -47,6 +50,7 @@ const handleCalculate=()=>{
       });
       getEventResult();
       setLoading(false);
+      
     });
   }else{
     toast.success("Event is not ended!!", {
@@ -63,7 +67,7 @@ const handleCalculate=()=>{
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
-          <p>Loading .....</p>
+          <p>{loadingText}</p>
         </div>
       ) : (
         <>

@@ -108,7 +108,7 @@ const updateCustomer = (customerInfo,setResponse) => {
     {
         customerId : customerInfo.customerId,
         customerName : customerInfo.customerName,
-        commission : customerInfo.commission,
+        commission : Number(customerInfo.commission),
         active : customerInfo.active
     },
     (data) => {
@@ -121,7 +121,7 @@ const saveCustomer = (userId,customerInfo,setResponse) => {
     postApi(`${apiList.saveCustomerApi}`,
     {
         customerName : customerInfo.customerName,
-        commission : customerInfo.commission,
+        commission : Number(customerInfo.commission),
         userId : userId
     },
     (data) => {

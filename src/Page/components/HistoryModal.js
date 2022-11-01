@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import moment from "moment";
 
 function HistoryModal({isEdit,historydata,amount,setAmount,handleUpdate}) {
   return (
@@ -18,7 +19,9 @@ function HistoryModal({isEdit,historydata,amount,setAmount,handleUpdate}) {
         <div className="event-details">
         <span className="league">{historydata.leagueName}</span>
         <span>{historydata.event}</span>
-        <span>{historydata.eventTime}</span>
+        <span>{`${moment(historydata.eventTime).format(
+                            "DD-MM-YYYY hh:mm:ss a"
+                             )}`}</span>
         <span>Result : {historydata.result}</span>
         <span>Bet : <span style={{color:historydata.color}}>{historydata.bet}</span></span>
         <span>Odds : {historydata.odds}</span>

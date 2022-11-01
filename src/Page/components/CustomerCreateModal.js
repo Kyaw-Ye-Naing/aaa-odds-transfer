@@ -8,6 +8,7 @@ function CustomerCreateModal({
   getCustomer,
 }) {
   const OnChangeText = (text, value) => {
+    console.log("text box",value);
     const newcustomer = { ...newcustomerData };
     newcustomer[text] = value;
     setNewCustomerData(newcustomer);
@@ -85,9 +86,10 @@ const Cancel = () => {
                     type="number"
                     value={newcustomerData.commission}
                     className="form-control"
+                    step="any"
                     required
                     onChange={(value) =>
-                      OnChangeText("commission", parseInt(value.target.value))
+                      OnChangeText("commission", value.target.value)
                     }
                     id="exampleInputPassword1"
                   />

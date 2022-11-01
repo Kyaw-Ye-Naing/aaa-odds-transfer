@@ -72,9 +72,10 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                     type="number"
                     value={customerdata.commission}
                     className="form-control"
+                    step="any"
                     required
                     onChange={(value) =>
-                      OnChangeText("commission", parseInt(value.target.value))
+                      OnChangeText("commission", value.target.value)
                     }
                     id="exampleInputPassword1"
                   />

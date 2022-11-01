@@ -1,4 +1,5 @@
 import { authHeader, baseUrl,handleResponse } from "../_constants";
+
 export const postApi = async (url, obj, setData) => {
   const requestOptions = {
     method: "POST",
@@ -9,7 +10,7 @@ export const postApi = async (url, obj, setData) => {
     .then(handleResponse)
     .then((data) => setData(data))
     .catch((error) => {
-      console.log("post_error>>>", error);
+      console.log("post_error>>>",error);
       return setData(error)
     });
 };

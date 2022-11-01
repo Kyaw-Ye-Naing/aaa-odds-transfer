@@ -116,7 +116,7 @@ function History() {
   const handleRemoveVoucher = (bettingid) => {
     // console.log("dfdfdfd",id)
     // console.log("dfdfdfd",amount)
-    oddController.removeOutstanding(bettingid, amount, (data) => {
+    oddController.removeOutstanding(bettingid,(data) => {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });

@@ -27,6 +27,7 @@ function DeleteAlertModal({handleRemoveVoucher,deleteId}) {
               </button>
             <button 
             type="button" 
+            data-bs-dismiss="modal"
             onClick={()=>handleRemoveVoucher(deleteId)}
             className="btn btn-danger">
               Delete</button>
