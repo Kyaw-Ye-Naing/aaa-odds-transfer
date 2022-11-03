@@ -8,6 +8,7 @@ import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
 import Spinner from "../asset/spinner";
+import InputAmountModal from "./components/InputAmountModal";
 
 function Betting() {
   const [eventsData, setEventsData] = useState([]);
@@ -17,7 +18,10 @@ function Betting() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [username, setUsername] = useState("");
+  const [betamount,setBetAmount] = useState("");
   const history = useHistory();
+  const [type,setType]=useState("");
+  const [betdata,setBetdata] = useState([]);
   const [selectedCustomer, setSelectdCustomer] = useState(0);
 
   useEffect(() => {
@@ -31,87 +35,87 @@ function Betting() {
     getCustomer();
   }, []);
 
-  const handleTeamAdd = (type, data) => {
+  const handleTeamAdd = () => {
     const newdata = [...bettingData];
     var isHomeBodyOdd = false;
-    if (data.homeTeamId == data.overTeamId) {
+    if (betdata.homeTeamId == betdata.overTeamId) {
       isHomeBodyOdd = true;
     }
 
     if (type == "home") {
       let obj = {
-        rapidEventId: data.rapidEventId,
-        leagueId: data.leagueId,
-        footballTeamId: data.homeTeamId,
+        rapidEventId: betdata.rapidEventId,
+        leagueId: betdata.leagueId,
+        footballTeamId: betdata.homeTeamId,
         unders: false,
         overs: false,
-        bodyOdd: data.bodyOdds,
-        goalOdd: data.goalOdds,
+        bodyOdd: betdata.bodyOdds,
+        goalOdd: betdata.goalOdds,
         home: true,
         away: false,
         isHome: true,
-        oppositeNameId: data.awayTeamId,
+        oppositeNameId: betdata.awayTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
-        choice: data.homeTeam,
-        choiceOdds: data.bodyOdds,
-        amount: 0,
+        choice: betdata.homeTeam,
+        choiceOdds: betdata.bodyOdds,
+        amount: betamount,
       };
       newdata.push(obj);
     } else if (type == "away") {
       let obj = {
-        rapidEventId: data.rapidEventId,
-        leagueId: data.leagueId,
-        footballTeamId: data.awayTeamId,
+        rapidEventId: betdata.rapidEventId,
+        leagueId: betdata.leagueId,
+        footballTeamId: betdata.awayTeamId,
         unders: false,
         overs: false,
-        bodyOdd: data.bodyOdds,
-        goalOdd: data.goalOdds,
+        bodyOdd: betdata.bodyOdds,
+        goalOdd: betdata.goalOdds,
         home: false,
         away: true,
         isHome: false,
-        oppositeNameId: data.homeTeamId,
+        oppositeNameId: betdata.homeTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
-        choice: data.awayTeam,
-        choiceOdds: data.bodyOdds,
-        amount: 0,
+        choice: betdata.awayTeam,
+        choiceOdds: betdata.bodyOdds,
+        amount: betamount,
       };
       newdata.push(obj);
     } else if (type == "over") {
       let obj = {
-        rapidEventId: data.rapidEventId,
-        leagueId: data.leagueId,
-        footballTeamId: data.homeTeamId,
+        rapidEventId: betdata.rapidEventId,
+        leagueId: betdata.leagueId,
+        footballTeamId: betdata.homeTeamId,
         unders: false,
         overs: true,
-        bodyOdd: data.bodyOdds,
-        goalOdd: data.goalOdds,
+        bodyOdd: betdata.bodyOdds,
+        goalOdd: betdata.goalOdds,
         home: false,
         away: false,
         isHome: false,
-        oppositeNameId: data.awayTeamId,
+        oppositeNameId: betdata.awayTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
-        choice: data.homeTeam + " (GP Over)",
-        choiceOdds: data.goalOdds,
-        amount: 0,
+        choice: betdata.homeTeam + " (GP Over)",
+        choiceOdds: betdata.goalOdds,
+        amount: betamount,
       };
       newdata.push(obj);
     } else {
       let obj = {
-        rapidEventId: data.rapidEventId,
-        leagueId: data.leagueId,
-        footballTeamId: data.awayTeamId,
+        rapidEventId: betdata.rapidEventId,
+        leagueId: betdata.leagueId,
+        footballTeamId: betdata.awayTeamId,
         unders: true,
         overs: false,
-        bodyOdd: data.bodyOdds,
-        goalOdd: data.goalOdds,
+        bodyOdd: betdata.bodyOdds,
+        goalOdd: betdata.goalOdds,
         home: false,
         away: false,
         isHome: false,
-        oppositeNameId: data.homeTeamId,
+        oppositeNameId: betdata.homeTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
-        choice: data.homeTeam + " (GA Under)",
-        choiceOdds: data.goalOdds,
-        amount: 0,
+        choice: betdata.homeTeam + " (GA Under)",
+        choiceOdds: betdata.goalOdds,
+        amount: betamount,
       };
       newdata.push(obj);
     }
@@ -120,7 +124,14 @@ function Betting() {
     //console.log("final customer", selectedCustomer)
 
     setBettingData(newdata);
+    calculate(newdata);
+    setBetAmount("");
   };
+
+  const handleOpenModal = (type,data) => {
+    setType(type);
+    setBetdata(data);
+  }
 
   const handleSave = () => {
     setIsSpinner(true);
@@ -225,12 +236,22 @@ function Betting() {
   const handleRemove = (index) => {
     console.log("before",bettingData)
     const result = bettingData.filter((_, i) => i !== index);
-console.log("after",result)
+    console.log("after",result)
     setBettingData(result);
+    if(result.length > 0){
+      calculate(result);
+    }else{
+      setTotalAmount(0);
+    }
   }
 
   return (
     <div>
+      <InputAmountModal 
+      betamount={betamount} 
+      setBetAmount={setBetAmount}
+      handleTeamAdd={handleTeamAdd}
+      />
       <NavBar username={username} bettingcolor={"link-btn-active"} />
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
@@ -290,7 +311,9 @@ console.log("after",result)
                               {/* <button type="button" class="btn btn-outline-success"> */}
                               <a
                                 className="team"
-                                onClick={() => handleTeamAdd("home", d)}
+                                data-bs-toggle="modal"
+                                data-bs-target="#inputamountModal"
+                                onClick={() => handleOpenModal("home", d)}
                               >
                                 {d.homeTeamId == d.overTeamId ? (
                                   <span>
@@ -305,7 +328,9 @@ console.log("after",result)
                             <td>
                               <button
                                 type="button"
-                                onClick={() => handleTeamAdd("over", d)}
+                                data-bs-toggle="modal"
+                                data-bs-target="#inputamountModal"
+                                onClick={() => handleOpenModal("over", d)}
                                 className="btn btn-outline-success"
                                 style={{ padding: "0.3rem 1rem" }}
                               >
@@ -316,7 +341,9 @@ console.log("after",result)
                             <td>
                               <button
                                 type="button"
-                                onClick={() => handleTeamAdd("under", d)}
+                                data-bs-toggle="modal"
+                                data-bs-target="#inputamountModal"
+                                onClick={() => handleOpenModal("under", d)}
                                 className="btn btn-outline-success"
                                 style={{ padding: "0.3rem 1rem" }}
                               >
@@ -326,7 +353,9 @@ console.log("after",result)
                             <td>
                               <a
                                 className="team"
-                                onClick={() => handleTeamAdd("away", d)}
+                                data-bs-toggle="modal"
+                                data-bs-target="#inputamountModal"
+                                onClick={() => handleOpenModal("away", d)}
                               >
                                 {d.awayTeamId == d.overTeamId ? (
                                   <span>
@@ -394,18 +423,19 @@ console.log("after",result)
                               <td>{b.choice}</td>
                               <td>{b.choiceOdds}</td>
                               <td>
-                                <input
+                                {b.amount}
+                                {/* <input
                                   type="email"
                                   className="form-control"
                                   value={b.amount}
                                   onChange={(e) =>
                                     handleTextChange(i, e.target.value)
                                   }
-                                />
+                                /> */}
                               </td>
                               <td className="text-center">
                                 <i className="fas fa-trash-alt" 
-                                style={{ color: "red" }}
+                                style={{ color: "red",cursor:'pointer' }}
                                  onClick={() => handleRemove(i)}></i>
                               </td>
                             </tr>
