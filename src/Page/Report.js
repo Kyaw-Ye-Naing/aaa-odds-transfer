@@ -136,11 +136,12 @@ function Report() {
               <tr>
               <th scope="col"></th>
               <th scope="col">No</th>
-              <th scope="col"></th>
               <th scope="col">Username</th>
+              <th scope="col">TurnOver</th>
+              <th scope="col">ValidAmount</th>
               <th scope="col">W/L Amount</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th scope="col">Commission</th>
+              <th scope="col">Total Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -158,14 +159,15 @@ function Report() {
                               </a>
                             </td>
                             <th scope="row">{i + 1}</th>
-                            <td></td>
                             <td>{d.customerName}</td>
+                            <td>{d.turnOver}</td>
+                            <td>{d.validAmount}</td>
+                            <td>{d.winLoseAmount}</td>
+                            <td>{d.commission}</td>
                             <td>{d.totalAmount >= 0 
                             ?<span>{d.totalAmount}</span>
                             :<span style={{color:'red'}}>{d.totalAmount}</span>
                           }</td>
-                            <td></td>
-                            <td></td>
                             
                           </tr>
                           {d.isExpand ? (
@@ -233,48 +235,41 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
     return (
       <>
         <tr className="table-secondary">
-          <th></th>
+          
           <th scope="col">No</th>
-          <th scope="col">Voucher</th>
           <th scope="col">Betted Date</th>
+          <th scope="col">Choice</th>
+          <th scope="col">Odds</th>
+          <th scope="col">Bet Amount</th>
           <th scope="col">W/L Amount</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
+          <th scope="col">Commission</th>
+          <th scope="col">Total Amount</th>
         </tr>
         {result &&
           result.map((d, i) => {
             return (
               <Fragment key={i}>
               <tr className="table-secondary">
-                <td></td>
+                
                 <th scope="row">{i + 1}</th>
-                <td>{d.voucher}</td>
                 <td>{`${moment(d.bettedDate).format(
                             "DD-MM-YYYY hh:mm:ss a"
                              )}`}</td>
+                <td><span style={{color:d.color}}>{d.bet}</span></td>
+                <td>{d.odds}</td>
+                <td>{d.amount}</td>
                 <td>{d.status == "Win" 
                             ?<span>{d.winLoseAmount}</span>
                             :<span style={{color:'red'}}>{d.winLoseAmount}</span>
                           }</td>
                 <td> 
                   {
-                    d.status == "Win" 
-                    ? <span className="badge rounded-pill bg-success">{d.status}</span>
-                    : <span className="badge rounded-pill bg-danger">{d.status}</span>
+                   d.commission
                   }
                  
                 </td>
                 <td>
-                  <div className="d-flex">
-                    {/* <button
-                      className="btn btn-outline-success"
-                      style={{ marginRight: "5px" }}
-                      data-bs-toggle="modal"
-                      data-bs-target="#myModal"
-                      onClick={() => handleViewModal("View",d)}
-                    >
-                      <i className="fas fa-eye"></i>&nbsp;View
-                    </button> */}
+                  {/* <div className="d-flex">
                     <button
                     className="btn btn-outline-success"
                     data-bs-toggle="modal"
@@ -283,7 +278,12 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
                   >
                    <i className="fas fa-eye"></i>&nbsp;View
                   </button>
-                  </div>
+                  </div> */}
+                  {}
+                  {d.winLoseAmount +  d.commission > 0 
+                            ?<span>{d.winLoseAmount +  d.commission}</span>
+                            :<span style={{color:'red'}}>{d.winLoseAmount +  d.commission}</span>
+                          }
                 </td>
               </tr>
               </Fragment>
