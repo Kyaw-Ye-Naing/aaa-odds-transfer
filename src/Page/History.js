@@ -304,9 +304,10 @@ export function ExpandRow({
       <tr className="table-secondary">
         <th></th>
         <th scope="col">No</th>
-        <th scope="col">Voucher</th>
         <th scope="col">Betted Date</th>
         <th scope="col">Amount</th>
+        <th scope="col">Choice</th>
+        <th scope="col">Odds</th>
         <th scope="col">Action</th>
       </tr>
       {result &&
@@ -316,14 +317,15 @@ export function ExpandRow({
               <tr className="table-secondary">
                 <td></td>
                 <th scope="row">{i + 1}</th>
-                <td>{d.voucher}</td>
                 <td>{`${moment(d.bettedDate).format(
                             "DD-MM-YYYY hh:mm:ss a"
                              )}`}</td>
                 <td>{d.amount}</td>
+                <td><span style={{color:d.color}}>{d.bet}</span></td>
+                <td>{d.odds}</td>
                 <td>
                   <div className="d-flex">
-                    <button
+                    {/* <button
                       className="btn btn-outline-success"
                       style={{ marginRight: "5px" }}
                       data-bs-toggle="modal"
@@ -331,7 +333,7 @@ export function ExpandRow({
                       onClick={() => handleViewModal("View", d)}
                     >
                       <i className="fas fa-eye"></i>&nbsp;View
-                    </button>
+                    </button> */}
                     <button
                       className="btn btn-outline-success"
                       data-bs-toggle="modal"

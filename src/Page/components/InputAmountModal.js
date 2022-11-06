@@ -1,6 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-function InputAmountModal({betamount,setBetAmount,handleTeamAdd}) {
+function InputAmountModal({handleTeamAdd,inputElement}) {
+//     const inputElement = useRef(null);
+
+//   useEffect(() => {
+//     if (inputElement.current) {
+//       inputElement.current.focus();
+//     }
+//   }, []);
+
     return (
         <div>
             <div className="modal"
@@ -19,15 +27,15 @@ function InputAmountModal({betamount,setBetAmount,handleTeamAdd}) {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleFormControlInput1" className="form-label">Bet Amount</label>
-                                <input type="amount" 
+                               <form onSubmit={(e)=>handleTeamAdd(e)}>
+                               <input type="amount" 
                                 className="form-control" 
-                                value={betamount}
-                                autoFocus
-                                onChange={(e)=>setBetAmount(e.target.value)}
+                               // value={betamount}
+                               ref={inputElement}
+                                //onChange={(e)=>setBetAmount(e.target.value)}
                                 id="exampleFormControlInput1"/>
-                            </div>
-                            <div className="d-flex flex-row-reverse bd-highlight">
-                            <button type="button"
+                                 <div className="d-flex flex-row-reverse bd-highlight mt-2">
+                            <button type="submit"
                             onClick={()=>handleTeamAdd()}
                             data-bs-dismiss="modal"
                                 className="btn btn-primary">
@@ -39,10 +47,14 @@ function InputAmountModal({betamount,setBetAmount,handleTeamAdd}) {
                                 Close</button>
                            
                             </div>
+                               </form>   
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
             </div>
+             
         </div>
     )
 }

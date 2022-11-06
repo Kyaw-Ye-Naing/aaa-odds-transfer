@@ -70,13 +70,6 @@ function Report() {
      
       <NavBar username={username} reportcolor={"link-btn-active"} />
        
-      {isLoading ? (
-        <div style={{ textAlign: "center" }}>
-          <Loader />
-          <p>Loading .....</p>
-        </div>
-      ) : (
-        <div>
       <span className="site-header">User Win / Lose Reports</span>
 
       <div className="container-fluid">
@@ -130,6 +123,12 @@ function Report() {
           </div>
         </div>
 
+        {isLoading ? (
+        <div style={{ textAlign: "center" }}>
+          <Loader />
+          <p>Loading .....</p>
+        </div>
+      ) : (
         <div className="table-responsive">
           <table className="report-table table table-light">
             <thead className="table-secondary">
@@ -139,9 +138,9 @@ function Report() {
               <th scope="col">Username</th>
               <th scope="col">TurnOver</th>
               <th scope="col">ValidAmount</th>
-              <th scope="col">W/L Amount</th>
-              <th scope="col">Commission</th>
-              <th scope="col">Total Amount</th>
+              <th scope="col" style={{textAlign:'right'}}>W/L Amount</th>
+              <th scope="col" style={{textAlign:'right'}}>Commission</th>
+              <th scope="col" style={{textAlign:'right'}}>Total Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -162,9 +161,9 @@ function Report() {
                             <td>{d.customerName}</td>
                             <td>{d.turnOver}</td>
                             <td>{d.validAmount}</td>
-                            <td>{d.winLoseAmount}</td>
-                            <td>{d.commission}</td>
-                            <td>{d.totalAmount >= 0 
+                            <td style={{textAlign:'right'}}>{d.winLoseAmount}</td>
+                            <td style={{textAlign:'right'}}>{d.commission}</td>
+                            <td style={{textAlign:'right'}}>{d.totalAmount >= 0 
                             ?<span>{d.totalAmount}</span>
                             :<span style={{color:'red'}}>{d.totalAmount}</span>
                           }</td>
@@ -188,9 +187,9 @@ function Report() {
             </tbody>
           </table>
         </div>
+        )}
       </div>
-      </div>
-         )}
+       
     </div>
   );
 }
@@ -241,9 +240,9 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
           <th scope="col">Choice</th>
           <th scope="col">Odds</th>
           <th scope="col">Bet Amount</th>
-          <th scope="col">W/L Amount</th>
-          <th scope="col">Commission</th>
-          <th scope="col">Total Amount</th>
+          <th scope="col" style={{textAlign:'right'}}>W/L Amount</th>
+          <th scope="col" style={{textAlign:'right'}}>Commission</th>
+          <th scope="col" style={{textAlign:'right'}}>Total Amount</th>
         </tr>
         {result &&
           result.map((d, i) => {
@@ -258,17 +257,17 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
                 <td><span style={{color:d.color}}>{d.bet}</span></td>
                 <td>{d.odds}</td>
                 <td>{d.amount}</td>
-                <td>{d.status == "Win" 
+                <td style={{textAlign:'right'}}>{d.status == "Win" 
                             ?<span>{d.winLoseAmount}</span>
                             :<span style={{color:'red'}}>{d.winLoseAmount}</span>
                           }</td>
-                <td> 
+                <td style={{textAlign:'right'}}> 
                   {
                    d.commission
                   }
                  
                 </td>
-                <td>
+                <td style={{textAlign:'right'}}>
                   {/* <div className="d-flex">
                     <button
                     className="btn btn-outline-success"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import NavBar from "./components/NavBar";
 import { data } from "./data";
 import moment from "moment";
@@ -18,11 +18,14 @@ function Betting() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [username, setUsername] = useState("");
-  const [betamount,setBetAmount] = useState("");
+ // const [betamount,setBetAmount] = useState("");
   const history = useHistory();
   const [type,setType]=useState("");
   const [betdata,setBetdata] = useState([]);
   const [selectedCustomer, setSelectdCustomer] = useState(0);
+ // const [closeModal, setCloseModal]   = useState(false);
+
+  const inputElement = useRef(null);
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
@@ -35,7 +38,12 @@ function Betting() {
     getCustomer();
   }, []);
 
-  const handleTeamAdd = () => {
+  const handleTeamAdd = (e) => {
+
+    e.preventDefault();
+
+    const betamount = inputElement.current.value;
+console.log("use ref value",betamount);
     const newdata = [...bettingData];
     var isHomeBodyOdd = false;
     if (betdata.homeTeamId == betdata.overTeamId) {
@@ -125,12 +133,20 @@ function Betting() {
 
     setBettingData(newdata);
     calculate(newdata);
-    setBetAmount("");
+
+    //setCloseModal(true);
+
+    document.getElementById("inputamountModal").classList.remove("show");
+    document.querySelectorAll(".modal-backdrop")
+            .forEach(el => el.classList.remove("modal-backdrop"));
+
+    inputElement.current.value = "";
   };
 
   const handleOpenModal = (type,data) => {
     setType(type);
     setBetdata(data);
+    inputElement.current.focus();
   }
 
   const handleSave = () => {
@@ -248,8 +264,8 @@ function Betting() {
   return (
     <div>
       <InputAmountModal 
-      betamount={betamount} 
-      setBetAmount={setBetAmount}
+      //closeModal={closeModal}
+      inputElement={inputElement} 
       handleTeamAdd={handleTeamAdd}
       />
       <NavBar username={username} bettingcolor={"link-btn-active"} />
