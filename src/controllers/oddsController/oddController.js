@@ -142,13 +142,13 @@ const getOutstanding = (userId,setResponse) => {
 };
 
 //--update member outstanding voucher(only amount) data
-const updateOutstanding = (bettingId,amount,setResponse) => {
-    console.log("dfdfdfd",amount)
-    console.log("dfdfdfd",bettingId)
+const updateOutstanding = (bettingId,amount,odds,userId,setResponse) => {
     postApi(`${apiList.updateMemberVoucherApi}`,
     {
         bettingId : bettingId,
-        amount : parseInt(amount)
+        amount : parseInt(amount),
+        userId : parseInt(userId),
+        odds : odds
     },
     (data) => {
         setResponse(data);

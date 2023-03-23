@@ -43,7 +43,7 @@ function Betting() {
     e.preventDefault();
 
     const betamount = inputElement.current.value;
-console.log("use ref value",betamount);
+    //console.log("use ref value",betamount);
     const newdata = [...bettingData];
     var isHomeBodyOdd = false;
     if (betdata.homeTeamId == betdata.overTeamId) {

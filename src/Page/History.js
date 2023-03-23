@@ -55,7 +55,11 @@ function History() {
   const [itemdetails, setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
   const [amount, setAmount] = useState(0);
-  const [deleteId,setDeleteId] = useState(0);
+  const [customer, setCustomer] = useState([]);
+  const [goal,setGoal] = useState(0);
+  const [unit,setUnit] = useState(0);
+  const [selectedCustomer, setSelectdCustomer] = useState(0);
+  const [deleteId, setDeleteId] = useState(0);
   const [itemview, setItemview] = useState({
     "voucher": "",
     "amount": 0,
@@ -81,6 +85,7 @@ function History() {
     }
     setUsername(userName);
     getMemberOutstanding();
+    getCustomer();
   }, []);
 
   const getMemberOutstanding = () => {
@@ -103,9 +108,11 @@ function History() {
   };
 
   const handleUpdate = (bettingid) => {
-    // console.log("dfdfdfd",id)
-    // console.log("dfdfdfd",amount)
-    oddController.updateOutstanding(bettingid, amount, (data) => {
+    const tempGoal = goal == 0 ? '=' : goal.toString() ;
+    const tempUnit = goal > 0 ? unit > 0 ? '+' + unit.toString() : unit.toString() : unit.toString();
+    const oddsUpdated =tempGoal + tempUnit;
+
+    oddController.updateOutstanding(bettingid, amount, oddsUpdated,selectedCustomer,(data) => {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -116,7 +123,7 @@ function History() {
   const handleRemoveVoucher = (bettingid) => {
     // console.log("dfdfdfd",id)
     // console.log("dfdfdfd",amount)
-    oddController.removeOutstanding(bettingid,(data) => {
+    oddController.removeOutstanding(bettingid, (data) => {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -124,18 +131,46 @@ function History() {
     });
   }
 
+  const handleChangeGoal = (value) => {
+    if(value <= 12){
+       setGoal(value);
+    }
+  };
+
+  const handleClickUnit = (type) => {
+    if(type == "inc"){
+      setUnit(prev => prev + 5)
+    }else{
+      setUnit(prev => prev - 5)
+    }
+  }
+
+  const getCustomer = () => {
+    const userId = localStorage.getItem("userId");
+    oddController.getCustomer(parseInt(userId), (data) => {
+      setCustomer(data.customer);
+    });
+  }
+
   return (
     <div>
-      <DeleteAlertModal handleRemoveVoucher={handleRemoveVoucher} deleteId={deleteId}/>
+      <DeleteAlertModal handleRemoveVoucher={handleRemoveVoucher} deleteId={deleteId} />
       <MyModal
         isEdit={isEdit}
         historydata={itemview}
         amount={amount}
         setAmount={setAmount}
+        customer={customer}
+        selectedCustomer={selectedCustomer}
+        unit={unit}
+        goal={goal}
+        handleClickUnit={handleClickUnit}
+        handleChangeGoal={handleChangeGoal}
+        setSelectdCustomer={setSelectdCustomer}
         handleUpdate={handleUpdate}
       />
-     <NavBar username={username} historycolor={"link-btn-active"} />
-      
+      <NavBar username={username} historycolor={"link-btn-active"} />
+
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
@@ -208,7 +243,7 @@ function History() {
                         <Fragment key={i}>
                           <tr >
                             <td>
-                              <a onClick={() => handleClick(i)} style={{ marginLeft: '5%',cursor:'pointer' }}>
+                              <a onClick={() => handleClick(i)} style={{ marginLeft: '5%', cursor: 'pointer' }}>
                                 {d.isExpand ? (
                                   <i className="fas fa-chevron-up"></i>
                                 ) : <i className="fas fa-chevron-down"></i>}
@@ -229,6 +264,9 @@ function History() {
                               itemview={itemview}
                               itemdetails={itemdetails}
                               setAmount={setAmount}
+                              setSelectdCustomer={setSelectdCustomer}
+                              setGoal={setGoal}
+                              setUnit = {setUnit}
                               setDeleteId={setDeleteId}
                               setIsEdit={setIsEdit} />
                           ) : null}
@@ -253,13 +291,16 @@ function History() {
 export default History;
 
 export function ExpandRow({
-   itemdetails, 
-   customerId,
-    setIsEdit, 
-    setItemview,
-    itemview,
-     setAmount,
-     setDeleteId }) {
+  itemdetails,
+  customerId,
+  setIsEdit,
+  setItemview,
+  itemview,
+  setAmount,
+  setSelectdCustomer,
+  setUnit,
+  setGoal,
+  setDeleteId }) {
   //const result = data.filter(a=>a.CustomerId == customerId);
 
   var result = itemdetails.filter((el) => {
@@ -297,6 +338,25 @@ export function ExpandRow({
     }
 
     setAmount(result.amount);
+    setSelectdCustomer(result.customerId);
+
+    const isExist = result.odds.includes("=");
+    let tempGoal = 0;
+    let tempUnit = 0;
+
+    if (isExist) {
+      const arr = result.odds.split(/[=]/);
+      tempGoal = 0;
+      tempUnit = parseInt(arr[1]);
+      setGoal(tempGoal);
+      setUnit(tempUnit);
+    } else {
+      const arr = result.odds.split(/[+-]/);
+      tempGoal = arr[0];
+      tempUnit = parseInt(arr[1]);
+      setGoal(tempGoal);
+      setUnit(tempUnit);
+    }
   }
 
   return (
@@ -318,10 +378,10 @@ export function ExpandRow({
                 <td></td>
                 <th scope="row">{i + 1}</th>
                 <td>{`${moment(d.bettedDate).format(
-                            "DD-MM-YYYY hh:mm:ss a"
-                             )}`}</td>
+                  "DD-MM-YYYY hh:mm:ss a"
+                )}`}</td>
                 <td>{d.amount}</td>
-                <td><span style={{color:d.color}}>{d.bet}</span></td>
+                <td><span style={{ color: d.color }}>{d.bet}</span></td>
                 <td>{d.odds}</td>
                 <td>
                   <div className="d-flex">
