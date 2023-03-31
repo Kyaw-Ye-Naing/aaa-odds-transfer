@@ -109,7 +109,7 @@ function History() {
 
   const handleUpdate = (bettingid) => {
     const tempGoal = goal == 0 ? '=' : goal.toString() ;
-    const tempUnit = goal > 0 ? unit > 0 ? '+' + unit.toString() : unit.toString() : unit.toString();
+    const tempUnit = goal > 0 ? unit == 0 ? '+0' : unit > 0 ? '+' + unit.toString() : unit.toString() : goal == 0 && unit == 0 ? 'D' :unit.toString();
     const oddsUpdated =tempGoal + tempUnit;
 
     oddController.updateOutstanding(bettingid, amount, oddsUpdated,selectedCustomer,(data) => {
@@ -350,12 +350,25 @@ export function ExpandRow({
       tempUnit = parseInt(arr[1]);
       setGoal(tempGoal);
       setUnit(tempUnit);
-    } else {
-      const arr = result.odds.split(/[+-]/);
+    } 
+    else {
+      const isExist_plus = result.odds.includes("+");
+
+      if(isExist_plus){
+        const arr = result.odds.split(/[+]/);
+        tempGoal = arr[0];
+        tempUnit = parseInt(arr[1]);
+        setGoal(tempGoal);
+        setUnit(tempUnit);
+      }
+      else{
+        const arr = result.odds.split(/[-]/);
       tempGoal = arr[0];
-      tempUnit = parseInt(arr[1]);
+      tempUnit = -1 * parseInt(arr[1]);
       setGoal(tempGoal);
       setUnit(tempUnit);
+      }
+      
     }
   }
 
