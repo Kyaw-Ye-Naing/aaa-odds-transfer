@@ -347,7 +347,7 @@ export function ExpandRow({
     if (isExist) {
       const arr = result.odds.split(/[=]/);
       tempGoal = 0;
-      tempUnit = parseInt(arr[1]);
+      tempUnit = arr[1] == 'D' ? 0 : parseInt(arr[1]);
       setGoal(tempGoal);
       setUnit(tempUnit);
     } 
