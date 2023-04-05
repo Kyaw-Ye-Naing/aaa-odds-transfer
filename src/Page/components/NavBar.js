@@ -9,6 +9,7 @@ function NavBar({
   calculatecolor = "link-btn",
   historycolor = "link-btn",
   customercolor = "link-btn",
+  analysiscolor = "link-btn"
 }) {
   const history = useHistory();
 
@@ -23,8 +24,11 @@ function NavBar({
       history.push("/calculate");
     } else if (type === 5) {
       history.push("/history");
-    } else {
+    } else if (type === 6){
       history.push("/customer");
+    } 
+    else {
+      history.push("/analysis");
     }
   };
 
@@ -106,6 +110,13 @@ function NavBar({
           >
             <span className="btn-label">Customer</span>
           </button>
+          <button
+            type="button"
+            className={`btn ${analysiscolor}`}
+            onClick={() => handleButtonLink(7)}
+          >
+            <span className="btn-label">Analysis</span>
+          </button>
         </div>
          <hr />
          </>
@@ -115,3 +126,5 @@ function NavBar({
 }
 
 export default NavBar;
+
+

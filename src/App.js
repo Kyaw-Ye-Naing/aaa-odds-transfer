@@ -8,6 +8,7 @@ import Report from './Page/Report';
 import Calculate from './Page/Calculate';
 import History from './Page/History';
 import Customer from './Page/Customer';
+import Analysis from './Page/Analysis';
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
@@ -25,6 +26,7 @@ function App() {
           <Route path={"/calculate"} component={Calculate}/>
           <Route path={"/history"} component={History}/>
           <Route path={"/customer"} component={Customer}/>
+          <Route path={"/analysis"} component={Analysis}/>
           <Redirect to="/" />
         </Switch>
       </Router>
