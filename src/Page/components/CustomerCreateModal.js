@@ -8,7 +8,7 @@ function CustomerCreateModal({
   getCustomer,
 }) {
   const OnChangeText = (text, value) => {
-    console.log("text box",value);
+    //console.log("text box",value);
     const newcustomer = { ...newcustomerData };
     newcustomer[text] = value;
     setNewCustomerData(newcustomer);
@@ -30,6 +30,7 @@ const Cancel = () => {
   const newcustomer = { ...newcustomerData };
   newcustomer["customerName"] = "";
   newcustomer["commission"] = 0;
+  newcustomer["betLimit"] = 0;
   newcustomer["active"] =true;
 
   setNewCustomerData(newcustomer);
@@ -90,6 +91,22 @@ const Cancel = () => {
                     required
                     onChange={(value) =>
                       OnChangeText("commission", value.target.value)
+                    }
+                    id="exampleInputPassword1"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="exampleInputPassword1" className="form-label">
+                    Bet Limit
+                  </label>
+                  <input
+                    type="number"
+                    value={newcustomerData.betLimit}
+                    className="form-control"
+                    step="any"
+                    required
+                    onChange={(value) =>
+                      OnChangeText("betLimit", value.target.value)
                     }
                     id="exampleInputPassword1"
                   />

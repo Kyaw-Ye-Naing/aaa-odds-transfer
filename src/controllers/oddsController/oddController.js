@@ -75,14 +75,30 @@ const getBettingEvents = (userId, setResponse) => {
 
 //--save betting events
 const saveBettingEvents = (userId, customerId, bettingInfo, setResponse) => {
-    console.log("customer id", customerId);
-    console.log("user id", userId);
-    console.log("api data", bettingInfo);
+    //console.log("customer id", customerId);
+    //console.log("user id", userId);
+    //console.log("api data", bettingInfo);
     postApi(`${apiList.saveBettingEventApi}`,
         {
             userId: userId,
             customerId: customerId,
             bettingDetails: bettingInfo
+        },
+        (data) => {
+            setResponse(data);
+        });
+};
+
+//--save betting events Confirm
+const saveBettingEventsConfirm = (userId, customerId, bettingInfo, setResponse) => {
+    //console.log("customer id", customerId);
+    //console.log("user id", userId);
+    console.log("api data", bettingInfo);
+    postApi(`${apiList.confirmSaveBettingEventApi}`,
+        {
+            userId: userId,
+            customerId: customerId,
+            betConfirmDetails: bettingInfo
         },
         (data) => {
             setResponse(data);
@@ -109,7 +125,8 @@ const updateCustomer = (customerInfo, setResponse) => {
             customerId: customerInfo.customerId,
             customerName: customerInfo.customerName,
             commission: Number(customerInfo.commission),
-            active: customerInfo.active
+            active: customerInfo.active,
+            betLimit : Number(customerInfo.betLimit)
         },
         (data) => {
             setResponse(data);
@@ -122,7 +139,8 @@ const saveCustomer = (userId, customerInfo, setResponse) => {
         {
             customerName: customerInfo.customerName,
             commission: Number(customerInfo.commission),
-            userId: userId
+            userId: userId,
+            betLimit : Number(customerInfo.betLimit)
         },
         (data) => {
             setResponse(data);
@@ -232,5 +250,6 @@ export const oddController = {
     getwinloseReport,
     getEventResult,
     calculateEventResult,
-    getSingleLiveData
+    getSingleLiveData,
+    saveBettingEventsConfirm
 }

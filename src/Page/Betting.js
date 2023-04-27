@@ -1,4 +1,4 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import NavBar from "./components/NavBar";
 import { data } from "./data";
 import moment from "moment";
@@ -17,13 +17,15 @@ function Betting() {
   const [bettingData, setBettingData] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
+  const [isConfirm, setIsConfirm] = useState();
+  const [bettingConfirm,setBettingConfirm] = useState([]);
   const [username, setUsername] = useState("");
- // const [betamount,setBetAmount] = useState("");
+  // const [betamount,setBetAmount] = useState("");
   const history = useHistory();
-  const [type,setType]=useState("");
-  const [betdata,setBetdata] = useState([]);
+  const [type, setType] = useState("");
+  const [betdata, setBetdata] = useState([]);
   const [selectedCustomer, setSelectdCustomer] = useState(0);
- // const [closeModal, setCloseModal]   = useState(false);
+  // const [closeModal, setCloseModal]   = useState(false);
 
   const inputElement = useRef(null);
 
@@ -138,12 +140,12 @@ function Betting() {
 
     document.getElementById("inputamountModal").classList.remove("show");
     document.querySelectorAll(".modal-backdrop")
-            .forEach(el => el.classList.remove("modal-backdrop"));
+      .forEach(el => el.classList.remove("modal-backdrop"));
 
     inputElement.current.value = "";
   };
 
-  const handleOpenModal = (type,data) => {
+  const handleOpenModal = (type, data) => {
     setType(type);
     setBetdata(data);
     inputElement.current.focus();
@@ -162,36 +164,38 @@ function Betting() {
     //     });
     //     setFinalSaveData(newdata);
     //     console.log("kyaw data",newdata);
-    if(selectedCustomer != 0){
+    if (selectedCustomer != 0) {
 
-      var tempresilt = bettingData.filter(a=>a.amount == 0);
+      var tempresilt = bettingData.filter(a => a.amount == 0);
       //console.log("count",tempresilt);
-      if(tempresilt.length > 0){
+      if (tempresilt.length > 0) {
         toast.error("Please enter bet amount!", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setIsSpinner(false);
-      }else{
+      } else {
         oddController.saveBettingEvents(parseInt(userId), parseInt(selectedCustomer), bettingData, (data) => {
           //console.log("dsta",data.data)
           toast.success(data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
           setBettingData([]);
-          setSelectdCustomer(0);
+          if(!data.isConfirm){
+            setSelectdCustomer(0);
+          }
           setTotalAmount(0);
+          setIsConfirm(data.isConfirm);
+          setBettingConfirm(data.betConfirmData);
           setIsSpinner(false);
         });
       }
-
-      
-    }else{
+    } else {
       toast.error("Please select user!", {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsSpinner(false);
     }
-    
+
   }
 
   const getBettingEvents = () => {
@@ -201,6 +205,7 @@ function Betting() {
     oddController.getBettingEvents(parseInt(userId), (data) => {
       //console.log("dsta", data.events);
       setEventsData(data.events);
+      setIsConfirm(data.isConfirm);
       setLoading(false);
     });
   }
@@ -250,64 +255,313 @@ function Betting() {
   };
 
   const handleRemove = (index) => {
-    console.log("before",bettingData)
+    console.log("before", bettingData)
     const result = bettingData.filter((_, i) => i !== index);
-    console.log("after",result)
+    console.log("after", result)
     setBettingData(result);
-    if(result.length > 0){
+    if (result.length > 0) {
       calculate(result);
-    }else{
+    } else {
       setTotalAmount(0);
     }
   }
 
+  const handleCheckbox = (index) => {
+    console.log("index",index);
+    // const index = bettingConfirm.findIndex((v) => {
+    //   return v.rapidEventId == rapidId;
+    // });
+    const obj = [...bettingConfirm];
+    obj[index].select = !obj[index].select;
+    console.log("index",obj);
+    setBettingConfirm(obj);
+  }
+
+const handleConfrimSave = () => {
+  const userId = localStorage.getItem("userId");
+  let newbettingConfirm = bettingConfirm.filter((e) => e.select == true);
+   console.log("confirm save",newbettingConfirm);
+
+   oddController.saveBettingEventsConfirm(parseInt(userId), parseInt(selectedCustomer), newbettingConfirm, (data) => {
+    //console.log("dsta",data.data)
+    toast.success(data.message, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    setBettingData([]);
+    setSelectdCustomer(0);
+    setTotalAmount(0);
+    setIsConfirm(data.isConfirm);
+    //setIsSpinner(false);
+  });
+}
+
   return (
     <div>
-      <InputAmountModal 
-      //closeModal={closeModal}
-      inputElement={inputElement} 
-      handleTeamAdd={handleTeamAdd}
+      <InputAmountModal
+        //closeModal={closeModal}
+        inputElement={inputElement}
+        handleTeamAdd={handleTeamAdd}
       />
       <NavBar username={username} bettingcolor={"link-btn-active"} />
-      {isLoading ? (
-        <div style={{ textAlign: "center" }}>
-          <Loader />
-          <p>Loading .....</p>
-        </div>
-      ) : (
-        <div>
-          <span className="site-header">User Betting Page</span>
-          <div className="row bet-container">
-            <div className="col-12 col-lg-8 col-md-8">
-              <div className="event mb-1">
+      {!isConfirm ?
+        isLoading ? (
+          <div style={{ textAlign: "center" }}>
+            <Loader />
+            <p>Loading .....</p>
+          </div>
+        ) : (
+          <div>
+            <span className="site-header">User Betting Page</span>
+            <div className="row bet-container">
+              <div className="col-12 col-lg-8 col-md-8">
+                <div className="event mb-1">
+                  <table className="table">
+                    <thead>
+                      <tr className="table-secondary">
+                        <th scope="col" width="15">
+                          No
+                        </th>
+                        <th scope="col" width="100">
+                          Time
+                        </th>
+                        <th scope="col" width="100">
+                          Home
+                        </th>
+                        <th scope="col" width="30">
+                          Over
+                        </th>
+                        <th scope="col" width="30">
+                          Goal
+                        </th>
+                        <th scope="col" width="30">
+                          Under
+                        </th>
+                        <th scope="col" width="100">
+                          Away
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {eventsData.length == 0 ? (
+                        <tr>
+                          <td
+                            colSpan={7}
+                            style={{ textAlign: "center", fontWeight: "bold" }}
+                          >
+                            No Data
+                          </td>
+                        </tr>
+                      ) : (
+                        eventsData &&
+                        eventsData.map((d, i) => {
+                          return (
+                            <tr key={i}>
+                              <th scope="row">{i + 1}</th>
+                              <td>{`${moment(d.date).format("hh:mm:ss a")}`}</td>
+                              <td>
+                                {/* <button type="button" class="btn btn-outline-success"> */}
+                                <a
+                                  className="team"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#inputamountModal"
+                                  onClick={() => handleOpenModal("home", d)}
+                                >
+                                  {d.homeTeamId == d.overTeamId ? (
+                                    <span>
+                                      {d.homeTeam}({d.bodyOdds})
+                                    </span>
+                                  ) : (
+                                    <span>{d.homeTeam}</span>
+                                  )}
+                                </a>
+                                {/* </button> */}
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#inputamountModal"
+                                  onClick={() => handleOpenModal("over", d)}
+                                  className="btn btn-outline-success"
+                                  style={{ padding: "0.3rem 1rem" }}
+                                >
+                                  <i className="fas fa-arrow-up"></i>
+                                </button>
+                              </td>
+                              <td>{d.goalOdds}</td>
+                              <td>
+                                <button
+                                  type="button"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#inputamountModal"
+                                  onClick={() => handleOpenModal("under", d)}
+                                  className="btn btn-outline-success"
+                                  style={{ padding: "0.3rem 1rem" }}
+                                >
+                                  <i className="fas fa-arrow-down"></i>
+                                </button>
+                              </td>
+                              <td>
+                                <a
+                                  className="team"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#inputamountModal"
+                                  onClick={() => handleOpenModal("away", d)}
+                                >
+                                  {d.awayTeamId == d.overTeamId ? (
+                                    <span>
+                                      {d.awayTeam}({d.bodyOdds})
+                                    </span>
+                                  ) : (
+                                    <span>{d.awayTeam}</span>
+                                  )}
+                                </a>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4 col-md-4">
+                <div className="panel">
+                  <select
+                    className="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg example"
+                    value={selectedCustomer}
+                    onChange={(e) => setSelectdCustomer(e.target.value)}
+                  >
+                    <option defaultValue={0}>
+                      --- Please Select ---
+                    </option>
+                    {
+                      customer && customer.map((data, i) => {
+                        return (
+                          <option key={data.customerId} value={data.customerId}>{data.customerName}</option>
+                        )
+                      })
+                    }
+                  </select>
+
+                  <div className="panel-details">
+                    <table className="table">
+                      <thead>
+                        <tr className="table-secondary">
+                          <th scope="col">No</th>
+                          <th scope="col" style={{ width: "40%" }}>
+                            Choice
+                          </th>
+                          <th scope="col" style={{ width: "20%" }}>
+                            Odds
+                          </th>
+                          <th scope="col" style={{ width: "30%" }}>
+                            Amount
+                          </th>
+                          <th scope="col">
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {bettingData.length != 0 ?
+                          bettingData &&
+                          bettingData.map((b, i) => {
+                            return (
+                              <tr key={i}>
+                                <td scope="row" className="text-center">{i + 1}</td>
+                                <td>{b.choice}</td>
+                                <td>{b.choiceOdds}</td>
+                                <td>
+                                  {b.amount}
+                                  {/* <input
+                                  type="email"
+                                  className="form-control"
+                                  value={b.amount}
+                                  onChange={(e) =>
+                                    handleTextChange(i, e.target.value)
+                                  }
+                                /> */}
+                                </td>
+                                <td className="text-center">
+                                  <i className="fas fa-trash-alt"
+                                    style={{ color: "red", cursor: 'pointer' }}
+                                    onClick={() => handleRemove(i)}></i>
+                                </td>
+                              </tr>
+                            );
+                          })
+                          : <tr>
+                            <td colSpan={4} style={{ textAlign: 'center' }}>no data</td>
+                          </tr>}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className=" total-txt mb-3">
+                    <label htmlFor="exampleFormControlInput1" className="form-label">
+                      Total
+                    </label>
+                    <input
+                      type="email"
+                      value={totalAmount}
+                      readOnly={true}
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => handleSave()}
+                    disabled={isSpinner}
+                  >
+                    {isSpinner ?
+                      (
+                        <>
+                          <span>Saving......</span>
+                        </>
+                      )
+                      :
+                      <>
+                        <i className="fas fa-save"></i>&nbsp;
+                        <span>Save</span>
+                      </>
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) :
+          <div style={{ display: "flex", justifyContent: "center"}}>
+            <div className="card mt-5" style={{boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
+              <div className="card-body">
+                <h4 style={{textAlign:"center"}}> Betting Confirmation Box</h4>
                 <table className="table">
                   <thead>
                     <tr className="table-secondary">
                       <th scope="col" width="15">
                         No
                       </th>
-                      <th scope="col" width="100">
-                        Time
+                      <th scope="col" width="300">
+                        Bet Type
                       </th>
                       <th scope="col" width="100">
-                        Home
-                      </th>
-                      <th scope="col" width="30">
-                        Over
-                      </th>
-                      <th scope="col" width="30">
-                        Goal
-                      </th>
-                      <th scope="col" width="30">
-                        Under
+                        Bet Amt
                       </th>
                       <th scope="col" width="100">
-                        Away
+                        Over Amt
+                      </th>
+                      <th scope="col" width="30">
+                        Confirm
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {eventsData.length == 0 ? (
+                    {bettingConfirm.length == 0 ? (
                       <tr>
                         <td
                           colSpan={7}
@@ -317,192 +571,141 @@ function Betting() {
                         </td>
                       </tr>
                     ) : (
-                      eventsData &&
-                      eventsData.map((d, i) => {
+                      bettingConfirm &&
+                      bettingConfirm.map((d, i) => {
                         return (
                           <tr key={i}>
                             <th scope="row">{i + 1}</th>
-                            <td>{`${moment(d.date).format("hh:mm:ss a")}`}</td>
+                            <td>{d.choice}</td>
                             <td>
-                              {/* <button type="button" class="btn btn-outline-success"> */}
-                              <a
-                                className="team"
-                                data-bs-toggle="modal"
-                                data-bs-target="#inputamountModal"
-                                onClick={() => handleOpenModal("home", d)}
-                              >
-                                {d.homeTeamId == d.overTeamId ? (
-                                  <span>
-                                    {d.homeTeam}({d.bodyOdds})
-                                  </span>
-                                ) : (
-                                  <span>{d.homeTeam}</span>
-                                )}
-                              </a>
-                              {/* </button> */}
+                              {d.amount}
                             </td>
                             <td>
-                              <button
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#inputamountModal"
-                                onClick={() => handleOpenModal("over", d)}
-                                className="btn btn-outline-success"
-                                style={{ padding: "0.3rem 1rem" }}
-                              >
-                                <i className="fas fa-arrow-up"></i>
-                              </button>
-                            </td>
-                            <td>{d.goalOdds}</td>
-                            <td>
-                              <button
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#inputamountModal"
-                                onClick={() => handleOpenModal("under", d)}
-                                className="btn btn-outline-success"
-                                style={{ padding: "0.3rem 1rem" }}
-                              >
-                                <i className="fas fa-arrow-down"></i>
-                              </button>
+                              {d.extraAmount}
                             </td>
                             <td>
-                              <a
-                                className="team"
-                                data-bs-toggle="modal"
-                                data-bs-target="#inputamountModal"
-                                onClick={() => handleOpenModal("away", d)}
-                              >
-                                {d.awayTeamId == d.overTeamId ? (
-                                  <span>
-                                    {d.awayTeam}({d.bodyOdds})
-                                  </span>
-                                ) : (
-                                  <span>{d.awayTeam}</span>
-                                )}
-                              </a>
+                              <div className="form-check">
+                                <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={()=>handleCheckbox(i)}/>
+                              </div>
                             </td>
+
                           </tr>
                         );
                       })
                     )}
                   </tbody>
                 </table>
-              </div>
-            </div>
-            <div className="col-12 col-lg-4 col-md-4">
-              <div className="panel">
-                <select
-                  className="form-select form-select-lg mb-3"
-                  aria-label=".form-select-lg example"
-                  value={selectedCustomer}
-                  onChange={(e) => setSelectdCustomer(e.target.value)}
-                >
-                  <option defaultValue={0}>
-                    --- Please Select ---
-                  </option>
-                  {
-                    customer && customer.map((data, i) => {
-                      return (
-                        <option key={data.customerId} value={data.customerId}>{data.customerName}</option>
-                      )
-                    })
-                  }
-                </select>
-
-                <div className="panel-details">
-                  <table className="table">
-                    <thead>
-                      <tr className="table-secondary">
-                        <th scope="col">No</th>
-                        <th scope="col" style={{ width: "40%" }}>
-                          Choice
-                        </th>
-                        <th scope="col" style={{ width: "20%" }}>
-                          Odds
-                        </th>
-                        <th scope="col" style={{ width: "30%" }}>
-                          Amount
-                        </th>
-                        <th scope="col">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      { bettingData.length != 0 ?
-                        bettingData &&
-                        bettingData.map((b, i) => {
-                          return (
-                            <tr key={i}>
-                              <td scope="row" className="text-center">{i + 1}</td>
-                              <td>{b.choice}</td>
-                              <td>{b.choiceOdds}</td>
-                              <td>
-                                {b.amount}
-                                {/* <input
-                                  type="email"
-                                  className="form-control"
-                                  value={b.amount}
-                                  onChange={(e) =>
-                                    handleTextChange(i, e.target.value)
-                                  }
-                                /> */}
-                              </td>
-                              <td className="text-center">
-                                <i className="fas fa-trash-alt" 
-                                style={{ color: "red",cursor:'pointer' }}
-                                 onClick={() => handleRemove(i)}></i>
-                              </td>
-                            </tr>
-                          );
-                        })
-                      :<tr>
-                        <td colSpan={4} style={{textAlign:'center'}}>no data</td>
-                        </tr>}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className=" total-txt mb-3">
-                  <label htmlFor="exampleFormControlInput1" className="form-label">
-                    Total
-                  </label>
-                  <input
-                    type="email"
-                    value={totalAmount}
-                    readOnly={true}
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                  />
-                </div>
-
-                <button 
-                type="button" 
-                className="btn btn-success"
-                 onClick={() => handleSave()}
-                 disabled={isSpinner}
-                 >
-                  {isSpinner ?
-                    (
-                      <>
-                        <span>Saving......</span>
-                      </>
-                    )
-                    :
-                    <>
-                      <i className="fas fa-save"></i>&nbsp;
-                      <span>Save</span>
-                    </>
-                  }
+                <div style={{display:"flex",justifyContent:"flex-end"}}>
+                <button type="button" className="btn btn-success" onClick={()=>handleConfrimSave()}>
+                  <i className="fa fa-save"></i>&nbsp;Save
                 </button>
+                  </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+      }
     </div>
   );
 }
+
+const data22 = [
+  {
+    "rapidEventId": 11223344,
+    "homeTeamId": 1,
+    "awayTeamId": 2,
+    "goalOdds": "1+70",
+    "bodyOdds": "2-50",
+    "overTeamId": 1,
+    "underTeamId": 2,
+    "date": "2023-04-24 03:00 PM",
+    "homeTeam": "Spurs",
+    "awayTeam": "Man U"
+  },
+  {
+    "rapidEventId": 343434232,
+    "homeTeamId": 3,
+    "awayTeamId": 4,
+    "goalOdds": "2+70",
+    "bodyOdds": "3-50",
+    "overTeamId": 4,
+    "underTeamId": 3,
+    "date": "2023-04-24 03:00 PM",
+    "homeTeam": "Chelsea",
+    "awayTeam": "Arsenal"
+  },
+  {
+    "rapidEventId": 6575757,
+    "homeTeamId": 5,
+    "awayTeamId": 6,
+    "goalOdds": "1+70",
+    "bodyOdds": "2-50",
+    "overTeamId": 5,
+    "underTeamId": 6,
+    "date": "2023-04-24 03:00 PM",
+    "homeTeam": "Liverpool",
+    "awayTeam": "Newcastle Utd"
+  }
+]
+
+
+const data33 = [
+  {
+    "rapidEventId": 771,
+    "leagueId": 45,
+    "footballTeamId": 1,
+    "unders": true,
+    "overs": false,
+    "bodyOdd": "1+40",
+    "goalOdd": "2+70",
+    "home": false,
+    "away": false,
+    "isHome": false,
+    "oppositeNameId": 2,
+    "isHomeBodyOdd": true,
+    "choice": "Man U" + " (GA Under)",
+    "choiceOdds": "1+40",
+    "amount": 400,
+    "extraAmount": 300,
+    "select" : false,
+  },
+  {
+    "rapidEventId": 772,
+    "leagueId": 45,
+    "footballTeamId": 1,
+    "unders": true,
+    "overs": false,
+    "bodyOdd": "1+40",
+    "goalOdd": "2+70",
+    "home": false,
+    "away": false,
+    "isHome": false,
+    "oppositeNameId": 2,
+    "isHomeBodyOdd": true,
+    "choice": "Man U" + " (GA Under)",
+    "choiceOdds": "1+40",
+    "amount": 400,
+    "extraAmount": 300,
+    "select" : false,
+  },
+  {
+    "rapidEventId": 773,
+    "leagueId": 45,
+    "footballTeamId": 1,
+    "unders": true,
+    "overs": false,
+    "bodyOdd": "1+40",
+    "goalOdd": "2+70",
+    "home": false,
+    "away": false,
+    "isHome": false,
+    "oppositeNameId": 2,
+    "isHomeBodyOdd": true,
+    "choice": "Man U" + " (GA Under)",
+    "choiceOdds": "1+40",
+    "amount": 400,
+    "extraAmount": 300,
+    "select" : false,
+  }
+]
 
 export default Betting;

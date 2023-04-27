@@ -11,7 +11,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
 
   const EditSave = () => {
     setLoading(true);
-    console.log("final data", customerdata);
+    //console.log("final data", customerdata);
     oddController.updateCustomer(customerdata,(data) => {
     //console.log("dsta", data.events);
     toast.success(data.message, {
@@ -76,6 +76,22 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                     required
                     onChange={(value) =>
                       OnChangeText("commission", value.target.value)
+                    }
+                    id="exampleInputPassword1"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="exampleInputPassword1" className="form-label">
+                    Bet Limit
+                  </label>
+                  <input
+                    type="number"
+                    value={customerdata.betLimit}
+                    className="form-control"
+                    step="any"
+                    required
+                    onChange={(value) =>
+                      OnChangeText("betLimit", value.target.value)
                     }
                     id="exampleInputPassword1"
                   />

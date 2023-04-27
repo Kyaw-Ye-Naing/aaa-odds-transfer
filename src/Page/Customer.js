@@ -43,12 +43,14 @@ function Customer() {
     customerName: "",
     commission: 0,
     customerId: 0,
+    betLimit :0,
     active: false,
   });
   const [newcustomerData, setNewCustomerData] = useState({
     customerName: "",
     commission: 0,
     customerId: 0,
+    betLimit :0,
     active: true,
   });
 
@@ -103,11 +105,12 @@ function Customer() {
     });
   };
 
-  const OnEditClick = (customer, commission, customerId, active) => {
+  const OnEditClick = (customer, commission, customerId, active,betLimit) => {
     const newedit = { ...customerData };
     newedit["customerName"] = customer;
     newedit["commission"] = commission;
     newedit["customerId"] = customerId;
+    newedit["betLimit"] = betLimit;
     newedit["active"] = active;
     setCustomerData(newedit);
   };
@@ -182,6 +185,7 @@ function Customer() {
                   <th scope="col">No</th>
                   <th scope="col">Name</th>
                   <th scope="col">Commission</th>
+                  <th scope="col">Bet Limit</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -199,6 +203,7 @@ function Customer() {
                           <th scope="row">{i + 1}</th>
                           <td>{d.customerName}</td>
                           <td>{d.commission}%</td>
+                          <td>{d.betLimit}</td>
                           <td>
                             <button
                               className="btn btn-outline-success"
@@ -209,7 +214,8 @@ function Customer() {
                                   d.customerName,
                                   d.commission,
                                   d.customerId,
-                                  d.active
+                                  d.active,
+                                  d.betLimit
                                 )
                               }
                             >
