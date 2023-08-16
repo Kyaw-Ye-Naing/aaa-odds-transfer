@@ -72,7 +72,7 @@ hr{
 /*----------- Start Link Button Group Section --------*/
 .group-list{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-wrap: wrap;
     /* margin-bottom: 1rem; */
@@ -181,6 +181,7 @@ hr{
 .bet-container .panel .panel-details{
     border:2px solid #ddd;
     border-bottom: none;
+    overflow-x: scroll;
 }
 
 .bet-container .panel select{
@@ -297,6 +298,12 @@ hr{
 }
 /*--------end modal section -------------------*/
 
+.accordion-button:focus {
+    z-index: 0; 
+    border-color: none; 
+    outline: 0; 
+    box-shadow: none;
+}
 /* body {
     font-family: 'Roboto', sans-serif;
 background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
@@ -341,7 +348,7 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
     }
 }
 
-@media screen and (max-width:359px){
+@media screen and (max-width:360px){
     .group-list .btn-label{
         font-size: 0.8rem;
         font-weight: bold;
@@ -349,5 +356,39 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 
     .title{
         display: none;
+    }
+
+    .input-gp {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width:770px) {
+    .group-list{
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .title{
+        display: none;
+    }
+}
+
+@media screen and (max-width : 700px){
+    .title span{
+        font-size: 1.3rem;
+      }
+}
+
+@media screen and (max-width :1000px){
+    .bet-container .panel select{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width : 430px) {
+    .diamond {
+display: none;
     }
 }

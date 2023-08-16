@@ -16,6 +16,7 @@ function Report() {
   const [itemdetails,setItemdetails] = useState([]);
   const [isEdit, setIsEdit] = useState("");
   const history = useHistory();
+  const [userRole,setUserRole] = useState();
   const [itemview,setItemview] = useState({
     "voucher" : "",
     "amount" : 0,
@@ -35,11 +36,13 @@ function Report() {
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
     //console.log("kokok",userName);
     if (userName == undefined || userName != "Bo Bo") {
       history.push("/");
     }
     setUsername(userName);
+    setUserRole(userRole);
     getWinLoseReport();
   }, []);
 
@@ -68,7 +71,7 @@ function Report() {
     <div>
       <MyModal isEdit={isEdit} historydata={itemview} />
      
-      <NavBar username={username} reportcolor={"link-btn-active"} />
+      <NavBar username={username} reportcolor={"link-btn-active"} userRole={userRole}/>
        
       <span className="site-header">User Win / Lose Reports</span>
 

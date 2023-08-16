@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 function NavBar({
+  userRole,
   username,
   homecolor = "link-btn",
   bettingcolor = "link-btn",
@@ -45,9 +46,9 @@ function NavBar({
           <span className="info">{username}</span>
         </div>
         <div className="title">
-          <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
+          <i className="fa-solid fa-diamond diamond" style={{ fontSize: 13 }}></i>
           <span className="px-2">Odds Trasfer Site</span>
-          <i className="fa-solid fa-diamond" style={{ fontSize: 13 }}></i>
+          <i className="fa-solid fa-diamond diamond" style={{ fontSize: 13 }}></i>
         </div>
         <div className="logout">
           <a
@@ -61,7 +62,7 @@ function NavBar({
         </div>
       </div>
 
-      {username == "Bo Bo" ? (
+      {userRole == 1 ? (
         <>
         <div
           className="group-list"

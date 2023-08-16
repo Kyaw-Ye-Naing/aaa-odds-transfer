@@ -347,17 +347,22 @@ function OddsTransfer() {
 
   const [username, setUsername] = useState("");
   const history = useHistory();
+  const [teamEye, setTeamEye] = useState(true);
+  const [userRole, setUserRole] = useState();
+ 
   // const saved = localStorage.getItem("info");
   // const initialValue = JSON.parse(saved);
   // console.log("userInfo",initialValue);
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
     //console.log("kokok",userName);
     if (userName == undefined) {
       history.push("/");
     }
     setUsername(userName);
+    setUserRole(userRole);
     getTeamFunction();
     refreshOdds();
 
@@ -496,8 +501,7 @@ function OddsTransfer() {
     const copyArray = [];
     searchedCopy.map((data) => {
       return copyArray.push(
-        `\n${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${
-          data.body
+        `\n${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${data.body
         }/${data.goal}`
       );
     });
@@ -590,16 +594,20 @@ function OddsTransfer() {
 
   return (
     <div className="odds-page">
-    <NavBar username={username} homecolor={'link-btn-active'}/>
-    <span
+      <NavBar username={username} userRole={userRole} homecolor={'link-btn-active'} />
+      <span
         className="site-header"
-        >
-          Odds Transfer
-        </span>
+      >
+        Odds Transfer
+      </span>
       <div className="main">
         {/* <div className="row"> */}
-        <div className="right">
-          <div className="table-title">
+        <div className="right" style={{marginBottom : "10px"}}>
+          <span onClick={() => setTeamEye(e => !e)}>
+          {teamEye ?<i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
+          </span>
+          {teamEye ?<>
+        <div className="table-title">
             <div className="input-gp">
               <input
                 type="email"
@@ -710,7 +718,8 @@ function OddsTransfer() {
             breakClassName={"page-item"}
             breakLinkClassName={"page-link"}
             activeClassName={"active"}
-          />
+          /></>
+          : null          }
         </div>
         <div className="middle">
           <div className="table-title">
@@ -740,7 +749,7 @@ function OddsTransfer() {
               disabled={isLoading ? true : false}
               onClick={() => refreshOdds()}
             >
-              Refresh <i className="fa-solid fa-arrows-rotate"></i>
+             Refresh <i className="fa-solid fa-arrows-rotate"></i>
             </button>
           </div>
           <div className="table-responsive">
@@ -839,6 +848,9 @@ function OddsTransfer() {
           />
         </div>
         <div className="left">
+          {/* <span style={{ cursor: 'pointer' }} onClick={() => setCopyEye((e) => !e)}>
+            {copyEye ? <i className="fa fa-eye"></i> : <i class="fa fa-eye-slash"></i>}
+          </span> */}
           <div className="table-title">
             <div className="mb-3 input-gp">
               <input

@@ -11,14 +11,17 @@ function Analysis() {
     const [type,setType] = useState("goal");
     const [goalbtnColor,setGoalbtnColor] = useState('btn-activate');
     const [bodybtnColor,setBodybtnColor] = useState('btn-normal');
+    const [userRole,setUserRole] = useState();
 
     useEffect(() => {
         const userName = localStorage.getItem("userName");
+        const userRole = localStorage.getItem("userRole");
         //console.log("kokok",userName);
         if (userName == undefined || userName != "Bo Bo") {
             history.push("/");
         }
         setUsername(userName);
+        setUserRole(userRole);
         //getCustomer();
     }, []);
 
@@ -36,7 +39,7 @@ function Analysis() {
 
     return (
         <div>
-            <NavBar username={username} analysiscolor={"link-btn-active"} />
+            <NavBar username={username} analysiscolor={"link-btn-active"} userRole={userRole}/>
             <span className="site-header">Analysis</span>
             <div className="d-flex justify-content-center">
             <div className="btn-group" role="group" aria-label="Basic example">

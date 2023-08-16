@@ -49,11 +49,11 @@ function HistoryModal({
             <div className="modal-body">
               <div className="event-details">
                 <span className="league">{historydata.leagueName}</span>
-                <span>{historydata.event}</span>
-                <span>{`${moment(historydata.eventTime).format(
+                <span style={{color: 'blueviolet'}}>{historydata.event}</span>
+                <span style={{color: 'chocolate'}}>{`${moment(historydata.eventTime).format(
                   "DD-MM-YYYY hh:mm:ss a"
                 )}`}</span>
-                <span>Result : {historydata.result}</span>
+                <span>Result : <span style={{color: 'crimson'}}>{historydata.result}</span></span>
                 <span>Bet : <span style={{ color: historydata.color }}>{historydata.bet}</span></span>
                 {/* <span>Odds : {historydata.odds}</span> */}
                 <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>

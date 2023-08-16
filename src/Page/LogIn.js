@@ -30,7 +30,9 @@ function LogIn() {
             setLoading(false);
             localStorage.setItem("userId", data.userId);
             localStorage.setItem("userName", data.userName);
-            console.log("uuyuy",data.userId);
+            //localStorage.setItem("userRole", data.userRole);
+            localStorage.setItem("userRole", data.userRole);
+            //console.log("uuyuy",data.userId);
             toast.success(data.message, {
                 position: toast.POSITION.TOP_RIGHT,
             });

@@ -15,27 +15,32 @@ function Betting() {
   const [isLoading, setLoading] = useState(false);
   const [isSpinner, setIsSpinner] = useState(false);
   const [bettingData, setBettingData] = useState([]);
+  const [searchText, setSearchText] = useState([]);
+  const [searchTeams, setSearchTeams] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [isConfirm, setIsConfirm] = useState();
-  const [bettingConfirm,setBettingConfirm] = useState([]);
+  const [bettingConfirm, setBettingConfirm] = useState([]);
   const [username, setUsername] = useState("");
   // const [betamount,setBetAmount] = useState("");
   const history = useHistory();
   const [type, setType] = useState("");
   const [betdata, setBetdata] = useState([]);
   const [selectedCustomer, setSelectdCustomer] = useState(0);
+  const [userRole, setUserRole] = useState();
   // const [closeModal, setCloseModal]   = useState(false);
 
   const inputElement = useRef(null);
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
     //console.log("kokok",userName);
     if (userName == undefined || userName != "Bo Bo") {
       history.push("/");
     }
     setUsername(userName);
+    setUserRole(userRole);
     getBettingEvents();
     getCustomer();
   }, []);
@@ -180,7 +185,7 @@ function Betting() {
             position: toast.POSITION.TOP_RIGHT,
           });
           setBettingData([]);
-          if(!data.isConfirm){
+          if (!data.isConfirm) {
             setSelectdCustomer(0);
           }
           setTotalAmount(0);
@@ -203,8 +208,9 @@ function Betting() {
     const userId = localStorage.getItem("userId");
     //console.log("session storage",userId)
     oddController.getBettingEvents(parseInt(userId), (data) => {
-      //console.log("dsta", data.events);
+      console.log("dsta", data.events);
       setEventsData(data.events);
+      setSearchTeams(data.events);
       setIsConfirm(data.isConfirm);
       setLoading(false);
     });
@@ -267,33 +273,57 @@ function Betting() {
   }
 
   const handleCheckbox = (index) => {
-    console.log("index",index);
+    console.log("index", index);
     // const index = bettingConfirm.findIndex((v) => {
     //   return v.rapidEventId == rapidId;
     // });
     const obj = [...bettingConfirm];
     obj[index].select = !obj[index].select;
-    console.log("index",obj);
+    console.log("index", obj);
     setBettingConfirm(obj);
   }
 
-const handleConfrimSave = () => {
-  const userId = localStorage.getItem("userId");
-  let newbettingConfirm = bettingConfirm.filter((e) => e.select == true);
-   console.log("confirm save",newbettingConfirm);
+  const handleConfrimSave = () => {
+    const userId = localStorage.getItem("userId");
+    let newbettingConfirm = bettingConfirm.filter((e) => e.select == true);
+    console.log("confirm save", newbettingConfirm);
 
-   oddController.saveBettingEventsConfirm(parseInt(userId), parseInt(selectedCustomer), newbettingConfirm, (data) => {
-    //console.log("dsta",data.data)
-    toast.success(data.message, {
-      position: toast.POSITION.TOP_RIGHT,
+    oddController.saveBettingEventsConfirm(parseInt(userId), parseInt(selectedCustomer), newbettingConfirm, (data) => {
+      //console.log("dsta",data.data)
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setBettingData([]);
+      setSelectdCustomer(0);
+      setTotalAmount(0);
+      setIsConfirm(data.isConfirm);
+      //setIsSpinner(false);
     });
-    setBettingData([]);
-    setSelectdCustomer(0);
-    setTotalAmount(0);
-    setIsConfirm(data.isConfirm);
-    //setIsSpinner(false);
-  });
-}
+  }
+
+  const onChangeBetting = (e) => {
+    setSearchText();
+    if (e.target.value.length != 0) {
+      const filteredRows = eventsData.filter((row) => {
+        return row.homeTeam
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()) ||
+          row.awayTeam
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase());
+      });
+      setSearchTeams(filteredRows);
+      //console.log("hhh",filteredRows);
+      // setPage(Math.ceil(filteredRows.length / rowsPerPage));
+    } else {
+      setSearchTeams([...eventsData]);
+    }
+  }
+
+  const cancelSearch = () => {
+    setSearchText("");
+    setSearchTeams(eventsData);
+  };
 
   return (
     <div>
@@ -302,7 +332,7 @@ const handleConfrimSave = () => {
         inputElement={inputElement}
         handleTeamAdd={handleTeamAdd}
       />
-      <NavBar username={username} bettingcolor={"link-btn-active"} />
+      <NavBar username={username} bettingcolor={"link-btn-active"} userRole={userRole} />
       {!isConfirm ?
         isLoading ? (
           <div style={{ textAlign: "center" }}>
@@ -312,11 +342,32 @@ const handleConfrimSave = () => {
         ) : (
           <div>
             <span className="site-header">User Betting Page</span>
+            <div className="input-gp" style={{ marginBottom: '10px' }}>
+              <input
+                type="email"
+                className="form-control"
+                id="exampleFormControlInput1"
+                placeholder="search ..."
+                style={{ width: "10rem" }}
+                value={searchText}
+                onChange={(e) => onChangeBetting(e)}
+              />
+              <button
+                type="button"
+                className="btn btn-light"
+                onClick={() => cancelSearch()}
+              >
+                <i
+                  className="fa-solid fa-circle-xmark"
+                  style={{ fontSize: 15 }}
+                ></i>
+              </button>
+            </div>
             <div className="row bet-container">
               <div className="col-12 col-lg-8 col-md-8">
                 <div className="event mb-1">
                   <table className="table">
-                    <thead>
+                    <thead style={{ position: 'sticky', top: 0 }}>
                       <tr className="table-secondary">
                         <th scope="col" width="15">
                           No
@@ -352,8 +403,8 @@ const handleConfrimSave = () => {
                           </td>
                         </tr>
                       ) : (
-                        eventsData &&
-                        eventsData.map((d, i) => {
+                        searchTeams &&
+                        searchTeams.map((d, i) => {
                           return (
                             <tr key={i}>
                               <th scope="row">{i + 1}</th>
@@ -449,17 +500,17 @@ const handleConfrimSave = () => {
                     <table className="table">
                       <thead>
                         <tr className="table-secondary">
-                          <th scope="col">No</th>
-                          <th scope="col" style={{ width: "40%" }}>
+                          <th scope="col" width="50">No</th>
+                          <th scope="col" width="200">
                             Choice
                           </th>
-                          <th scope="col" style={{ width: "20%" }}>
+                          <th scope="col" width="200">
                             Odds
                           </th>
-                          <th scope="col" style={{ width: "30%" }}>
+                          <th scope="col" width="100">
                             Amount
                           </th>
-                          <th scope="col">
+                          <th scope="col" width="50">
                             Action
                           </th>
                         </tr>
@@ -468,11 +519,37 @@ const handleConfrimSave = () => {
                         {bettingData.length != 0 ?
                           bettingData &&
                           bettingData.map((b, i) => {
+                            console.log("b >>>>>",b)
+                            let isExist = b.choiceOdds.includes("=");
+                            let tempGoal = 0;
+                            let tempUnit = 0;
+
+                            if(isExist){
+                              const arr = b.choiceOdds.split(/[=]/);
+                              tempGoal = 0;
+                              tempUnit = arr[0] == 'D' ? 0 : parseInt(arr[1]);
+                            }else{
+                              const  isExist_plus = b.choiceOdds.includes("+");
+
+                              if(isExist_plus){
+                                const arr = b.choiceOdds.split(/[+]/);
+                                tempGoal = arr[0];
+                                tempUnit = parseInt(arr[1]);
+                              }
+                              else{
+                                const arr = b.choiceOdds.split(/[-]/);
+                                tempGoal = arr[0];
+                                tempUnit = -1 * parseInt(arr[1]);
+                              }
+                            }
+
                             return (
                               <tr key={i}>
                                 <td scope="row" className="text-center">{i + 1}</td>
                                 <td>{b.choice}</td>
-                                <td>{b.choiceOdds}</td>
+                                <td>
+                                  {b.choiceOdds}
+                                </td>
                                 <td>
                                   {b.amount}
                                   {/* <input
@@ -536,73 +613,73 @@ const handleConfrimSave = () => {
             </div>
           </div>
         ) :
-          <div style={{ display: "flex", justifyContent: "center"}}>
-            <div className="card mt-5" style={{boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
-              <div className="card-body">
-                <h4 style={{textAlign:"center"}}> Betting Confirmation Box</h4>
-                <table className="table">
-                  <thead>
-                    <tr className="table-secondary">
-                      <th scope="col" width="15">
-                        No
-                      </th>
-                      <th scope="col" width="300">
-                        Bet Type
-                      </th>
-                      <th scope="col" width="100">
-                        Bet Amt
-                      </th>
-                      <th scope="col" width="100">
-                        Over Amt
-                      </th>
-                      <th scope="col" width="30">
-                        Confirm
-                      </th>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="card mt-5" style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
+            <div className="card-body">
+              <h4 style={{ textAlign: "center" }}> Betting Confirmation Box</h4>
+              <table className="table">
+                <thead>
+                  <tr className="table-secondary">
+                    <th scope="col" width="15">
+                      No
+                    </th>
+                    <th scope="col" width="300">
+                      Bet Type
+                    </th>
+                    <th scope="col" width="100">
+                      Bet Amt
+                    </th>
+                    <th scope="col" width="100">
+                      Over Amt
+                    </th>
+                    <th scope="col" width="30">
+                      Confirm
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bettingConfirm.length == 0 ? (
+                    <tr>
+                      <td
+                        colSpan={7}
+                        style={{ textAlign: "center", fontWeight: "bold" }}
+                      >
+                        No Data
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {bettingConfirm.length == 0 ? (
-                      <tr>
-                        <td
-                          colSpan={7}
-                          style={{ textAlign: "center", fontWeight: "bold" }}
-                        >
-                          No Data
-                        </td>
-                      </tr>
-                    ) : (
-                      bettingConfirm &&
-                      bettingConfirm.map((d, i) => {
-                        return (
-                          <tr key={i}>
-                            <th scope="row">{i + 1}</th>
-                            <td>{d.choice}</td>
-                            <td>
-                              {d.amount}
-                            </td>
-                            <td>
-                              {d.extraAmount}
-                            </td>
-                            <td>
-                              <div className="form-check">
-                                <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={()=>handleCheckbox(i)}/>
-                              </div>
-                            </td>
+                  ) : (
+                    bettingConfirm &&
+                    bettingConfirm.map((d, i) => {
+                      return (
+                        <tr key={i}>
+                          <th scope="row">{i + 1}</th>
+                          <td>{d.choice}</td>
+                          <td>
+                            {d.amount}
+                          </td>
+                          <td>
+                            {d.extraAmount}
+                          </td>
+                          <td>
+                            <div className="form-check">
+                              <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={() => handleCheckbox(i)} />
+                            </div>
+                          </td>
 
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
-                <div style={{display:"flex",justifyContent:"flex-end"}}>
-                <button type="button" className="btn btn-success" onClick={()=>handleConfrimSave()}>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <button type="button" className="btn btn-success" onClick={() => handleConfrimSave()}>
                   <i className="fa fa-save"></i>&nbsp;Save
                 </button>
-                  </div>
               </div>
             </div>
           </div>
+        </div>
       }
     </div>
   );
@@ -666,7 +743,7 @@ const data33 = [
     "choiceOdds": "1+40",
     "amount": 400,
     "extraAmount": 300,
-    "select" : false,
+    "select": false,
   },
   {
     "rapidEventId": 772,
@@ -685,7 +762,7 @@ const data33 = [
     "choiceOdds": "1+40",
     "amount": 400,
     "extraAmount": 300,
-    "select" : false,
+    "select": false,
   },
   {
     "rapidEventId": 773,
@@ -704,7 +781,7 @@ const data33 = [
     "choiceOdds": "1+40",
     "amount": 400,
     "extraAmount": 300,
-    "select" : false,
+    "select": false,
   }
 ]
 

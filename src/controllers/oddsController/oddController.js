@@ -200,10 +200,11 @@ const getwinloseReport = (userId, startDate, endDate, setResponse) => {
 
 //--------------------- Event Calculation Page -------------------------------
 //--get event results
-const getEventResult = (userId, setResponse) => {
+const getEventResult = (userId,startDate, setResponse) => {
     postApi(`${apiList.getEventResult}`,
         {
             userId: userId,
+            selectedDate : startDate
         },
         (data) => {
             setResponse(data);
@@ -211,10 +212,11 @@ const getEventResult = (userId, setResponse) => {
 };
 
 //--calculate event result
-const calculateEventResult = (userId, setResponse) => {
+const calculateEventResult = (userId,startDate, setResponse) => {
     postApi(`${apiList.calculateVoucherApi}`,
         {
             userId: userId,
+            selectedDate : startDate
         },
         (data) => {
             setResponse(data);

@@ -39,6 +39,7 @@ function Customer() {
   const [customerInfo, setCustomerInfo] = useState([]);
   const [searchCustomer,setSearchCustomer] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [userRole,setUserRole] = useState();
   const [customerData, setCustomerData] = useState({
     customerName: "",
     commission: 0,
@@ -56,11 +57,13 @@ function Customer() {
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
     //console.log("kokok",userName);
     if (userName == undefined || userName != "Bo Bo") {
       history.push("/");
     }
     setUsername(userName);
+    setUserRole(userRole);
     getCustomer();
   }, []);
 
@@ -138,7 +141,7 @@ function Customer() {
         getCustomer={getCustomer}
         setLoading={setLoading}
       />
-       <NavBar username={username} customercolor={"link-btn-active"} />
+       <NavBar username={username} customercolor={"link-btn-active"} userRole={userRole}/>
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />

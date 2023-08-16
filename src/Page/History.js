@@ -60,6 +60,7 @@ function History() {
   const [unit,setUnit] = useState(0);
   const [selectedCustomer, setSelectdCustomer] = useState(0);
   const [deleteId, setDeleteId] = useState(0);
+  const [userRole,setUserRole] = useState();
   const [itemview, setItemview] = useState({
     "voucher": "",
     "amount": 0,
@@ -79,11 +80,13 @@ function History() {
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
     //console.log("kokok",userName);
     if (userName == undefined || userName != "Bo Bo") {
       history.push("/");
     }
     setUsername(userName);
+    setUserRole(userRole);
     getMemberOutstanding();
     getCustomer();
   }, []);
@@ -169,7 +172,7 @@ function History() {
         setSelectdCustomer={setSelectdCustomer}
         handleUpdate={handleUpdate}
       />
-      <NavBar username={username} historycolor={"link-btn-active"} />
+      <NavBar username={username} historycolor={"link-btn-active"} userRole={userRole}/>
 
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
