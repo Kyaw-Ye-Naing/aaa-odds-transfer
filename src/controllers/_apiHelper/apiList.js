@@ -23,5 +23,6 @@ export const apiList = {
     getEventResult :"Odd/get-event-result",
     calculateVoucherApi:"Odd/calculate-event-result",
 
-    getSingleLiveData : "Odd/single-live-data"
+    getSingleLiveData : "Odd/single-live-data",
+    getVoucherDetails : "Odd/analysis-voucher-details"
 };

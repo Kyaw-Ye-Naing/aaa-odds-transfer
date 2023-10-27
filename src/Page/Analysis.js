@@ -41,13 +41,14 @@ function Analysis() {
         <div>
             <NavBar username={username} analysiscolor={"link-btn-active"} userRole={userRole}/>
             <span className="site-header">Analysis</span>
-            <div className="d-flex justify-content-center">
+            {/* <div className="d-flex justify-content-center">
             <div className="btn-group" role="group" aria-label="Basic example">
                 <button type="button" className={goalbtnColor} onClick={()=>handleOnClick('goal')}>Goal Live Data</button>
                 <button type="button" className={bodybtnColor} onClick={()=>handleOnClick('body')}>Body Live Data</button>
             </div>
-            </div>
-            {type == 'goal' ?  <GoalLiveData /> :  <BodyLiveData />}
+            </div> */}
+            {/* {type == 'goal' ?  <GoalLiveData /> :  <BodyLiveData />} */}
+            <BodyLiveData />
         </div>
     )
 }

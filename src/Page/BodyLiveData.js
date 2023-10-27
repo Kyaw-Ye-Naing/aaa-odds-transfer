@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
+import AnalysisModal from './components/AnalysisModal';
 
 const BodyLiveData = () => {
     const defaultDate = moment(new Date()).format("YYYY-MM-DD");
     const [username, setUsername] = useState("");
     const history = useHistory();
     const [startDate, setStartDate] = useState(defaultDate);
-    const rowsPerPage = 5;
+    const rowsPerPage = 10;
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState();
     const [serachdiff, setSearchDiff] = useState();
@@ -18,11 +19,10 @@ const BodyLiveData = () => {
     const [searchSingle, setSearchSingle] = useState(data);
     const [singleLiveData,setSingleLiveData] = useState([]);
     const [isLoading, setLoading] = useState(false);
+    const [rapidEventId,setRapidEventId] = useState(0);
 
     useEffect(() => {
-        console.log("I am useEffect from Body");
         const userName = localStorage.getItem("userName");
-        //console.log("kokok",userName);
         if (userName == undefined || userName != "Bo Bo") {
             history.push("/");
         }
@@ -34,7 +34,7 @@ const BodyLiveData = () => {
     const getGetBodyLiveData = () => {
         setLoading(true);
         oddController.getSingleLiveData(startDate, true, (data) => {
-            //console.log("dsta",data)
+            console.log("dsta",data)
             setSearchSingle(data.livedata);
             setSingleLiveData(data.livedata);
             setLoading(false);
@@ -90,7 +90,8 @@ const BodyLiveData = () => {
      
     return (
         <div>
-            <span className="d-flex justify-content-center mt-1">Body Live Data Report</span>
+             <AnalysisModal rapidEventId={rapidEventId}/>
+            <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex" style={{ gap: 5 }}>
                 <div className="bd-highlight">
                     <div className="mb-2">
@@ -116,19 +117,6 @@ const BodyLiveData = () => {
                     </button>
                 </div>
             </div>
-            <div className="d-flex align-items-center justify-content-between">
-                <div className="mb-2">
-                    <label>Body Difference</label>
-                    <input
-                        type="number"
-                        style={{ textAlign: "left" }}
-                        value={serachdiff}
-                        className="search-txt form-control"
-                        id="exampleFormControlInput1"
-                        placeholder="search ..."
-                        onChange={(e) => handleDiffChange(e)}
-                    />
-                </div>
                 <div className="mb-2">
                     <label>Search Team</label>
                     <input
@@ -154,12 +142,15 @@ const BodyLiveData = () => {
                             <thead>
                                 <tr className="table-secondary">
                                     <th scope="col">No</th>
-                                    <th scope="col">League Name</th>
-                                    <th scope="col">Home Team</th>
-                                    <th scope="col">Home Bet Amount</th>
-                                    <th scope="col">Away Team</th>
-                                    <th scope="col">Away Bet Amount</th>
-                                    <th scope="col">Body Difference</th>
+                                    <th scope="col">EventTime</th>
+                                    <th scope="col">Team</th>
+                                    <th scope="col">Home Amt</th>
+                                    <th scope="col">Away Amt</th>
+                                    <th scope="col">Over Amt</th>
+                                    <th scope="col">Under Amt</th>
+                                    <th scope="col">Body Diff</th>
+                                    <th scope="col">Goal Diff</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,12 +166,16 @@ const BodyLiveData = () => {
                                                 <Fragment key={i}>
                                                     <tr >
                                                         <th scope="row">{i + 1}</th>
-                                                        <td>{d.leagueName}</td>
-                                                        <td>{d.homeTeam}</td>
+                                                        <td>{moment(d.eventTime).format("hh:mm A")}</td>
+                                                        <td><span style={{color: d.overTeamId === d.homeTeamId ? 'red' : null,marginRight : 5}}>{d.homeTeam}</span>
+                                                        Vs<span style={{color: d.overTeamId === d.awayTeamId ? 'red' : null,marginLeft : 5}}>{d.awayTeam}</span> <br/> ({d.bodyOdds})/({d.goalOdds})</td>
                                                         <td style={{color:d.homeAmount > d.awayAmount ? 'red' : 'black'}}>{d.homeAmount.toLocaleString("en-US")}</td>
-                                                        <td>{d.awayTeam}</td>
                                                         <td style={{color:d.awayAmount > d.homeAmount ? 'red' : 'black'}}>{d.awayAmount.toLocaleString("en-US")}</td>
-                                                        <td style={{color:'orange'}}>{d.bodyAmount.toLocaleString("en-US")}</td>
+                                                        <td style={{color:d.over > d.under ? 'red' : 'black'}}>{d.over.toLocaleString("en-US")}</td>
+                                                        <td style={{color:d.under > d.over ? 'red' : 'black'}}>{d.under.toLocaleString("en-US")}</td>
+                                                        <td style={{color:'orange'}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
+                                                        <td style={{color:'orange'}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
+                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" className='btn btn-primary btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
                                                     </tr>
                                                 </Fragment>
                                             )
@@ -349,4 +344,6 @@ const data = [
         "eventTime": "2023-03-31 12:00:000"
     },
 ]
-export default BodyLiveData
+export default BodyLiveData;
+
+

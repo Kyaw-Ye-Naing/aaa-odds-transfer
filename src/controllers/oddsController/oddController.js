@@ -223,6 +223,7 @@ const calculateEventResult = (userId,startDate, setResponse) => {
         });
 };
 
+//------------------------ Analysis Page ---------------------------------------------
 //--calculate event result
 const getSingleLiveData = (startDate,isBody, setResponse) => {
     postApi(`${apiList.getSingleLiveData}`,
@@ -230,6 +231,14 @@ const getSingleLiveData = (startDate,isBody, setResponse) => {
             searchDate : startDate,
             isBody : isBody
         },
+        (data) => {
+            setResponse(data);
+        });
+};
+
+//---get voucher details
+const getVoucherDetails = (rapidEventId, setResponse) => {
+    getApi(`${apiList.getVoucherDetails}/${parseInt(rapidEventId)}`,
         (data) => {
             setResponse(data);
         });
@@ -253,5 +262,6 @@ export const oddController = {
     getEventResult,
     calculateEventResult,
     getSingleLiveData,
-    saveBettingEventsConfirm
+    saveBettingEventsConfirm,
+    getVoucherDetails
 }
