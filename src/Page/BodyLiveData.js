@@ -16,7 +16,7 @@ const BodyLiveData = () => {
     const [page, setPage] = useState();
     const [serachdiff, setSearchDiff] = useState();
     const [searchText, setSearchText] = useState([]);
-    const [searchSingle, setSearchSingle] = useState(data);
+    const [searchSingle, setSearchSingle] = useState([]);
     const [singleLiveData,setSingleLiveData] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const [rapidEventId,setRapidEventId] = useState(0);
@@ -27,7 +27,6 @@ const BodyLiveData = () => {
             history.push("/");
         }
         setUsername(userName);
-        setPage(data.length / rowsPerPage);
         getGetBodyLiveData();
     }, []);
 
@@ -37,6 +36,7 @@ const BodyLiveData = () => {
             console.log("dsta",data)
             setSearchSingle(data.livedata);
             setSingleLiveData(data.livedata);
+            setPage(data.livedata.length / rowsPerPage);
             setLoading(false);
         });
     }
@@ -92,10 +92,8 @@ const BodyLiveData = () => {
         <div>
              <AnalysisModal rapidEventId={rapidEventId}/>
             <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex" style={{ gap: 5 }}>
-                <div className="bd-highlight">
-                    <div className="mb-2">
-                        <label className="form-label">Start Date</label>
+                <div className="d-flex" style={{ gap: 5 }}>
+                    <div className="bd-highlight mb-2">
                         <input
                             className="form-control"
                             type="date"
@@ -105,20 +103,19 @@ const BodyLiveData = () => {
                             name="birthday"
                         />
                     </div>
+
+                    <div className="bd-highlight mb-2">
+                        <button
+                            type="button"
+                            className="btn btn-success"
+                            onClick={() => getGetBodyLiveData()}
+                        >
+                            Search
+                        </button>
+                    </div>
                 </div>
 
-                <div className="bd-highlight">
-                    <button
-                        type="button"
-                        className="search-btn btn btn-success"
-                        onClick={() => getGetBodyLiveData()}
-                    >
-                        Search
-                    </button>
-                </div>
-            </div>
                 <div className="mb-2">
-                    <label>Search Team</label>
                     <input
                         type="text"
                         value={searchText}
@@ -165,7 +162,7 @@ const BodyLiveData = () => {
                                             return (
                                                 <Fragment key={i}>
                                                     <tr >
-                                                        <th scope="row">{i + 1}</th>
+                                                        <th scope="row">{pageCount * rowsPerPage + i + 1}</th>
                                                         <td>{moment(d.eventTime).format("hh:mm A")}</td>
                                                         <td><span style={{color: d.overTeamId === d.homeTeamId ? 'red' : null,marginRight : 5}}>{d.homeTeam}</span>
                                                         Vs<span style={{color: d.overTeamId === d.awayTeamId ? 'red' : null,marginLeft : 5}}>{d.awayTeam}</span> <br/> ({d.bodyOdds})/({d.goalOdds})</td>
