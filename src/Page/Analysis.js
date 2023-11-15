@@ -4,8 +4,11 @@ import BodyLiveData from './BodyLiveData';
 import { useHistory } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import './analysis.css';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 function Analysis() {
+    const handle = useFullScreenHandle();
+    console.log("kokok",handle);
     const [username, setUsername] = useState("");
     const history = useHistory();
     const [type,setType] = useState("goal");
@@ -16,7 +19,7 @@ function Analysis() {
     useEffect(() => {
         const userName = localStorage.getItem("userName");
         const userRole = localStorage.getItem("userRole");
-        //console.log("kokok",userName);
+        console.log("kokok",handle);
         if (userName == undefined || userName != "Bo Bo") {
             history.push("/");
         }
@@ -39,8 +42,14 @@ function Analysis() {
 
     return (
         <div>
-            <NavBar username={username} analysiscolor={"link-btn-active"} userRole={userRole}/>
-            <span className="site-header">Analysis</span>
+            <NavBar username={username} analysiscolor={"link-btn-active"} userRole={userRole} />
+           
+            <button onClick={handle.enter} className='btn btn-light' style={{ float: 'right' }}>
+                <i className="fa-solid fa-maximize" style={{ color: 'gray', fontSize: '1.2rem' }}></i>
+            </button>
+
+            <FullScreen handle={handle}>
+
             {/* <div className="d-flex justify-content-center">
             <div className="btn-group" role="group" aria-label="Basic example">
                 <button type="button" className={goalbtnColor} onClick={()=>handleOnClick('goal')}>Goal Live Data</button>
@@ -48,7 +57,17 @@ function Analysis() {
             </div>
             </div> */}
             {/* {type == 'goal' ?  <GoalLiveData /> :  <BodyLiveData />} */}
-            <BodyLiveData />
+
+                <div style={{ background: handle.active ? "#fff" : null, height: handle.active ? '100%' : null }}>
+                <span className="site-header">Analysis</span>
+                    { handle.active ?
+                        <button onClick={handle.exit} className='btn btn-light' style={{ position: 'absolute',top : 0 ,right : 0 }}>
+                            <i className="fa-solid fa-minimize" style={{ color: 'gray', fontSize: '1.2rem' }}></i>
+                        </button> : null
+                    }
+                    <BodyLiveData />
+                </div>
+            </FullScreen>
         </div>
     )
 }

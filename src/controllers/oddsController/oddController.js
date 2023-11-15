@@ -244,6 +244,26 @@ const getVoucherDetails = (rapidEventId, setResponse) => {
         });
 };
 
+//---get overall voucher with user id
+const getOverallVoucher = (customerId, setResponse) => {
+    getApi(`${apiList.getOverallVoucher}/${parseInt(customerId)}`,
+        (data) => {
+            setResponse(data);
+        });
+};
+
+//---get overall voucher with user id
+const updateOverallVoucher = (voucherList, setResponse) => {
+    console.log("data>>>",voucherList);
+    postApi(`${apiList.updateVoucherLists}`, {
+        voucherList: voucherList
+    },
+        (data) => {
+            setResponse(data);
+        });
+};
+
+
 export const oddController = {
     getAllTeams,
     saveSelectedTeams,
@@ -263,5 +283,7 @@ export const oddController = {
     calculateEventResult,
     getSingleLiveData,
     saveBettingEventsConfirm,
-    getVoucherDetails
+    getVoucherDetails,
+    getOverallVoucher,
+    updateOverallVoucher
 }

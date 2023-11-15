@@ -24,5 +24,7 @@ export const apiList = {
     calculateVoucherApi:"Odd/calculate-event-result",
 
     getSingleLiveData : "Odd/single-live-data",
-    getVoucherDetails : "Odd/analysis-voucher-details"
+    getVoucherDetails : "Odd/analysis-voucher-details",
+    getOverallVoucher : "Odd/voucher-overall",
+    updateVoucherLists : "Odd/voucher-modify"
 };

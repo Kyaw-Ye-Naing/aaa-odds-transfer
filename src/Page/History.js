@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import MyModal from "./components/HistoryModal";
 import DeleteAlertModal from "./components/DeleteAlertModal";
 import { oddController } from "../controllers/oddsController/oddController";
+import ReactiveButton from 'reactive-button';
+import { Button } from 'react-bootstrap';
 
 const data = [
   {
@@ -61,6 +63,9 @@ function History() {
   const [selectedCustomer, setSelectdCustomer] = useState(0);
   const [deleteId, setDeleteId] = useState(0);
   const [userRole,setUserRole] = useState();
+  const [tab,setTab] = useState(false);
+  const [goalbtnColor,setGoalbtnColor] = useState('btn-normal');
+  const [bodybtnColor,setBodybtnColor] = useState('btn-activate');
   const [itemview, setItemview] = useState({
     "voucher": "",
     "amount": 0,
@@ -155,6 +160,17 @@ function History() {
     });
   }
 
+  const handleOnClick = (value) => {
+    setTab(value);
+    if (value){
+       setGoalbtnColor('btn-activate');
+       setBodybtnColor('btn-normal');
+    }else{
+       setGoalbtnColor('btn-normal');
+       setBodybtnColor('btn-activate');
+    }
+}
+
   return (
     <div>
       <DeleteAlertModal handleRemoveVoucher={handleRemoveVoucher} deleteId={deleteId} />
@@ -173,30 +189,38 @@ function History() {
         handleUpdate={handleUpdate}
       />
       <NavBar username={username} historycolor={"link-btn-active"} userRole={userRole}/>
-
-      {isLoading ? (
-        <div style={{ textAlign: "center" }}>
-          <Loader />
-          <p>Loading .....</p>
+      <span className="site-header">Member Outstanding</span>
+      <div className="d-flex justify-content-center mb-2">
+        <div className="btn-group" role="group" aria-label="Basic example">
+        <button type="button" className={bodybtnColor} onClick={() => handleOnClick(false)}>List Mode</button>
+          <button type="button" className={goalbtnColor} onClick={() => handleOnClick(true)}>Edit Mode</button>
         </div>
-      ) : (
-        <div>
-          <span className="site-header">Member Outstanding</span>
-          <div className="wrapper">
-            <div className="table-responsive">
-              <table className="table table-light">
-                <thead>
-                  <tr className="table-secondary">
-                    <th scope="col"></th>
-                    <th scope="col">No</th>
-                    <th scope="col"></th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                {/* <tbody>
+      </div> 
+      { tab ?
+      <Edit customer={customer}/> :
+      <div>
+        {isLoading ? (
+          <div style={{ textAlign: "center" }}>
+            <Loader />
+            <p>Loading .....</p>
+          </div>
+        ) : (
+          <div>
+            <div className="wrapper">
+              <div className="table-responsive">
+                <table className="table table-light">
+                  <thead>
+                    <tr className="table-secondary">
+                      <th scope="col"></th>
+                      <th scope="col">No</th>
+                      <th scope="col"></th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  {/* <tbody>
                   {data &&
                     data.map((d, i) => {
                       return (
@@ -238,55 +262,57 @@ function History() {
                       );
                     })}
                 </tbody> */}
-                <tbody>
-                  {item.length != 0 ?
-                    item &&
-                    item.map((d, i) => {
-                      return (
-                        <Fragment key={i}>
-                          <tr >
-                            <td>
-                              <a onClick={() => handleClick(i)} style={{ marginLeft: '5%', cursor: 'pointer' }}>
-                                {d.isExpand ? (
-                                  <i className="fas fa-chevron-up"></i>
-                                ) : <i className="fas fa-chevron-down"></i>}
-                              </a>
-                            </td>
-                            <th scope="row">{i + 1}</th>
-                            <td></td>
-                            <td>{d.customerName}</td>
-                            <td>{d.totalAmount}</td>
-                            <td></td>
-                            <td></td>
+                  <tbody>
+                    {item.length != 0 ?
+                      item &&
+                      item.map((d, i) => {
+                        return (
+                          <Fragment key={i}>
+                            <tr >
+                              <td>
+                                <a onClick={() => handleClick(i)} style={{ marginLeft: '5%', cursor: 'pointer' }}>
+                                  {d.isExpand ? (
+                                    <i className="fas fa-chevron-up"></i>
+                                  ) : <i className="fas fa-chevron-down"></i>}
+                                </a>
+                              </td>
+                              <th scope="row">{i + 1}</th>
+                              <td></td>
+                              <td>{d.customerName}</td>
+                              <td>{d.totalAmount}</td>
+                              <td></td>
+                              <td></td>
 
-                          </tr>
-                          {d.isExpand ? (
-                            <ExpandRow
-                              setItemview={setItemview}
-                              customerId={d.customerId}
-                              itemview={itemview}
-                              itemdetails={itemdetails}
-                              setAmount={setAmount}
-                              setSelectdCustomer={setSelectdCustomer}
-                              setGoal={setGoal}
-                              setUnit = {setUnit}
-                              setDeleteId={setDeleteId}
-                              setIsEdit={setIsEdit} />
-                          ) : null}
-                        </Fragment>
-                      );
-                    })
-                    :
-                    <tr>
-                      <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
+                            </tr>
+                            {d.isExpand ? (
+                              <ExpandRow
+                                setItemview={setItemview}
+                                customerId={d.customerId}
+                                itemview={itemview}
+                                itemdetails={itemdetails}
+                                setAmount={setAmount}
+                                setSelectdCustomer={setSelectdCustomer}
+                                setGoal={setGoal}
+                                setUnit={setUnit}
+                                setDeleteId={setDeleteId}
+                                setIsEdit={setIsEdit} />
+                            ) : null}
+                          </Fragment>
+                        );
+                      })
+                      :
+                      <tr>
+                        <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+}
     </div>
   );
 }
@@ -435,4 +461,193 @@ export function ExpandRow({
         })}
     </>
   );
+}
+
+const Edit = (props) => {
+const {customer} = props;
+const [voucherList,setVoucherList] = useState([]);
+const [editableData,setEditableData] = useState([]);
+const [valueState, setValueState] = useState('idle');
+
+  useEffect(() => {
+    console.log("customer",customer)
+  },[])
+
+ const handleVoucherView = (customerId)=>{
+  setEditableData([]);
+  console.log("customer",customerId)
+  oddController.getOverallVoucher(parseInt(customerId), (data) => {
+    setVoucherList(data.payload);
+  });
+ }
+
+ const handleVoucherAdd = (v) => {
+  console.log("ddd",editableData)
+  const arr = editableData.map(obj => ({ ...obj }));
+  arr.push(v);
+  //const arr = [...editableData];
+  //arr.push(v);
+  setEditableData(arr);
+ }
+
+ const handleVoucherSave = () => {
+  setValueState('loading');
+  oddController.updateOverallVoucher(editableData, (data) => {
+    setValueState('success');
+    setVoucherList([]);
+    setEditableData([]);
+  });
+ }
+
+ const handleTextChange = (index, value, type) => {
+ let newData = [...editableData];
+  if(type === 'odds'){
+    editableData[index].odds = value;
+  }
+  if(type === 'amount'){
+    editableData[index].amount = value;
+  }
+ setEditableData(newData);
+};
+
+const handleVoucherRemove = (value) => {
+  let newData = [...editableData];
+  newData = newData.filter(item => item.bettingId != value.bettingId);
+  setEditableData(newData);
+}
+
+  return (
+    <div>
+      <div className="row">
+        <div className="col-lg-3 col-12 mb-4">
+          <div className="bg-light" style={{height:500,overflowY:'scroll'}}>
+            <table class="table">
+              <thead style={{position:'sticky'}}>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {customer && customer.map((v, i) =>
+                  <tr key={i}>
+                    <th scope="row">{i+1}</th>
+                    <td>{v.customerName}</td>
+                    <td>
+                      <Button variant="success" size="sm" onClick={() => handleVoucherView(v.customerId)}><i className="fa fa-eye"></i></Button>
+                    </td>
+                  </tr>
+                )
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="col-lg-4 col-12 mb-2">
+        <div className="bg-light">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Choice</th>
+                <th scope="col">Odds</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              { voucherList.length > 0 ? voucherList.map((v,i) =>
+              <tr>
+                <th scope="row">{i+1}</th>
+                <td>{v.choice}</td>
+                <td>{v.odds}</td>
+                <td>{v.amount}</td> 
+                <td><Button variant="success" size="sm" onClick={() => handleVoucherAdd(v)}><i className="fa fa-plus"></i></Button></td>
+              </tr>
+                ) : <tr>
+                  <td colSpan={5} style={{ textAlign: 'center' }}>No Data</td>
+                </tr>
+}
+              {/* <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td><Button variant="success" size="sm">Add</Button></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry the Bird</td>
+                <td>@twitter</td>
+                <td>@mdo</td>
+                <td><Button variant="success" size="sm">Add</Button></td>
+              </tr> */}
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <div className="col-lg-5 col-12 mb-2">
+        <div className="bg-light">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Choice</th>
+                <th scope="col">Odds</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              { editableData.length > 0 ? editableData.map((v,i) =>
+              <tr>
+                <th scope="row">{i+1}</th>
+                <td>{v.choice}</td>
+                <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={v.odds}
+                      onChange={(e) =>
+                       handleTextChange(i, e.target.value,'odds', v)
+                      }
+                    />
+                </td>
+                <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={v.amount}
+                      width={'100%'}
+                    onChange={(e) =>
+                     handleTextChange(i, e.target.value, 'amount', v)
+                    }
+                    />
+                </td>
+                <td><Button variant="danger" size="sm" onClick={() => handleVoucherRemove(v)}><i className="fa fa-trash"></i></Button></td>
+              </tr>
+) :
+<tr>
+                  <td colSpan={5} style={{ textAlign: 'center' }}>No Data</td>
+                </tr>
+}
+            </tbody>
+          </table>
+            <div className="d-flex justify-content-center pb-2">
+              <ReactiveButton
+                buttonState={valueState}
+                idleText="Save"
+                color="green"
+                loadingText="Loading"
+                successText="Update Successfully!"
+                disabled={editableData.length > 0 ? false : true}
+                onClick={()=>handleVoucherSave()}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }

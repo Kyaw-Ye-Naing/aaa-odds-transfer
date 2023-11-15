@@ -172,13 +172,13 @@ const BodyLiveData = () => {
                                                         <td style={{color:d.under > d.over ? 'red' : 'black'}}>{d.under.toLocaleString("en-US")}</td>
                                                         <td style={{color:'orange'}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
                                                         <td style={{color:'orange'}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
-                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" className='btn btn-primary btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
+                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" className='btn btn-success btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
                                                     </tr>
                                                 </Fragment>
                                             )
                                         })
                                     : <tr>
-                                        <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
+                                        <td colSpan={9} style={{ textAlign: 'center' }}>no data</td>
                                     </tr>
                                 }
                             </tbody>
