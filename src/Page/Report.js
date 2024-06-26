@@ -184,7 +184,7 @@ function Report() {
                       );
                     })
             :<tr>
-              <td colSpan={7} style={{textAlign:'center'}}>no data</td>
+              <td colSpan={8} style={{textAlign:'center'}}>no data</td>
             </tr>
                   }
             </tbody>
