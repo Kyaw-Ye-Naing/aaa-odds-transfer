@@ -28,6 +28,7 @@ function LogIn() {
         setLoading(true);
         oddController.checkLogIn(name, password, (data) => {
             setLoading(false);
+            console.log("uuyuy",data);
             localStorage.setItem("userId", data.userId);
             localStorage.setItem("userName", data.userName);
             //localStorage.setItem("userRole", data.userRole);

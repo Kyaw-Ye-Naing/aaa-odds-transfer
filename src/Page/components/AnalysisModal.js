@@ -43,19 +43,19 @@ const [loading,setLoading] = useState(false);
                                         </div>
                                         <div className='col-md-3 p-0' style={{ borderRight: '1px solid black' }}>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                                <span>Home</span>
+                                                <span>Away</span>
                                                 <span>Total - {voucherDetails.awayList && voucherDetails.awayList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                         </div>
                                         <div className='col-md-3 p-0' style={{ borderRight: '1px solid black' }}>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                                <span>Home</span>
+                                                <span>Over</span>
                                                 <span>Total - {voucherDetails.overList && voucherDetails.overList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                         </div>
                                         <div className='col-md-3 p-0'>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                                <span>Home</span>
+                                                <span>Under</span>
                                                 <span>Total - {voucherDetails.underList && voucherDetails.underList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                         </div>

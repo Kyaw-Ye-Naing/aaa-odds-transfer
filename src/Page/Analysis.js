@@ -8,7 +8,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 function Analysis() {
     const handle = useFullScreenHandle();
-    console.log("kokok",handle);
     const [username, setUsername] = useState("");
     const history = useHistory();
     const [type,setType] = useState("goal");
@@ -19,8 +18,8 @@ function Analysis() {
     useEffect(() => {
         const userName = localStorage.getItem("userName");
         const userRole = localStorage.getItem("userRole");
-        console.log("kokok",handle);
-        if (userName == undefined || userName != "Bo Bo") {
+        
+        if (userName == undefined || userRole != 1) {
             history.push("/");
         }
         setUsername(userName);

@@ -108,11 +108,12 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                     Active
                   </label>
                 </div>
+                <div className="d-flex justify-content-end">
                 <button 
                 type="button" 
                 className="btn btn-secondary" 
                 data-bs-dismiss="modal" 
-                style={{marginRight:5}}>
+               >
                   Close
                   </button>
                 <button 
@@ -120,9 +121,11 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 data-bs-dismiss="modal" 
                 className="btn btn-primary" 
                 onClick={()=>EditSave()} 
+                style={{marginLeft:5}}
                 >
                   Save
                 </button>
+                </div>
               </form>
             </div>
           </div>

@@ -634,15 +634,16 @@ function OddsTransfer() {
               className="btn btn-success"
               disabled={isLoading1 ? true : false}
               onClick={() => teamsHandleSave()}
+              style={{fontSize:'0.875rem'}}
             >
               Add <i className="fa-solid fa-plus"></i>
             </button>
           </div>
           <div className="d-flex justify-content-between my-2">
-            <span style={{ fontSize: "15px" }}>
+            <span style={{ fontSize:'0.875rem' }}>
               Selected {selectedTeams} Teams
             </span>
-            <div>
+            <div style={{ fontSize:'0.875rem' }}>
               Check All &nbsp;
               <input
                 className="form-check-input"
@@ -664,6 +665,7 @@ function OddsTransfer() {
                     style={{
                       backgroundColor: MyColor.headerbackground,
                       color: MyColor.color,
+                      fontSize:'0.875rem'
                     }}
                   >
                     <th scope="col">NO</th>
@@ -671,7 +673,7 @@ function OddsTransfer() {
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style={{fontSize:'0.8rem'}}>
                   {searchedTeam.length > 0 &&
                     searchedTeam
                       .slice(
@@ -748,6 +750,7 @@ function OddsTransfer() {
               className="btn btn-success mb-3"
               disabled={isLoading ? true : false}
               onClick={() => refreshOdds()}
+              style={{fontSize:'0.875rem'}}
             >
              Refresh <i className="fa-solid fa-arrows-rotate"></i>
             </button>
@@ -764,6 +767,7 @@ function OddsTransfer() {
                     style={{
                       backgroundColor: MyColor.headerbackground,
                       color: MyColor.color,
+                      fontSize:'0.875rem'
                     }}
                   >
                     <th scope="col">No</th>
@@ -778,7 +782,7 @@ function OddsTransfer() {
                     }}
                   ></tr>
                 </thead>
-                <tbody>
+                <tbody style={{fontSize:'0.8rem'}}>
                   {searchedOdd.length > 0 &&
                     searchedOdd
                       .slice(
@@ -876,7 +880,7 @@ function OddsTransfer() {
             <button
               type="button"
               className="btn btn-success mb-3"
-              style={{ marginBottom: 5 }}
+              style={{ marginBottom: 5,fontSize:'0.875rem' }}
               disabled={isLoading2 || searchedCopy.length == 0 ? true : false}
               onClick={() => handleCopy()}
             >
@@ -896,6 +900,7 @@ function OddsTransfer() {
                   style={{
                     backgroundColor: MyColor.headerbackground,
                     color: MyColor.color,
+                    fontSize:'0.875rem'
                   }}
                 >
                   <th scope="col">No</th>
@@ -905,7 +910,7 @@ function OddsTransfer() {
                   <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{fontSize:'0.8rem'}}>
                 {searchedCopy.length > 0 &&
                   searchedCopy
                     .slice(

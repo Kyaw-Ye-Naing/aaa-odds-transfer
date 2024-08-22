@@ -1,36 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
 
-body{
+body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
 
-.App{
-  overflow-x: hidden; 
- /* background: linear-gradient(120deg,#3b7197,#00B3B3); */
- background-color: rgb(255, 255, 255);
- height: 100vh;
+.App {
+    overflow-x: hidden;
+    /* background: linear-gradient(120deg,#3b7197,#00B3B3); */
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
-hr{
+hr {
     margin: 0.5rem 0;
 }
 
-.modal-content{
+.modal-content {
     border-left: 5px solid green;
 }
 
-#deletealertModal .modal-content{
+#deletealertModal .modal-content {
     border-left: 5px solid red;
 }
+
 /*----------- Start Nav Bar Section --------*/
-.odds-nav{
+.odds-nav {
     background-color: #00636E;
     /* background-color: #303A52; */
     display: flex;
@@ -38,39 +40,40 @@ hr{
     align-items: center;
     padding: 1rem 4rem;
     margin-bottom: 0.5rem;
-  }
+}
 
-.profile{
+.profile {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.profile .info{
+.profile .info {
     color: white;
     margin-left: 1rem;
     font-weight: 400;
     font-size: larger;
 }
-  
-.title{
-     color: white;
-     display: flex;
-     align-items: center;
-}
 
-.title span{
-    font-size: 2rem;
-}
-
-.logLink{
+.title {
+    color: white;
     display: flex;
     align-items: center;
 }
+
+.title span {
+    font-size: 2rem;
+}
+
+.logLink {
+    display: flex;
+    align-items: center;
+}
+
 /*----------- End Nav Bar Section --------*/
 
 /*----------- Start Link Button Group Section --------*/
-.group-list{
+.group-list {
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -78,64 +81,65 @@ hr{
     /* margin-bottom: 1rem; */
 }
 
-.group-list .link-btn{
+.group-list .link-btn {
     margin-left: .5rem;
     background-color: #00636E;
-    color:white;
-    margin-bottom: 5px; 
-}
-
-.group-list .link-btn:hover{
-    background-color: #237e88;
-    color:whitesmoke;
-}
-
-.group-list .link-btn-active{
-    margin-left: .5rem;
-    background-color: #ffc107;
-    color:black;
+    color: white;
     margin-bottom: 5px;
 }
 
-.group-list .link-btn-active:hover{
+.group-list .link-btn:hover {
+    background-color: #237e88;
+    color: whitesmoke;
+}
+
+.group-list .link-btn-active {
+    margin-left: .5rem;
+    background-color: #ffc107;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.group-list .link-btn-active:hover {
     background-color: hsl(45, 77%, 64%);
-    color:black;
+    color: black;
 }
 
 /*----------- End Link Button Group Section --------*/
 
 /*----------- Start Events Section --------*/
-.main{
+.main {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
- }
- 
-.right{
-     width: 300px;
-}
- 
-.middle{
-    width: 500px; 
-}
- 
-.left{
-     width: 500px; 
-}
- 
-.table-title{
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-}
- 
-.input-gp{
-     display: flex;
 }
 
-.site-header{
-    color:green;
+.right {
+    width: 300px;
+}
+
+.middle {
+    width: 500px;
+}
+
+.left {
+    width: 500px;
+}
+
+.table-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.875rem;
+}
+
+.input-gp {
+    display: flex;
+}
+
+.site-header {
+    color: green;
     font-size: 1.1rem;
     display: flex;
     justify-content: center;
@@ -143,95 +147,89 @@ hr{
     font-weight: bold;
 }
 
-.bet-container .event{
+.bet-container .event {
     margin: 0 .3rem;
     height: 70vh;
     overflow-y: scroll;
-    overflow-x: none; 
+    overflow-x: none;
     scroll-behavior: smooth;
 }
 
-.bet-container .event table{
-   font-size: larger;
+.bet-container .event table,
+.bet-container .panel .panel-details table {
+    font-size: 0.9rem;
 }
 
-.bet-container .event table td,.bet-container .event table th{
+.bet-container .event table td,
+.bet-container .event table th {
     text-align: left;
-    padding: 1rem 0.2rem;
- }
+    padding: 0.5rem 0.2rem;
+}
 
-.bet-container .event table .team{
+.bet-container .event table .team {
     cursor: pointer;
     text-decoration: none;
     color: black;
 }
 
-.bet-container .event table .team:hover{
+.bet-container .event table .team:hover {
     color: rgb(5, 181, 76);
 }
 
-.bet-container .panel{
+.bet-container .panel {
     margin: .3rem .3rem;
 }
 
-.bet-container .panel table{
+.bet-container .panel table {
     font-size: large;
- }
+}
 
-.bet-container .panel .panel-details{
-    border:2px solid #ddd;
+.bet-container .panel .panel-details {
+    border: 2px solid #ddd;
     border-bottom: none;
     overflow-x: scroll;
 }
 
-.bet-container .panel select{
+.bet-container .panel select {
     width: 50%;
 }
 
-.bet-container .panel .total-txt{
-   float: right;
-    width: 30%;
+.bet-container .panel button span {
+    font-size: 0.875rem;
 }
 
-.bet-container .panel button{
-    margin-top: 23px;
- }
-
- .bet-container .panel button span{
-    font-size: 1.1rem;
- }
-
-.bet-container .event::-webkit-scrollbar-track
-{
-	border: 1px solid #00636E;
-	background-color: #F5F5F5;
+.bet-container .event::-webkit-scrollbar-track {
+    border: 1px solid #00636E;
+    background-color: #F5F5F5;
     border-radius: 10px;
 }
 
-.bet-container .event::-webkit-scrollbar
-{
-	width: 10px;
-	background-color: #F5F5F5;
+.bet-container .event::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
 }
 
-.bet-container .event::-webkit-scrollbar-thumb
-{
-	background-color:#00636E;	
+.bet-container .event::-webkit-scrollbar-thumb {
+    background-color: #00636E;
     border-radius: 10px;
+}
+
+.page-link {
+    font-size: 0.8rem;
 }
 
 /*--------Start Report Site-------------------*/
-.search-btn{
+.search-btn {
     margin-top: 2rem;
 }
 
 
-.search-txt{
-   width: 200px;
-   margin-top: 5px;
+.search-txt {
+    width: 200px;
+    margin-top: 5px;
 }
 
-.report-table{
+.report-table {
     /* font-size: 1.3rem; */
     overflow-x: scroll;
 }
@@ -249,19 +247,21 @@ hr{
     align-items: center;
     margin-bottom: 1rem;
 }
-.customer-header .customer-txt{
+
+.customer-header .customer-txt {
     width: 200px;
 }
+
 /*--------end history section -------------------*/
 
 /*--------start modal section -------------------*/
-.event-details{
+.event-details {
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
 }
 
-.event-details .league{
+.event-details .league {
     font-weight: bolder;
     font-size: 1.2rem;
 }
@@ -270,40 +270,43 @@ hr{
     display: flex;
     align-items: center;
 }
-.amt-edit input{
+
+.amt-edit input {
     width: 100px;
     margin-left: 5px;
 }
 
-.delete-body{
+.delete-body {
     display: flex;
     flex-direction: column;
 }
 
-.delete-body span{
+.delete-body span {
     font-weight: bold;
     font-size: 1rem;
 }
 
-.delete-body span i{
+.delete-body span i {
     font-weight: bold;
     font-size: 1.5rem;
     color: red;
     margin-right: 5px;
 }
 
-.delete-body .delete-btn-gp{
+.delete-body .delete-btn-gp {
     display: flex;
     justify-content: flex-end;
 }
+
 /*--------end modal section -------------------*/
 
 .accordion-button:focus {
-    z-index: 0; 
-    border-color: none; 
-    outline: 0; 
+    z-index: 0;
+    border-color: none;
+    outline: 0;
     box-shadow: none;
 }
+
 /* body {
     font-family: 'Roboto', sans-serif;
 background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
@@ -312,49 +315,50 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 /*------ media query ---------*/
 
 @media screen and (max-width: 600px) {
-    .title span{
+    .title span {
         font-size: 1.0rem;
-      }
+    }
 
-      .profile .info{
+    .profile .info {
         font-weight: 400;
         font-size: medium;
     }
 
-    .profile img{
+    .profile img {
         width: 20px;
         height: 20px;
     }
 
-    .logout span{
+    .logout span {
         display: none;
     }
-    .odds-nav{      
-        padding: 1rem 2rem;     
-      }
 
-      .bet-container .event table{
-        font-size: 1rem;
-     }
+    .odds-nav {
+        padding: 1rem 2rem;
+    }
 
-     .bet-container .panel table{
-        font-size: 1.1rem;
-     }
-  }
+    .bet-container .event table {
+        font-size: 0.8rem;
+    }
+
+    .bet-container .panel table {
+        font-size: 0.8rem;
+    }
+}
 
 @media screen and (min-width: 600px) {
-    .logout span{
+    .logout span {
         display: block;
     }
 }
 
-@media screen and (max-width:360px){
-    .group-list .btn-label{
+@media screen and (max-width:360px) {
+    .group-list .btn-label {
         font-size: 0.8rem;
         font-weight: bold;
     }
 
-    .title{
+    .title {
         display: none;
     }
 
@@ -364,31 +368,31 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 }
 
 @media screen and (min-width:770px) {
-    .group-list{
+    .group-list {
         justify-content: center;
     }
 }
 
 @media screen and (max-width:400px) {
-    .title{
+    .title {
         display: none;
     }
 }
 
-@media screen and (max-width : 700px){
-    .title span{
+@media screen and (max-width : 700px) {
+    .title span {
         font-size: 1.3rem;
-      }
+    }
 }
 
-@media screen and (max-width :1000px){
-    .bet-container .panel select{
+@media screen and (max-width :1000px) {
+    .bet-container .panel select {
         width: 100%;
     }
 }
 
 @media screen and (max-width : 430px) {
     .diamond {
-display: none;
+        display: none;
     }
 }

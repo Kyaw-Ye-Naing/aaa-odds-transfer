@@ -123,11 +123,11 @@ const Cancel = () => {
                     Active
                   </label>
                 </div>
+                <div className="d-flex justify-content-end">
                 <button
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
-                  style={{ marginRight: 5 }}
                   onClick={() => Cancel()}
                 >
                   Close
@@ -136,9 +136,11 @@ const Cancel = () => {
                   type="button"
                   className="btn btn-primary"
                   onClick={() => Save()}
+                  style={{ marginLeft: 5 }}
                 >
                   Save
                 </button>
+                </div>
               </form>
             </div>
           </div>

@@ -41,7 +41,7 @@ function Betting() {
     const userName = localStorage.getItem("userName");
     const userRole = localStorage.getItem("userRole");
 
-    if (userName == undefined || userName != "Bo Bo") {
+    if (userName == undefined || userRole != 1) {
       history.push("/");
     }
     setUsername(userName);
@@ -416,7 +416,7 @@ function Betting() {
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                      {eventType}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu style={{fontSize:'1rem'}}>
                       <Dropdown.Item onClick={() => handleEventCheckbox('Upcoming')}>Upcoming</Dropdown.Item>
                       <Dropdown.Item onClick={() => handleEventCheckbox('All Event')}>All Event</Dropdown.Item>
                       <Dropdown.Item onClick={() => handleEventCheckbox('Previous')}>Previous</Dropdown.Item>
@@ -539,7 +539,7 @@ function Betting() {
                   <div className="col-12 col-lg-4 col-md-4">
                     <div className="panel">
                       <select
-                        className="form-select form-select-lg mb-3"
+                        className="form-select mb-3"
                         aria-label=".form-select-lg example"
                         value={selectedCustomer}
                         onChange={(e) => setSelectdCustomer(e.target.value)}
@@ -579,7 +579,7 @@ function Betting() {
                             {bettingData.length != 0 ?
                               bettingData &&
                               bettingData.map((b, i) => {
-                                console.log("b >>>>>", b)
+                                
                                 let isExist = b.choiceOdds.includes("=");
                                 let tempGoal = 0;
                                 let tempUnit = 0;
@@ -644,19 +644,7 @@ function Betting() {
                         </table>
                       </div>
 
-                      <div className=" total-txt mb-3">
-                        <label htmlFor="exampleFormControlInput1" className="form-label">
-                          Total
-                        </label>
-                        <input
-                          type="email"
-                          value={totalAmount}
-                          readOnly={true}
-                          className="form-control"
-                          id="exampleFormControlInput1"
-                        />
-                      </div>
-
+                      <div className="d-flex justify-content-between align-items-end mb-3">
                       <button
                         type="button"
                         className="btn btn-success"
@@ -672,10 +660,24 @@ function Betting() {
                           :
                           <>
                             <i className="fas fa-save"></i>&nbsp;
-                            <span>Save</span>
+                            <span style={{fontSize:'0.875rem'}}>Save</span>
                           </>
                         }
                       </button>
+                      <div>
+                        <label htmlFor="exampleFormControlInput1" className="form-label" >
+                          Total
+                        </label>
+                        <input
+                          type="email"
+                          value={totalAmount}
+                          readOnly={true}
+                          className="form-control"
+                          id="exampleFormControlInput1"
+                          style={{fontSize:'0.875rem'}}
+                        />
+                      </div>
+                      </div>
                     </div>
                   </div>
                 </div>
