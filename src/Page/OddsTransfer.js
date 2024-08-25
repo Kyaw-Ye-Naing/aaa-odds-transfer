@@ -8,6 +8,7 @@ import Loader from "../asset/loader";
 import Spinner from "../asset/spinner";
 import { useHistory } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import color from "../config/color";
 
 const TeamData = [
   {
@@ -597,6 +598,7 @@ function OddsTransfer() {
       <NavBar username={username} userRole={userRole} homecolor={'link-btn-active'} />
       <span
         className="site-header"
+        style={{color:color['dark'].main}}
       >
         Odds Transfer
       </span>
@@ -631,10 +633,10 @@ function OddsTransfer() {
             </div>
             <button
               type="button"
-              className="btn btn-success"
+              className="btn"
               disabled={isLoading1 ? true : false}
               onClick={() => teamsHandleSave()}
-              style={{fontSize:'0.875rem'}}
+              style={{fontSize:'0.875rem',backgroundColor:color['dark'].main,color:'#fff'}}
             >
               Add <i className="fa-solid fa-plus"></i>
             </button>
@@ -663,7 +665,7 @@ function OddsTransfer() {
                 <thead>
                   <tr
                     style={{
-                      backgroundColor: MyColor.headerbackground,
+                      backgroundColor:color['dark'].headerbg,
                       color: MyColor.color,
                       fontSize:'0.875rem'
                     }}
@@ -747,10 +749,10 @@ function OddsTransfer() {
             </div>
             <button
               type="button"
-              className="btn btn-success mb-3"
+              className="btn mb-3"
               disabled={isLoading ? true : false}
               onClick={() => refreshOdds()}
-              style={{fontSize:'0.875rem'}}
+              style={{fontSize:'0.875rem',backgroundColor:color['dark'].main,color:'#fff'}}
             >
              Refresh <i className="fa-solid fa-arrows-rotate"></i>
             </button>
@@ -765,7 +767,7 @@ function OddsTransfer() {
                 <thead>
                   <tr
                     style={{
-                      backgroundColor: MyColor.headerbackground,
+                      backgroundColor: color['dark'].headerbg,
                       color: MyColor.color,
                       fontSize:'0.875rem'
                     }}
@@ -879,8 +881,8 @@ function OddsTransfer() {
             {/* <CopyToClipboard text={searchCopy}> */}
             <button
               type="button"
-              className="btn btn-success mb-3"
-              style={{ marginBottom: 5,fontSize:'0.875rem' }}
+              className="btn mb-3"
+              style={{ marginBottom: 5,fontSize:'0.875rem',backgroundColor:color['dark'].main,color:'#fff' }}
               disabled={isLoading2 || searchedCopy.length == 0 ? true : false}
               onClick={() => handleCopy()}
             >
@@ -898,7 +900,7 @@ function OddsTransfer() {
               <thead>
                 <tr
                   style={{
-                    backgroundColor: MyColor.headerbackground,
+                    backgroundColor: color['dark'].headerbg,
                     color: MyColor.color,
                     fontSize:'0.875rem'
                   }}

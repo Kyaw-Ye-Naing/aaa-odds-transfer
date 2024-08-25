@@ -61,7 +61,7 @@ const Cancel = () => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body" style={{fontSize:'0.8rem'}}>
               <form>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
@@ -72,6 +72,7 @@ const Cancel = () => {
                     value={newcustomerData.customerName}
                     className="form-control"
                     id="exampleInputEmail1"
+                    style={{fontSize:'0.8rem'}}
                     required
                     aria-describedby="emailHelp"
                     onChange={(value) =>
@@ -87,6 +88,7 @@ const Cancel = () => {
                     type="number"
                     value={newcustomerData.commission}
                     className="form-control"
+                    style={{fontSize:'0.8rem'}}
                     step="any"
                     required
                     onChange={(value) =>
@@ -104,6 +106,7 @@ const Cancel = () => {
                     value={newcustomerData.betLimit}
                     className="form-control"
                     step="any"
+                    style={{fontSize:'0.8rem'}}
                     required
                     onChange={(value) =>
                       OnChangeText("betLimit", value.target.value)
@@ -114,6 +117,7 @@ const Cancel = () => {
                 <div className="mb-3 form-check">
                   <input
                     type="checkbox"
+                    style={{fontSize:'0.8rem'}}
                     checked={newcustomerData.active}
                     onChange={(v) => OnChangeText("active", v.target.checked)}
                     className="form-check-input"
@@ -128,6 +132,7 @@ const Cancel = () => {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  style={{ fontSize:'0.8rem' }}
                   onClick={() => Cancel()}
                 >
                   Close
@@ -136,7 +141,7 @@ const Cancel = () => {
                   type="button"
                   className="btn btn-primary"
                   onClick={() => Save()}
-                  style={{ marginLeft: 5 }}
+                  style={{ marginLeft: 5,fontSize:'0.8rem' }}
                 >
                   Save
                 </button>

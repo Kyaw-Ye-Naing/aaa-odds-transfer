@@ -5,6 +5,7 @@ import Loader from "../asset/loader";
 import MyModal from "./components/HistoryModal";
 import { useHistory } from "react-router-dom";
 import { oddController } from "../controllers/oddsController/oddController";
+import color from "../config/color";
 
 function Report() {
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
@@ -73,10 +74,10 @@ function Report() {
      
       <NavBar username={username} reportcolor={"link-btn-active"} userRole={userRole}/>
        
-      <span className="site-header">User Win / Lose Reports</span>
+      <span className="site-header" style={{color:color['dark'].main}}>User Win / Lose Reports</span>
 
       <div className="container-fluid">
-        <div className="d-flex flex-wrap bd-highlight mb-3">
+        <div className="d-flex flex-wrap bd-highlight mb-3" style={{fontSize:'0.8rem'}}>
           <div className="p-2 bd-highlight">
             <div className="mb-2">
               <label className="form-label">Start Date</label>
@@ -85,6 +86,7 @@ function Report() {
                 type="date"
                 id="birthday"
                 value={startDate}
+                style={{fontSize:'0.8rem'}}
                 onChange={(e)=>setStartDate(e.target.value)}
                 name="birthday"
               />
@@ -98,6 +100,7 @@ function Report() {
                 type="date"
                 id="birthday"
                 value={endDate}
+                style={{fontSize:'0.8rem'}}
                 onChange={(e)=>setEndDate(e.target.value)}
                 name="birthday"
               />
@@ -106,7 +109,8 @@ function Report() {
           <div className="p-2 bd-highlight">
             <button 
             type="button" 
-            className="search-btn btn btn-success"
+            className="search-btn btn"
+            style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
             onClick={()=>getWinLoseReport()}
             >
               Search
@@ -133,8 +137,8 @@ function Report() {
         </div>
       ) : (
         <div className="table-responsive">
-          <table className="report-table table table-light">
-            <thead className="table-secondary">
+          <table className="report-table table">
+            <thead style={{backgroundColor:color['dark'].headerbg,fontSize:'0.875rem'}}>
               <tr>
               <th scope="col"></th>
               <th scope="col">No</th>
@@ -152,7 +156,7 @@ function Report() {
                     item.map((d, i) => {
                       return (
                         <Fragment key={i}>
-                          <tr > 
+                          <tr style={{fontSize:'0.8rem'}}> 
                             <td>
                               <a onClick={() => handleClick(i)} style={{marginLeft:'5%',cursor:'pointer'}}>
                               {d.isExpand ? (
@@ -236,7 +240,7 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
 
     return (
       <>
-        <tr className="table-secondary">
+        <tr className="table-secondary" style={{fontSize:'0.875rem'}}>
           
           <th scope="col">No</th>
           <th scope="col">Betted Date</th>
@@ -251,7 +255,7 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
           result.map((d, i) => {
             return (
               <Fragment key={i}>
-              <tr className="table-secondary">
+              <tr className="table-secondary" style={{fontSize:'0.8rem'}}>
                 
                 <th scope="row">{i + 1}</th>
                 <td>{`${moment(d.bettedDate).format(

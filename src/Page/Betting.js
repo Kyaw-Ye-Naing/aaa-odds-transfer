@@ -12,6 +12,7 @@ import InputAmountModal from "./components/InputAmountModal";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import color from "../config/color";
 
 function Betting() {
   const handle = useFullScreenHandle();
@@ -386,7 +387,7 @@ function Betting() {
                 handleTeamAdd={handleTeamAdd}
               />
               <div style={{ background: handle.active ? "#fff" : null, height: handle.active ? '100%' : null }} className={handle.active ? 'container-fluid' : null}>
-                <span className="site-header">User Betting Page</span>
+                <span className="site-header" style={{color:color['dark'].main}}>User Betting Page</span>
                 {handle.active ?
                   <button onClick={handle.exit} className='btn btn-light' style={{ position: 'absolute', top: 5, right: 5 }}>
                     <i className="fa-solid fa-minimize" style={{ color: 'gray', fontSize: '1rem' }}></i>
@@ -413,7 +414,7 @@ function Betting() {
                     ></i>
                   </button>
                   <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle id="dropdown-basic" style={{backgroundColor:'white',color:'#000',borderColor:'gray'}}>
                      {eventType}
                     </Dropdown.Toggle>
                     <Dropdown.Menu style={{fontSize:'1rem'}}>
@@ -428,7 +429,7 @@ function Betting() {
                     <div className="event mb-1">
                       <table className="table">
                         <thead style={{ position: 'sticky', top: 0 }}>
-                          <tr className="table-secondary">
+                          <tr style={{backgroundColor:color['dark'].headerbg}}>
                             <th scope="col" width="15">
                               No
                             </th>
@@ -559,7 +560,7 @@ function Betting() {
                       <div className="panel-details">
                         <table className="table">
                           <thead>
-                            <tr className="table-secondary">
+                            <tr style={{backgroundColor:color['dark'].headerbg}}>
                               <th scope="col" width="50">No</th>
                               <th scope="col" width="200">
                                 Choice
@@ -647,7 +648,8 @@ function Betting() {
                       <div className="d-flex justify-content-between align-items-end mb-3">
                       <button
                         type="button"
-                        className="btn btn-success"
+                        className="btn"
+                        style={{backgroundColor:color['dark'].main,color:'#fff'}}
                         onClick={() => handleSave()}
                         disabled={isSpinner}
                       >
@@ -659,7 +661,7 @@ function Betting() {
                           )
                           :
                           <>
-                            <i className="fas fa-save"></i>&nbsp;
+                            <i className="fas fa-save" style={{color:'#fff'}}></i>&nbsp;
                             <span style={{fontSize:'0.875rem'}}>Save</span>
                           </>
                         }

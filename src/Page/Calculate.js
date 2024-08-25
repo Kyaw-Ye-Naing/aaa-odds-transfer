@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
+import color from "../config/color";
 
 function Calculate() {
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
@@ -66,13 +67,12 @@ function Calculate() {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-
   }
 
   return (
     <div>
       <NavBar username={username} calculatecolor={"link-btn-active"} userRole={userRole} />
-      <span className="site-header">Voucher Calculation</span>
+      <span className="site-header" style={{color:color['dark'].main}}>Voucher Calculation</span>
       {isLoading ? (
         <div style={{ textAlign: "center" }}>
           <Loader />
@@ -86,15 +86,15 @@ function Calculate() {
             : <span className="badge bg-warning">Pending</span>}</span><br/> */}
             <button
             type="button"
-            style={{ marginLeft: '5px' }}
+            style={{ marginLeft: '5px',backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.875rem' }}
             disabled={isShow}
-            className="btn btn-success"
+            className="btn"
             onClick={() => handleCalculate()}
           >
             <i className="fas fa-file-signature"></i>&nbsp;Calculate Voucher
           </button>
           </div>
-          <div className="d-flex" style={{ gap: 5 }}>
+          <div className="d-flex" style={{ gap: 5 ,fontSize:'0.8rem'}}>
             <div className="bd-highlight">
               <div className="mb-2">
                 <label className="form-label">Start Date</label>
@@ -103,6 +103,7 @@ function Calculate() {
                   type="date"
                   id="birthday"
                   value={startDate}
+                  style={{fontSize:'0.8rem'}}
                   onChange={(e) => setStartDate(e.target.value)}
                   name="goal-calculate"
                 />
@@ -112,7 +113,8 @@ function Calculate() {
             <div className="bd-highlight">
               <button
                 type="button"
-                className="search-btn btn btn-success"
+                className="search-btn btn"
+                style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem',marginLeft:5}}
                 onClick={() => getEventResult()}
               >
                 Search
@@ -123,7 +125,7 @@ function Calculate() {
           <div className="cal-container">
             <div className="table-responsive">
               <table className="table table-light">
-                <thead className="table-secondary">
+                <thead className="table-secondary" style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
                   <tr>
                     <th scope="col">No</th>
                     <th scope="col">Time</th>
@@ -133,7 +135,7 @@ function Calculate() {
                     <th scope="col">Away</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style={{fontSize:'0.8rem'}}>
                   {events.length != 0 ?
                     events &&
                     events.map((d, i) => {

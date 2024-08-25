@@ -4,7 +4,8 @@
     justify-content: center;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.563) 0px 5px 15px;;
-    background: linear-gradient(120deg,#007C64,#55b49b);
+    /* background: linear-gradient(120deg,#007C64,#55b49b); */
+    background: linear-gradient(120deg,#156064,#00C49A);
 }
 
 .btn-lg {
@@ -66,7 +67,7 @@
     /* border-radius: 50%; */
     padding: 6px 15px;
     margin-bottom: 1rem;
-    background-color: #007C64;
+    background-color: #156064;
     color: #fff;
    }
 
@@ -84,6 +85,6 @@
     /* border-radius: 50%; */
     padding: 6px 15px;
     /* margin-bottom: 1rem; */
-    background-color: #007C64;
+    background-color: #156064;
     color: #fff;
    }

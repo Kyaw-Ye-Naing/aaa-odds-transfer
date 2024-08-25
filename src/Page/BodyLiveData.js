@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import AnalysisModal from './components/AnalysisModal';
+import color from '../config/color';
 
 const BodyLiveData = () => {
     const defaultDate = moment(new Date()).format("YYYY-MM-DD");
@@ -98,6 +99,7 @@ const BodyLiveData = () => {
                             className="form-control"
                             type="date"
                             id="birthday"
+                            style={{fontSize:'0.8rem'}}
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                             name="birthday"
@@ -107,7 +109,8 @@ const BodyLiveData = () => {
                     <div className="bd-highlight mb-2">
                         <button
                             type="button"
-                            className="btn btn-success"
+                            className="btn"
+                            style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
                             onClick={() => getGetBodyLiveData()}
                         >
                             Search
@@ -135,9 +138,9 @@ const BodyLiveData = () => {
             ) : (
                 <Fragment>
                     <div className="table-responsive">
-                        <table className="table table-light">
-                            <thead>
-                                <tr className="table-secondary">
+                        <table className="table">
+                            <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+                                <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">EventTime</th>
                                     <th scope="col">Team</th>
@@ -150,7 +153,7 @@ const BodyLiveData = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style={{fontSize:'0.8rem'}}>
                                 {searchSingle.length != 0 ?
                                     searchSingle &&
                                     searchSingle
@@ -172,7 +175,7 @@ const BodyLiveData = () => {
                                                         <td style={{color:d.under > d.over ? 'red' : 'black'}}>{d.under.toLocaleString("en-US")}</td>
                                                         <td style={{color:'orange'}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
                                                         <td style={{color:'orange'}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
-                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" className='btn btn-success btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
+                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" style={{backgroundColor:color['dark'].main,color:'#fff'}} className='btn btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
                                                     </tr>
                                                 </Fragment>
                                             )

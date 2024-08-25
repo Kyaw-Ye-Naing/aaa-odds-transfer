@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import color from "../../config/color";
 
 function NavBar({
   userRole,
@@ -35,7 +36,7 @@ function NavBar({
 
   return (
     <div>
-      <div className="odds-nav">
+      <div className="odds-nav" style={{backgroundColor:color['dark'].main}}>
         <div className="profile">
           <img
             src="https://annedece.sirv.com/Images/user-vector.jpg"
@@ -53,7 +54,8 @@ function NavBar({
         <div className="logout">
           <a
             href="/"
-            className="btn btn-warning logLink"
+            className="btn logLink"
+            style={{backgroundColor:color['dark'].secondary}}
             onClick={() => localStorage.clear()}
           >
             <i className="fa-solid fa-right-from-bracket"></i>

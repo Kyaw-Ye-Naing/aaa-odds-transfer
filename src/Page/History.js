@@ -9,6 +9,7 @@ import DeleteAlertModal from "./components/DeleteAlertModal";
 import { oddController } from "../controllers/oddsController/oddController";
 import ReactiveButton from 'reactive-button';
 import { Button } from 'react-bootstrap';
+import color from "../config/color";
 
 const data = [
   {
@@ -63,7 +64,7 @@ function History() {
   const [selectedCustomer, setSelectdCustomer] = useState(0);
   const [deleteId, setDeleteId] = useState(0);
   const [userRole,setUserRole] = useState();
-  const [tab,setTab] = useState(false);
+  const [tab,setTab] = useState("list");
   const [goalbtnColor,setGoalbtnColor] = useState('btn-normal');
   const [bodybtnColor,setBodybtnColor] = useState('btn-activate');
   const [itemview, setItemview] = useState({
@@ -162,13 +163,13 @@ function History() {
 
   const handleOnClick = (value) => {
     setTab(value);
-    if (value){
-       setGoalbtnColor('btn-activate');
-       setBodybtnColor('btn-normal');
-    }else{
-       setGoalbtnColor('btn-normal');
-       setBodybtnColor('btn-activate');
-    }
+    // if (value){
+    //    setGoalbtnColor('btn-activate');
+    //    setBodybtnColor('btn-normal');
+    // }else{
+    //    setGoalbtnColor('btn-normal');
+    //    setBodybtnColor('btn-activate');
+    // }
 }
 
   return (
@@ -189,14 +190,26 @@ function History() {
         handleUpdate={handleUpdate}
       />
       <NavBar username={username} historycolor={"link-btn-active"} userRole={userRole}/>
-      <span className="site-header">Member Outstanding</span>
+      <span className="site-header" style={{color:color['dark'].main}}>Member Outstanding</span>
       <div className="d-flex justify-content-center mb-2">
         <div className="btn-group" role="group" aria-label="Basic example">
-        <button type="button" className={bodybtnColor} onClick={() => handleOnClick(false)}>List Mode</button>
-          <button type="button" className={goalbtnColor} onClick={() => handleOnClick(true)}>Edit Mode</button>
+        <button type="button" 
+        className="btn-normal"
+        style={{backgroundColor:tab === "list" ? color['dark'].primary : color['dark'].primary1,fontSize:'0.8rem' }} 
+        onClick={() => handleOnClick("list")}
+        >
+          List Mode
+        </button>
+        <button type="button" 
+        className="btn-normal" 
+        style={{backgroundColor:tab === "edit" ? color['dark'].primary : color['dark'].primary1,fontSize:'0.8rem' }} 
+        onClick={() => handleOnClick("edit")}
+        >
+          Edit Mode
+        </button>
         </div>
       </div> 
-      { tab ?
+      { tab === "edit" ?
       <Edit customer={customer}/> :
       <div>
         {isLoading ? (
@@ -208,9 +221,9 @@ function History() {
           <div>
             <div className="wrapper">
               <div className="table-responsive">
-                <table className="table table-light">
+                <table className="table">
                   <thead>
-                    <tr className="table-secondary">
+                    <tr style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
                       <th scope="col"></th>
                       <th scope="col">No</th>
                       <th scope="col"></th>
@@ -262,7 +275,7 @@ function History() {
                       );
                     })}
                 </tbody> */}
-                  <tbody>
+                  <tbody style={{fontSize:'0.8rem'}}>
                     {item.length != 0 ?
                       item &&
                       item.map((d, i) => {
@@ -403,7 +416,7 @@ export function ExpandRow({
 
   return (
     <>
-      <tr className="table-secondary">
+      <tr style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
         <th></th>
         <th scope="col">No</th>
         <th scope="col">Betted Date</th>
@@ -416,7 +429,7 @@ export function ExpandRow({
         result.map((d, i) => {
           return (
             <Fragment key={d.bettingId}>
-              <tr className="table-secondary">
+              <tr className="table-secondary" style={{fontSize:'0.8rem'}}>
                 <td></td>
                 <th scope="row">{i + 1}</th>
                 <td>{`${moment(d.bettedDate).format(
@@ -522,20 +535,22 @@ const handleVoucherRemove = (value) => {
         <div className="col-lg-3 col-12 mb-4">
           <div className="bg-light" style={{height:500,overflowY:'scroll'}}>
             <table class="table">
-              <thead style={{position:'sticky'}}>
+              <thead style={{position:'sticky',fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{fontSize:'0.8rem'}}>
                 {customer && customer.map((v, i) =>
                   <tr key={i}>
                     <th scope="row">{i+1}</th>
                     <td>{v.customerName}</td>
                     <td>
-                      <Button variant="success" size="sm" onClick={() => handleVoucherView(v.customerId)}><i className="fa fa-eye"></i></Button>
+                      <Button style={{backgroundColor:color['dark'].main,borderColor:color['dark'].main}} size="sm" onClick={() => handleVoucherView(v.customerId)}>
+                        <i className="fa fa-eye"></i>
+                      </Button>
                     </td>
                   </tr>
                 )
@@ -547,7 +562,7 @@ const handleVoucherRemove = (value) => {
         <div className="col-lg-4 col-12 mb-2">
         <div className="bg-light">
           <table class="table">
-            <thead>
+            <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Choice</th>
@@ -556,14 +571,18 @@ const handleVoucherRemove = (value) => {
                 <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{fontSize:'0.8rem'}}>
               { voucherList.length > 0 ? voucherList.map((v,i) =>
               <tr>
                 <th scope="row">{i+1}</th>
                 <td>{v.choice}</td>
                 <td>{v.odds}</td>
                 <td>{v.amount}</td> 
-                <td><Button variant="success" size="sm" onClick={() => handleVoucherAdd(v)}><i className="fa fa-plus"></i></Button></td>
+                <td>
+                  <Button size="sm" onClick={() => handleVoucherAdd(v)} style={{backgroundColor:color['dark'].main,color:'#fff'}}>
+                      <i className="fa fa-plus"></i>
+                   </Button>
+                </td>
               </tr>
                 ) : <tr>
                   <td colSpan={5} style={{ textAlign: 'center' }}>No Data</td>
@@ -590,7 +609,7 @@ const handleVoucherRemove = (value) => {
         <div className="col-lg-5 col-12 mb-2">
         <div className="bg-light">
         <table class="table">
-            <thead>
+            <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Choice</th>
@@ -599,7 +618,7 @@ const handleVoucherRemove = (value) => {
                 <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{fontSize:'0.8rem'}}>
               { editableData.length > 0 ? editableData.map((v,i) =>
               <tr>
                 <th scope="row">{i+1}</th>
@@ -625,7 +644,11 @@ const handleVoucherRemove = (value) => {
                     }
                     />
                 </td>
-                <td><Button variant="danger" size="sm" onClick={() => handleVoucherRemove(v)}><i className="fa fa-trash"></i></Button></td>
+                <td>
+                  <Button variant="danger" size="sm" onClick={() => handleVoucherRemove(v)}>
+                    <i className="fa fa-trash"></i>
+                    </Button>
+                    </td>
               </tr>
 ) :
 <tr>
@@ -638,7 +661,7 @@ const handleVoucherRemove = (value) => {
               <ReactiveButton
                 buttonState={valueState}
                 idleText="Save"
-                color="green"
+                style={{backgroundColor:color['dark'].main,color:'#fff'}}
                 loadingText="Loading"
                 successText="Update Successfully!"
                 disabled={editableData.length > 0 ? false : true}

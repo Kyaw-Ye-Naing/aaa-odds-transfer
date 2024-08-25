@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import './analysis.css';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import color from "../config/color";
 
 function Analysis() {
     const handle = useFullScreenHandle();
@@ -58,7 +59,7 @@ function Analysis() {
             {/* {type == 'goal' ?  <GoalLiveData /> :  <BodyLiveData />} */}
 
                 <div style={{ background: handle.active ? "#fff" : null, height: handle.active ? '100%' : null }}>
-                <span className="site-header">Analysis</span>
+                <span className="site-header" style={{color:color['dark'].main}}>Analysis</span>
                     { handle.active ?
                         <button onClick={handle.exit} className='btn btn-light' style={{ position: 'absolute',top : 0 ,right : 0 }}>
                             <i className="fa-solid fa-minimize" style={{ color: 'gray', fontSize: '1.2rem' }}></i>

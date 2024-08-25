@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import CustomerCreateModal from "./components/CustomerCreateModal";
 import { oddController } from "../controllers/oddsController/oddController";
 import ReactPaginate from "react-paginate";
+import color from "../config/color";
 
 const data = [
   {
@@ -149,7 +150,7 @@ function Customer() {
         </div>
       ) : (
         <div>
-          <span className="site-header">Customer</span>
+          <span className="site-header" style={{color:color['dark'].main}}>Customer</span>
           <div className="customer-header">
           <div className="input-gp">
               <input
@@ -174,7 +175,8 @@ function Customer() {
             </div>
             <button
               type="button"
-              className="btn btn-outline-success"
+              className="btn"
+              style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
               data-bs-target="#customeraddModal"
               data-bs-toggle="modal"
             >
@@ -182,9 +184,9 @@ function Customer() {
             </button>
           </div>
           <div className="table-responsive">
-            <table className="table table-light">
-              <thead>
-                <tr className="table-secondary">
+            <table className="table">
+              <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+                <tr>
                   <th scope="col">No</th>
                   <th scope="col">Name</th>
                   <th scope="col">Commission</th>
@@ -192,7 +194,7 @@ function Customer() {
                   <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{fontSize:'0.8rem'}}>
                 {searchCustomer.length != 0 ?
                 searchCustomer &&
                   searchCustomer
@@ -209,7 +211,8 @@ function Customer() {
                           <td>{d.betLimit}</td>
                           <td>
                             <button
-                              className="btn btn-outline-success"
+                              className="btn"
+                              style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
                               data-bs-toggle="modal"
                               data-bs-target="#customerModal"
                               onClick={() =>

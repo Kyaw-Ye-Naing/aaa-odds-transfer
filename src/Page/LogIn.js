@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Spinner from "../asset/spinner1";
 import {useHistory} from "react-router-dom";
 import { oddController } from '../controllers/oddsController/oddController';
+import color from '../config/color';
 
 const userdata = [
     {
@@ -83,7 +84,7 @@ function LogIn() {
                                 <button
                                 type="button"
                                 disabled = {isLoading}
-                                    style={{ backgroundColor: MyColor.headerbackground, color: "#fff" }}
+                                    style={{ backgroundColor: color['dark'].main, color: "#fff" }}
                                     className="btn btn-lg w-100 shadow-lg"
                                     onClick={() => handleSave()}
                                 >

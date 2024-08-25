@@ -46,7 +46,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body" style={{fontSize:'0.8rem'}}>
               <form>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
@@ -58,6 +58,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                     className="form-control"
                     id="exampleInputEmail1"
                     required
+                    style={{fontSize:'0.8rem'}}
                     aria-describedby="emailHelp"
                     onChange={(value) =>
                       OnChangeText("customerName", value.target.value)
@@ -73,6 +74,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                     value={customerdata.commission}
                     className="form-control"
                     step="any"
+                    style={{fontSize:'0.8rem'}}
                     required
                     onChange={(value) =>
                       OnChangeText("commission", value.target.value)
@@ -89,6 +91,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                     value={customerdata.betLimit}
                     className="form-control"
                     step="any"
+                    style={{fontSize:'0.8rem'}}
                     required
                     onChange={(value) =>
                       OnChangeText("betLimit", value.target.value)
@@ -111,6 +114,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 <div className="d-flex justify-content-end">
                 <button 
                 type="button" 
+                style={{ fontSize:'0.8rem' }}
                 className="btn btn-secondary" 
                 data-bs-dismiss="modal" 
                >
@@ -119,9 +123,9 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 <button 
                 type="button" 
                 data-bs-dismiss="modal" 
+                style={{ marginLeft: 5,fontSize:'0.8rem' }}
                 className="btn btn-primary" 
                 onClick={()=>EditSave()} 
-                style={{marginLeft:5}}
                 >
                   Save
                 </button>

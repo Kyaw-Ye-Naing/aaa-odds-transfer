@@ -1,5 +1,5 @@
 .btn-activate{
-    background-color: #3c8f72;
+    /* background-color: #3c8f72; */
     border: 1px solid #3c8f72;
     color: white;
     padding: 0.4rem;
@@ -7,7 +7,7 @@
 }
 
 .btn-normal{
-    background-color: #9ad8c3;
+    /* background-color: #9ad8c3; */
     border: 1px solid #9ad8c3;
     color: #000; 
     padding: 0.4rem;

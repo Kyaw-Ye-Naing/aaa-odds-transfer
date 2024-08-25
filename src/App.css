@@ -33,8 +33,7 @@ hr {
 
 /*----------- Start Nav Bar Section --------*/
 .odds-nav {
-    background-color: #00636E;
-    /* background-color: #303A52; */
+    /* background-color: #00636E; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -83,7 +82,8 @@ hr {
 
 .group-list .link-btn {
     margin-left: .5rem;
-    background-color: #00636E;
+    /* background-color: #00636E; */
+    background-color: #156064;
     color: white;
     margin-bottom: 5px;
 }
@@ -95,7 +95,8 @@ hr {
 
 .group-list .link-btn-active {
     margin-left: .5rem;
-    background-color: #ffc107;
+    /* background-color: #ffc107; */
+    background-color: #F8E16C;
     color: black;
     margin-bottom: 5px;
 }
@@ -139,7 +140,6 @@ hr {
 }
 
 .site-header {
-    color: green;
     font-size: 1.1rem;
     display: flex;
     justify-content: center;
@@ -220,7 +220,7 @@ hr {
 
 /*--------Start Report Site-------------------*/
 .search-btn {
-    margin-top: 2rem;
+    margin-top: 1.65rem;
 }
 
 
