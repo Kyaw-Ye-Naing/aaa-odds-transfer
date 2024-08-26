@@ -4,11 +4,12 @@ import moment from "moment";
 import MyColor from "../config/color";
 import { toast } from "react-toastify";
 import { oddController } from "../controllers/oddsController/oddController";
-import Loader from "../asset/loader";
 import Spinner from "../asset/spinner";
 import { useHistory } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import color from "../config/color";
+import Loading from "./components/Loading";
+
 
 const TeamData = [
   {
@@ -659,7 +660,9 @@ function OddsTransfer() {
           </div>
           <div className="table-responsive">
             {isLoading1 ? (
-              <Loader />
+              <div style={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+              <Loading />
+              </div>
             ) : (
               <table className="table table-hover table-bordered">
                 <thead>
@@ -760,7 +763,7 @@ function OddsTransfer() {
           <div className="table-responsive">
             {isLoading ? (
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <Loader />
+                <Loading />
               </div>
             ) : (
               <table className="table table-hover table-bordered">

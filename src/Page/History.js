@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
 import NavBar from "./components/NavBar";
-import Loader from "../asset/loader";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,6 +9,7 @@ import { oddController } from "../controllers/oddsController/oddController";
 import ReactiveButton from 'reactive-button';
 import { Button } from 'react-bootstrap';
 import color from "../config/color";
+import Loading from "./components/Loading";
 
 const data = [
   {
@@ -195,14 +195,14 @@ function History() {
         <div className="btn-group" role="group" aria-label="Basic example">
         <button type="button" 
         className="btn-normal"
-        style={{backgroundColor:tab === "list" ? color['dark'].primary : color['dark'].primary1,fontSize:'0.8rem' }} 
+        style={{backgroundColor:tab === "list" ? color['dark'].secondary : color['dark'].secondary3,fontSize:'0.8rem' }} 
         onClick={() => handleOnClick("list")}
         >
           List Mode
         </button>
         <button type="button" 
         className="btn-normal" 
-        style={{backgroundColor:tab === "edit" ? color['dark'].primary : color['dark'].primary1,fontSize:'0.8rem' }} 
+        style={{backgroundColor:tab === "edit" ? color['dark'].secondary : color['dark'].secondary3,fontSize:'0.8rem' }} 
         onClick={() => handleOnClick("edit")}
         >
           Edit Mode
@@ -213,8 +213,8 @@ function History() {
       <Edit customer={customer}/> :
       <div>
         {isLoading ? (
-          <div style={{ textAlign: "center" }}>
-            <Loader />
+          <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
+            <Loading />
             <p>Loading .....</p>
           </div>
         ) : (

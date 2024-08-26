@@ -1,11 +1,11 @@
 import React, { useState,Fragment,useEffect } from "react";
 import NavBar from "./components/NavBar";
 import moment from "moment";
-import Loader from "../asset/loader";
 import MyModal from "./components/HistoryModal";
 import { useHistory } from "react-router-dom";
 import { oddController } from "../controllers/oddsController/oddController";
 import color from "../config/color";
+import Loading from "./components/Loading";
 
 function Report() {
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
@@ -131,8 +131,8 @@ function Report() {
         </div>
 
         {isLoading ? (
-        <div style={{ textAlign: "center" }}>
-          <Loader />
+        <div style={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
+          <Loading />
           <p>Loading .....</p>
         </div>
       ) : (

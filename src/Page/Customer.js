@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
-import Loader from "../asset/loader";
 import CustomerModal from "./components/CustomerEditModal";
 import { useHistory } from "react-router-dom";
 import CustomerCreateModal from "./components/CustomerCreateModal";
 import { oddController } from "../controllers/oddsController/oddController";
 import ReactPaginate from "react-paginate";
 import color from "../config/color";
+import Loading from "./components/Loading";
 
 const data = [
   {
@@ -144,8 +144,8 @@ function Customer() {
       />
        <NavBar username={username} customercolor={"link-btn-active"} userRole={userRole}/>
       {isLoading ? (
-        <div style={{ textAlign: "center" }}>
-          <Loader />
+        <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
+          <Loading />
           <p>Loading .....</p>
         </div>
       ) : (

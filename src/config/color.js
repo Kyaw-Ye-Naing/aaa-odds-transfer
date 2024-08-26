@@ -30,6 +30,7 @@
         secondary:"#F8E16C",
         secondary1:"#FFC2B4",
         secondary2:"#FB8F67",
+        secondary3:"#EDF6F9"
     }, 
     light:{
 

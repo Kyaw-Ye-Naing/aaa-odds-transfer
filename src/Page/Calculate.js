@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
 import color from "../config/color";
+import Loading from "./components/Loading";
 
 function Calculate() {
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
@@ -74,8 +74,8 @@ function Calculate() {
       <NavBar username={username} calculatecolor={"link-btn-active"} userRole={userRole} />
       <span className="site-header" style={{color:color['dark'].main}}>Voucher Calculation</span>
       {isLoading ? (
-        <div style={{ textAlign: "center" }}>
-          <Loader />
+        <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
+          <Loading />
           <p>{loadingText}</p>
         </div>
       ) : (

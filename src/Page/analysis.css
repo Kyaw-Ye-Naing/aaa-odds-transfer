@@ -1,9 +1,9 @@
 .btn-activate{
     /* background-color: #3c8f72; */
-    border: 1px solid #3c8f72;
+    border: 1px solid #F8E16C;
     color: white;
     padding: 0.4rem;
-    transition: all .5s ease-in;
+    transition: all .3s ease-in;
 }
 
 .btn-normal{
@@ -11,5 +11,5 @@
     border: 1px solid #9ad8c3;
     color: #000; 
     padding: 0.4rem;
-    transition: all .5s ease-in;
+    transition: all .3s ease-in;
 }

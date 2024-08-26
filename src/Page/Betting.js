@@ -13,6 +13,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import color from "../config/color";
+import Loading from "./components/Loading";
 
 function Betting() {
   const handle = useFullScreenHandle();
@@ -343,8 +344,11 @@ function Betting() {
   }
 
   const cancelSearch = () => {
+    console.log("dfsfsf",eventType,data.events)
     setSearchText("");
-    setSearchTeams(eventsData);
+    const temp_data = eventType === "Upcoming" ? eventsData.filter(item => moment(item.date).format("yyyy-MM-DD hh:mm:ss a") > moment().format("yyyy-MM-DD hh:mm:ss a")) : 
+    eventType === "Previous" ? eventsData.filter(item => moment(item.date).format("yyyy-MM-DD hh:mm:ss a") < moment().format("yyyy-MM-DD hh:mm:ss a")) : eventsData;
+    setSearchTeams(temp_data);
   };
 
   const handleEventCheckbox = (type) => {
@@ -375,8 +379,8 @@ function Betting() {
       <FullScreen handle={handle}>
       {!isConfirm ?
         isLoading ? (
-          <div style={{ textAlign: "center" }}>
-            <Loader />
+          <div style={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+            <Loading/>
             <p>Loading .....</p>
           </div>
         ) : (   
@@ -405,7 +409,8 @@ function Betting() {
                   />
                   <button
                     type="button"
-                    className="btn btn-light"
+                    className="btn"
+                    style={{backgroundColor:color['dark'].secondary3}}
                     onClick={() => cancelSearch()}
                   >
                     <i
@@ -414,7 +419,7 @@ function Betting() {
                     ></i>
                   </button>
                   <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic" style={{backgroundColor:'white',color:'#000',borderColor:'gray'}}>
+                    <Dropdown.Toggle id="dropdown-basic" style={{backgroundColor:'white',color:'#000',borderColor:'gray',marginLeft:5}}>
                      {eventType}
                     </Dropdown.Toggle>
                     <Dropdown.Menu style={{fontSize:'1rem'}}>

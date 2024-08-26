@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react'
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import Loader from "../asset/loader";
 import { oddController } from "../controllers/oddsController/oddController";
 import AnalysisModal from './components/AnalysisModal';
 import color from '../config/color';
+import Loading from './components/Loading';
 
 const BodyLiveData = () => {
     const defaultDate = moment(new Date()).format("YYYY-MM-DD");
@@ -131,8 +131,8 @@ const BodyLiveData = () => {
                 </div>
             </div>
             {isLoading ? (
-                <div style={{ textAlign: "center" }}>
-                    <Loader />
+                <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
+                    <Loading />
                     <p>Loading .....</p>
                 </div>
             ) : (
