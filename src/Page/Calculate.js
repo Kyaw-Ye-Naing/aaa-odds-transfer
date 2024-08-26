@@ -124,8 +124,8 @@ function Calculate() {
 
           <div className="cal-container">
             <div className="table-responsive">
-              <table className="table table-light">
-                <thead className="table-secondary" style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+              <table className="table">
+                <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
                   <tr>
                     <th scope="col">No</th>
                     <th scope="col">Time</th>

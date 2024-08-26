@@ -450,17 +450,18 @@ export function ExpandRow({
                       <i className="fas fa-eye"></i>&nbsp;View
                     </button> */}
                     <button
-                      className="btn btn-outline-success"
+                      className="btn"
                       data-bs-toggle="modal"
-                      style={{ marginRight: "5px" }}
+                      style={{ marginRight: "5px",fontSize:'0.8rem',backgroundColor:color['dark'].main,color:'#fff' }}
                       data-bs-target="#myModal"
                       onClick={() => handleViewModal("Edit", d)}
                     >
                       <i className="fas fa-edit"></i>&nbsp;Edit
                     </button>
                     <button
-                      className="btn btn-outline-success"
+                      className="btn"
                       data-bs-toggle="modal"
+                      style={{fontSize:'0.8rem',backgroundColor:color['dark'].main,color:'#fff'}}
                       data-bs-target="#deletealertModal"
                       onClick={() => setDeleteId(d.bettingId)}
                     >

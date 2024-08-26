@@ -1,6 +1,7 @@
 import React from "react";
 import { oddController } from "../../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
+import color from "../../config/color";
 
 function CustomerCreateModal({
   newcustomerData,
@@ -141,7 +142,7 @@ const Cancel = () => {
                   type="button"
                   className="btn btn-primary"
                   onClick={() => Save()}
-                  style={{ marginLeft: 5,fontSize:'0.8rem' }}
+                  style={{ marginLeft: 5,fontSize:'0.8rem',backgroundColor:color['dark'].main,color:'#fff' }}
                 >
                   Save
                 </button>

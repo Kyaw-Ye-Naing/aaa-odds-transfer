@@ -1,6 +1,7 @@
 import React from "react";
 import { oddController } from "../../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
+import color from "../../config/color";
 
 function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoading }) {
   const OnChangeText = (text, value) => {
@@ -123,8 +124,8 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 <button 
                 type="button" 
                 data-bs-dismiss="modal" 
-                style={{ marginLeft: 5,fontSize:'0.8rem' }}
-                className="btn btn-primary" 
+                style={{ marginLeft: 5,fontSize:'0.8rem',backgroundColor:color['dark'].main,color:'#fff' }}
+                className="btn" 
                 onClick={()=>EditSave()} 
                 >
                   Save
