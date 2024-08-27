@@ -34,7 +34,8 @@ const BodyLiveData = () => {
 
     const getGetBodyLiveData = () => {
         setLoading(true);
-        oddController.getSingleLiveData(startDate, true, (data) => {
+        const userId = localStorage.getItem("userId");
+        oddController.getSingleLiveData(startDate, true,parseInt(userId), (data) => {
             console.log("dsta",data)
             setSearchSingle(data.livedata);
             setSingleLiveData(data.livedata);

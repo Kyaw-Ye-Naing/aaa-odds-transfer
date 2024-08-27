@@ -225,10 +225,11 @@ const calculateEventResult = (userId,startDate, setResponse) => {
 
 //------------------------ Analysis Page ---------------------------------------------
 //--calculate event result
-const getSingleLiveData = (startDate,isBody, setResponse) => {
+const getSingleLiveData = (startDate,isBody,userId, setResponse) => {
     postApi(`${apiList.getSingleLiveData}`,
         {
             searchDate : startDate,
+            userId : userId,
             isBody : isBody
         },
         (data) => {
