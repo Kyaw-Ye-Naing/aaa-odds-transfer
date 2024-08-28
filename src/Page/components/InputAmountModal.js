@@ -1,4 +1,5 @@
 import React from 'react';
+import color from '../../config/color';
 
 function InputAmountModal({handleTeamAdd,inputElement}) {
 //     const inputElement = useRef(null);
@@ -34,19 +35,21 @@ function InputAmountModal({handleTeamAdd,inputElement}) {
                                ref={inputElement}
                                 //onChange={(e)=>setBetAmount(e.target.value)}
                                 id="exampleFormControlInput1"/>
-                                 <div className="d-flex flex-row-reverse bd-highlight mt-2">
-                            <button type="submit"
-                            onClick={()=>handleTeamAdd()}
-                            data-bs-dismiss="modal"
-                                className="btn btn-primary">
-                                Save changes</button>
-                            <button type="button"
-                             style={{marginRight:5}}
-                                className="btn btn-secondary"
-                                data-bs-dismiss="modal">
-                                Close</button>
-                           
-                            </div>
+                                    <div className="d-flex flex-row-reverse bd-highlight mt-2">
+                                        <button type="submit"
+                                            onClick={() => handleTeamAdd()}
+                                            data-bs-dismiss="modal"
+                                            className="btn"
+                                            style={{ backgroundColor: color['dark'].main, color: 'white' }}
+                                        >
+                                            Save</button>
+                                        <button type="button"
+                                            style={{ marginRight: 5 }}
+                                            className="btn btn-secondary"
+                                            data-bs-dismiss="modal">
+                                            Close</button>
+
+                                    </div>
                                </form>   
                             </div>
                            

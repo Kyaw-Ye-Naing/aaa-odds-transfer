@@ -76,56 +76,59 @@ function Report() {
        
       <span className="site-header" style={{color:color['dark'].main}}>User Win / Lose Reports</span>
 
-      <div className="container-fluid">
-        <div className="d-flex flex-wrap bd-highlight mb-3" style={{fontSize:'0.8rem'}}>
-          <div className="p-2 bd-highlight">
-            <div className="mb-2">
-              <label className="form-label">Start Date</label>
-              <input
-                className="form-control"
-                type="date"
-                id="birthday"
-                value={startDate}
-                style={{fontSize:'0.8rem'}}
-                onChange={(e)=>setStartDate(e.target.value)}
-                name="birthday"
-              />
+      <div style={{marginLeft:3,marginRight:3}}>
+        <div className="row mb-2" style={{ fontSize: '0.8rem' }}>
+          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 row">
+            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+              <div className="mb-2">
+                <label className="form-label">Start Date</label>
+                <input
+                  className="form-control"
+                  type="date"
+                  id="birthday"
+                  value={startDate}
+                  style={{ fontSize: '0.8rem'}}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  name="birthday"
+                />
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+              <div className="mb-2">
+                <label className="form-label">End Date</label>
+                <input
+                  className="form-control"
+                  type="date"
+                  id="birthday"
+                  value={endDate}
+                  style={{ fontSize: '0.8rem' }}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  name="birthday"
+                />
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" >
+              <button
+                type="button"
+                className="search-btn btn"
+                style={{ backgroundColor: color['dark'].main, color: '#fff', fontSize: '0.8rem' }}
+                onClick={() => getWinLoseReport()}
+              >
+                Search
+              </button>
             </div>
           </div>
-          <div className="p-2 bd-highlight">
-            <div className="mb-2">
-              <label className="form-label">End Date</label>
-              <input
-                className="form-control"
-                type="date"
-                id="birthday"
-                value={endDate}
-                style={{fontSize:'0.8rem'}}
-                onChange={(e)=>setEndDate(e.target.value)}
-                name="birthday"
-              />
-            </div>
-          </div>
-          <div className="p-2 bd-highlight">
-            <button 
-            type="button" 
-            className="search-btn btn"
-            style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
-            onClick={()=>getWinLoseReport()}
-            >
-              Search
-            </button>
-          </div>
-          <div className="ms-auto p-2 bd-highlight">
-            <div className="mb-2">
-              <label className="form-label"></label>
-              <input
-                type="email"
-                style={{ textAlign: "left" }}
-                className="search-txt form-control"
-                id="exampleFormControlInput1"
-                placeholder="search ..."
-              />
+          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 row">
+            <div className="search-input-panel">
+              <div className="mb-2">
+                <label className="form-label"></label>
+                <input
+                  type="text"
+                  className="search-txt form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="search ..."
+                />
+              </div>
             </div>
           </div>
         </div>

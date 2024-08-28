@@ -16,18 +16,19 @@ function DeleteAlertModal({handleRemoveVoucher,deleteId}) {
       <div className="modal-body">
       <button type="button" className="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
       <div className="delete-body">
-            <span> <i className="fas fa-trash-alt"></i>Are you sure you want to delete?</span>
+            <span style={{fontSize:'0.875rem',display:'flex',alignItems:'center'}}> <i className="fa-solid fa-triangle-exclamation"></i>Are you sure you want to delete?</span>
             <div className="delete-btn-gp"> 
             <button 
             type="button" 
             className="btn btn-secondary" 
-            style={{marginRight:5}} 
+            style={{marginRight:5,fontSize:'0.8rem'}} 
             data-bs-dismiss="modal">
               Cancel
               </button>
             <button 
             type="button" 
             data-bs-dismiss="modal"
+            style={{fontSize:'0.8rem'}}
             onClick={()=>handleRemoveVoucher(deleteId)}
             className="btn btn-danger">
               Delete</button>

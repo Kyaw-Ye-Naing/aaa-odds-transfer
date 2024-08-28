@@ -564,7 +564,7 @@ function Betting() {
 
                       <div className="panel-details">
                         <table className="table">
-                          <thead>
+                          <thead style={{fontSize:'0.875rem'}}>
                             <tr style={{backgroundColor:color['dark'].headerbg}}>
                               <th scope="col" width="50">No</th>
                               <th scope="col" width="200">
@@ -610,7 +610,7 @@ function Betting() {
                                 }
 
                                 return (
-                                  <tr key={i}>
+                                  <tr key={i} style={{fontSize:'0.8rem'}}>
                                     <td scope="row" className="text-center">{i + 1}</td>
                                     <td>{b.choice}</td>
                                     <td>
@@ -619,6 +619,7 @@ function Betting() {
                                         type="email"
                                         className="form-control"
                                         value={b.choiceOdds}
+                                        style={{fontSize:'0.8rem'}}
                                         onChange={(e) =>
                                           handleTextChange(i, e.target.value,'odds',b)
                                         }
@@ -630,6 +631,7 @@ function Betting() {
                                         type="email"
                                         className="form-control"
                                         value={b.amount}
+                                        style={{fontSize:'0.8rem'}}
                                         onChange={(e) =>
                                           handleTextChange(i, e.target.value, 'amount',b)
                                         }
@@ -654,7 +656,7 @@ function Betting() {
                       <button
                         type="button"
                         className="btn"
-                        style={{backgroundColor:color['dark'].main,color:'#fff'}}
+                        style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
                         onClick={() => handleSave()}
                         disabled={isSpinner}
                       >
@@ -672,7 +674,7 @@ function Betting() {
                         }
                       </button>
                       <div>
-                        <label htmlFor="exampleFormControlInput1" className="form-label" >
+                        <label htmlFor="exampleFormControlInput1" className="form-label" style={{fontSize:'0.8rem',fontWeight:'bold'}}>
                           Total
                         </label>
                         <input
@@ -697,7 +699,7 @@ function Betting() {
                 <div className="card-body">
                   <h4 style={{ textAlign: "center" }}> Betting Confirmation Box</h4>
                   <table className="table">
-                    <thead>
+                    <thead style={{fontSize:'0.875rem'}}>
                       <tr className="table-secondary">
                         <th scope="col" width="15">
                           No
@@ -716,7 +718,7 @@ function Betting() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{fontSize:'0.8rem'}}>
                       {bettingConfirm.length == 0 ? (
                         <tr>
                           <td
@@ -752,7 +754,7 @@ function Betting() {
                     </tbody>
                   </table>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <button type="button" className="btn btn-success" onClick={() => handleConfrimSave()}>
+                    <button type="button" className="btn" style={{backgroundColor:color['dark'].main,color:'white',fontSize:'0.8rem'}} onClick={() => handleConfrimSave()}>
                       <i className="fa fa-save"></i>&nbsp;Save
                     </button>
                   </div>

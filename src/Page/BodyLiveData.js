@@ -94,9 +94,9 @@ const BodyLiveData = () => {
     return (
         <div>
              <AnalysisModal rapidEventId={rapidEventId}/>
-            <div className="d-flex align-items-center justify-content-between">
-                <div className="d-flex" style={{ gap: 5 }}>
-                    <div className="bd-highlight mb-2">
+            <div className="row mb-2">
+                <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12 row">
+                    <div className="col-md-6 col-lg-4 col-sm-6 col-xs-12 mb-2">
                         <input
                             className="form-control"
                             type="date"
@@ -108,7 +108,7 @@ const BodyLiveData = () => {
                         />
                     </div>
 
-                    <div className="bd-highlight mb-2">
+                    <div className="col-md-6 col-lg-4 col-sm-6 col-xs-12 mb-2">
                         <button
                             type="button"
                             className="btn"
@@ -120,16 +120,17 @@ const BodyLiveData = () => {
                     </div>
                 </div>
 
-                <div className="mb-2">
+                <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12 row">
+                    <div className='search-input-panel'>
                     <input
                         type="text"
                         value={searchText}
-                        style={{ textAlign: "left" }}
                         onChange={(e) => handleTeamChange(e)}
                         className="search-txt form-control"
                         id="exampleFormControlInput1"
                         placeholder="search ..."
                     />
+                    </div>
                 </div>
             </div>
             {isLoading ? (

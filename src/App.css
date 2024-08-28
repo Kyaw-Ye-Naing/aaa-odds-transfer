@@ -9,9 +9,12 @@ body {
 
 .App {
     overflow-x: hidden;
-    /* background: linear-gradient(120deg,#3b7197,#00B3B3); */
-    background-color: rgb(255, 255, 255);
+    /* background: linear-gradient(120deg,#3b7197,#00B3B3); #4C7766 #EBE6E0*/
+    /* background-color: rgba(245, 245, 245, 0.816); */
+    background-color: whitesmoke;
     height: 100vh;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 html,
@@ -157,7 +160,7 @@ hr {
 
 .bet-container .event table,
 .bet-container .panel .panel-details table {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
 }
 
 .bet-container .event table td,
@@ -201,17 +204,18 @@ hr {
 .bet-container .event::-webkit-scrollbar-track {
     border: 1px solid #00636E;
     background-color: #F5F5F5;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .bet-container .event::-webkit-scrollbar {
-    width: 10px;
+    width: 7px;
+    height: 7px;
     background-color: #F5F5F5;
 }
 
 .bet-container .event::-webkit-scrollbar-thumb {
     background-color: #00636E;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .page-link {
@@ -223,6 +227,10 @@ hr {
     margin-top: 1.65rem;
 }
 
+.search-input-panel{
+    display: flex;
+    justify-content: end;
+}
 
 .search-txt {
     width: 200px;
@@ -383,6 +391,9 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
     .title span {
         font-size: 1.3rem;
     }
+    .site-header {
+        margin-bottom: 3px;
+    }
 }
 
 @media screen and (max-width :1000px) {
@@ -396,3 +407,23 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
         display: none;
     }
 }
+
+@media  screen and (max-width: 576px) {
+   
+}
+
+@media  screen and (max-width: 768px) {
+    .search-btn {
+        margin-top: 0;
+    }
+    .search-input-panel{
+        justify-content: start;
+    }
+    .search-txt {
+        width: 100%;
+        margin-top: 0;
+    }
+    .my-icon{
+        display: none;
+    }
+} 

@@ -456,7 +456,7 @@ export function ExpandRow({
                       data-bs-target="#myModal"
                       onClick={() => handleViewModal("Edit", d)}
                     >
-                      <i className="fas fa-edit"></i>&nbsp;Edit
+                      <i className="fas fa-edit my-icon"></i>&nbsp;Edit
                     </button>
                     <button
                       className="btn"
@@ -465,7 +465,7 @@ export function ExpandRow({
                       data-bs-target="#deletealertModal"
                       onClick={() => setDeleteId(d.bettingId)}
                     >
-                      <i className="fas fa-trash"></i>&nbsp;Delete
+                      <i className="fas fa-trash my-icon"></i>&nbsp;Delete
                     </button>
                   </div>
                 </td>

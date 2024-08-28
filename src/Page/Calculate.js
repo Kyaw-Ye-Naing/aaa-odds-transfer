@@ -94,10 +94,9 @@ function Calculate() {
             <i className="fas fa-file-signature"></i>&nbsp;Calculate Voucher
           </button>
           </div>
-          <div className="d-flex" style={{ gap: 5 ,fontSize:'0.8rem'}}>
+          <div className="d-flex my-2" style={{ gap: 5 ,fontSize:'0.8rem'}}>
             <div className="bd-highlight">
               <div className="mb-2">
-                <label className="form-label">Start Date</label>
                 <input
                   className="form-control"
                   type="date"

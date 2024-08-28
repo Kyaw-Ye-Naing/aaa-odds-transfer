@@ -180,7 +180,7 @@ function Customer() {
               data-bs-target="#customeraddModal"
               data-bs-toggle="modal"
             >
-              <i className="fas fa-add"></i>&nbsp;Add New
+              <i className="fas fa-add my-icon"></i>&nbsp;Add New
             </button>
           </div>
           <div className="table-responsive">
@@ -225,7 +225,7 @@ function Customer() {
                                 )
                               }
                             >
-                              <i className="fas fa-edit"></i>&nbsp;Edit
+                              <i className="fas fa-edit my-icon"></i>&nbsp;Edit
                             </button>
                           </td>
                         </tr>
