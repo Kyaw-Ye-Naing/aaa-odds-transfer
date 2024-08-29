@@ -112,7 +112,7 @@ function Calculate() {
             <div className="bd-highlight">
               <button
                 type="button"
-                className="search-btn btn"
+                className="btn"
                 style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem',marginLeft:5}}
                 onClick={() => getEventResult()}
               >

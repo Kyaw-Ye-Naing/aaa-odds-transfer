@@ -101,7 +101,7 @@ function Customer() {
     setLoading(true);
     const userId = localStorage.getItem("userId");
     oddController.getCustomer(parseInt(userId), (data) => {
-      console.log("dsta", data.customer);
+
       setCustomerInfo(data.customer);
       setSearchCustomer(data.customer);
       setPage(Math.ceil(data.customer.length / rowsPerPage));

@@ -27,11 +27,14 @@
         primary:"#00C49A",
         headerbg:"#83c5be91",
         primary1:"#83C5be",
+        primary2:"#16f165",
         secondary:"#F8E16C",
         secondary1:"#FFC2B4",
         secondary2:"#FB8F67",
         secondary3:"#EDF6F9",
-        secondary4:"#805D93"
+        secondary4:"#805D93",
+        secondary5:"#bb7d0c",
+        secondary6:"#e0001f"
     }, 
     light:{
 

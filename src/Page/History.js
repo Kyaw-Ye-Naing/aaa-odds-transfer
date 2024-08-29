@@ -436,7 +436,7 @@ export function ExpandRow({
                   "DD-MM-YYYY hh:mm:ss a"
                 )}`}</td>
                 <td>{d.amount}</td>
-                <td><span style={{ color: d.color }}>{d.bet}</span></td>
+                <td><span style={{ color: d.color}}>{d.bet}</span></td>
                 <td>{d.odds}</td>
                 <td>
                   <div className="d-flex">

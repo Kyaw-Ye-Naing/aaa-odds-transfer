@@ -170,14 +170,14 @@ const BodyLiveData = () => {
                                                     <tr >
                                                         <th scope="row">{pageCount * rowsPerPage + i + 1}</th>
                                                         <td>{moment(d.eventTime).format("hh:mm A")}</td>
-                                                        <td><span style={{color: d.overTeamId === d.homeTeamId ? 'red' : null,marginRight : 5}}>{d.homeTeam}</span>
-                                                        Vs<span style={{color: d.overTeamId === d.awayTeamId ? 'red' : null,marginLeft : 5}}>{d.awayTeam}</span> <br/> ({d.bodyOdds})/({d.goalOdds})</td>
-                                                        <td style={{color:d.homeAmount > d.awayAmount ? 'red' : 'black'}}>{d.homeAmount.toLocaleString("en-US")}</td>
-                                                        <td style={{color:d.awayAmount > d.homeAmount ? 'red' : 'black'}}>{d.awayAmount.toLocaleString("en-US")}</td>
-                                                        <td style={{color:d.over > d.under ? 'red' : 'black'}}>{d.over.toLocaleString("en-US")}</td>
-                                                        <td style={{color:d.under > d.over ? 'red' : 'black'}}>{d.under.toLocaleString("en-US")}</td>
-                                                        <td style={{color:'orange'}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
-                                                        <td style={{color:'orange'}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
+                                                        <td><span style={{color: d.overTeamId === d.homeTeamId ? color['dark'].secondary6 : null,marginRight : 5}}>{d.homeTeam}</span>
+                                                        Vs<span style={{color: d.overTeamId === d.awayTeamId ? color['dark'].secondary6 : null,marginLeft : 5}}>{d.awayTeam}</span> <br/> ({d.bodyOdds})/({d.goalOdds})</td>
+                                                        <td style={{color:d.homeAmount > d.awayAmount ? color['dark'].secondary6 : 'black'}}>{d.homeAmount.toLocaleString("en-US")}</td>
+                                                        <td style={{color:d.awayAmount > d.homeAmount ? color['dark'].secondary6 : 'black'}}>{d.awayAmount.toLocaleString("en-US")}</td>
+                                                        <td style={{color:d.over > d.under ? color['dark'].secondary6 : 'black'}}>{d.over.toLocaleString("en-US")}</td>
+                                                        <td style={{color:d.under > d.over ? color['dark'].secondary6 : 'black'}}>{d.under.toLocaleString("en-US")}</td>
+                                                        <td style={{color:color['dark'].secondary5}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
+                                                        <td style={{color:color['dark'].secondary5}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
                                                         <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" style={{backgroundColor:color['dark'].main,color:'#fff'}} className='btn btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
                                                     </tr>
                                                 </Fragment>

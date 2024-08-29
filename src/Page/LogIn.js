@@ -29,12 +29,11 @@ function LogIn() {
         setLoading(true);
         oddController.checkLogIn(name, password, (data) => {
             setLoading(false);
-            console.log("uuyuy",data);
-            localStorage.setItem("userId", data.userId);
-            localStorage.setItem("userName", data.userName);
-            //localStorage.setItem("userRole", data.userRole);
-            localStorage.setItem("userRole", data.userRole);
-            //console.log("uuyuy",data.userId);
+            localStorage.setItem("USER", JSON.stringify(data.userDetails));
+            localStorage.setItem("TOKEN",data.token);
+            localStorage.setItem("userName",data.userDetails.oddsUserName);
+            localStorage.setItem("userRole",data.userDetails.roleId);
+            localStorage.setItem("userId",data.userDetails.oddsUserId);
             toast.success(data.message, {
                 position: toast.POSITION.TOP_RIGHT,
             });
