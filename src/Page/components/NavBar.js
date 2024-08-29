@@ -64,7 +64,7 @@ function NavBar({
         </div>
       </div>
 
-      {userRole == 1 ? (
+      {userRole == 1 || userRole == 2 ? (
         <>
         <div
           className="group-list"
