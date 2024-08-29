@@ -25,7 +25,7 @@ const BodyLiveData = () => {
     useEffect(() => {
         const userName = localStorage.getItem("userName");
         const userRole = localStorage.getItem("userRole");
-        if (userName == undefined || userRole != 1 || userRole != 2) {
+        if (userName == undefined || userRole > 2) {
             history.push("/");
         }
         setUsername(userName);
