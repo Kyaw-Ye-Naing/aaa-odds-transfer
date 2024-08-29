@@ -60,7 +60,7 @@ function Customer() {
     const userName = localStorage.getItem("userName");
     const userRole = localStorage.getItem("userRole");
     //console.log("kokok",userName);
-    if (userName == undefined || userRole != 1) {
+    if (userName == undefined || userRole != 1 || userRole != 2) {
       history.push("/");
     }
     setUsername(userName);
