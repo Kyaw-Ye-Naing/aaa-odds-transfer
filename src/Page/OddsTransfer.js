@@ -596,9 +596,11 @@ function OddsTransfer() {
       <div className="main">
         {/* <div className="row"> */}
         <div className="right" style={{marginBottom : "10px"}}>
+          <div style={{position:'relative'}}>
           <span style={{position:'absolute',marginTop:'-29px'}} onClick={() => setTeamEye(e => !e)}>
           {teamEye ?<i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
           </span>
+          </div>
           {teamEye ?<>
         <div className="table-title">
             <div className="input-gp">
