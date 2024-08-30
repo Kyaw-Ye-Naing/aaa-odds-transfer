@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import color from "../config/color";
 import Loading from "./components/Loading";
+import DialogModal from "./components/DialogModal";
 
 
 const TeamData = [
@@ -379,6 +380,12 @@ function OddsTransfer() {
     //setCopyPage(Math.ceil(CopyData.length / rowsPerPage));
   }, []);
 
+  const openAlertModal = () => {
+      const modalElement = document.getElementById('alertModal');
+      const modal = new window.bootstrap.Modal(modalElement);
+      modal.show();
+  } 
+
   const getTeamFunction = () => {
     setLoading1(true);
     const userId = localStorage.getItem("userId");
@@ -424,7 +431,6 @@ function OddsTransfer() {
     //setItems(items);
     setSelectedTeam(isTrue.length);
     setIsAllSelected(false);
-    //console.log("after",items);
   };
 
   const handleCheckedAll = () => {
@@ -432,12 +438,8 @@ function OddsTransfer() {
     newarr.map((data) => {
       data.isSelected = !isAllSelected;
     });
-    // console.log("check",isAllSelected)
-    // console.log("data",newarr)
     setIsAllSelected(!isAllSelected);
-    console.log("check", isAllSelected);
     if (!isAllSelected) {
-      console.log("hey");
       setSelectedTeam(newarr.length);
     } else {
       setSelectedTeam(0);
@@ -457,7 +459,6 @@ function OddsTransfer() {
 
     //console.log("selected data",rapidEventList);
     const userId = localStorage.getItem("userId");
-    console.log("session storage", userId);
     oddController.saveSelectedTeams(
       parseFloat(userId),
       rapidEventList,
@@ -479,21 +480,14 @@ function OddsTransfer() {
 
   const refreshOdds = () => {
     setLoading(true);
-    //console.log("ddd",isLoading)
     const userId = localStorage.getItem("userId");
-    // console.log("session storage",userId)
     oddController.updateResfreshOdds(parseInt(userId), (data) => {
       setOddsItem(data.data);
-      console.log("ddd", data.data)
-      console.log("ccc", data.datacc)
       setSearchedOdd(data.data);
       setCopyItem(data.datacc);
       setSearchedCopy(data.datacc);
       setOddPage(Math.ceil(data.data.length / rowsPerPage));
       setCopyPage(Math.ceil(data.datacc.length / rowsPerPage));
-      // toast.success(data.message, {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
       setLoading(false);
     });
   };
@@ -507,7 +501,7 @@ function OddsTransfer() {
         }/${data.goal}`
       );
     });
-    // console.log("dddd",copyArray);
+  
     navigator.clipboard.writeText(copyArray);
 
     const rapidEventId = [];
@@ -515,8 +509,6 @@ function OddsTransfer() {
       return rapidEventId.push(data.rapidEventId);
     });
     const userId = localStorage.getItem("userId");
-    //console.log("session storage",userId)
-    //console.log("copy",rapidEventId);
     oddController.updateSelectedOdds(parseInt(userId), rapidEventId, (data) => {
       setLoading2(false);
       toast.success("You can copy now", {
@@ -532,7 +524,6 @@ function OddsTransfer() {
 
   const onChangeTeam = (e) => {
     setSearchText(e.target.value);
-    //console.log("eeee", e.target.value);
     if (e.target.value.length != 0) {
       const filteredRows = items.filter((row) => {
         return row.teamName
@@ -540,7 +531,6 @@ function OddsTransfer() {
           .includes(e.target.value.toLowerCase());
       });
       setSearchedTeam(filteredRows);
-      //console.log("hhh",filteredRows);
       setPage(Math.ceil(filteredRows.length / rowsPerPage));
     } else {
       setSearchedTeam([...items]);
@@ -586,7 +576,6 @@ function OddsTransfer() {
   const handleRemoveOdds = (id) => {
     var filterResult = searchedCopy.filter((a) => a.rapidEventId != id);
     var filterResultog = copyitem.filter((a) => a.rapidEventId != id);
-    //console.log("sfsfsf",filterResult);
     //setNewcopyPage(filterResult);
 
     setSearchedCopy(filterResult);
@@ -596,6 +585,7 @@ function OddsTransfer() {
 
   return (
     <div className="odds-page">
+      {/* <DialogModal /> */}
       <NavBar username={username} userRole={userRole} homecolor={'link-btn-active'} />
       <span
         className="site-header"
@@ -606,7 +596,7 @@ function OddsTransfer() {
       <div className="main">
         {/* <div className="row"> */}
         <div className="right" style={{marginBottom : "10px"}}>
-          <span onClick={() => setTeamEye(e => !e)}>
+          <span style={{position:'absolute',marginTop:'-29px'}} onClick={() => setTeamEye(e => !e)}>
           {teamEye ?<i className="fa fa-eye-slash"></i> : <i className="fa fa-eye"></i>}
           </span>
           {teamEye ?<>
@@ -614,10 +604,10 @@ function OddsTransfer() {
             <div className="input-gp">
               <input
                 type="email"
-                className="form-control"
+                className="custom-input"
                 id="exampleFormControlInput1"
                 placeholder="search ..."
-                style={{ width: "10rem" }}
+                style={{ width: "10rem",height:38 }}
                 value={searchText}
                 onChange={(e) => onChangeTeam(e)}
               />
@@ -733,9 +723,10 @@ function OddsTransfer() {
             <div className="mb-3 input-gp">
               <input
                 type="email"
-                className="form-control"
+                className="custom-input"
                 id="exampleFormControlInput1"
                 placeholder="search ..."
+                style={{height:38}}
                 value={searchOdd}
                 onChange={(e) => onChangeOdds(e)}
               />
@@ -864,9 +855,10 @@ function OddsTransfer() {
             <div className="mb-3 input-gp">
               <input
                 type="email"
-                className="form-control"
+                className="custom-input"
                 id="exampleFormControlInput1"
                 placeholder="search ..."
+                style={{height:38}}
                 value={searchCopy}
                 onChange={(e) => onChangeCopy(e)}
               />

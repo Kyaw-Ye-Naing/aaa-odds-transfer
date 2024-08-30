@@ -155,10 +155,10 @@ function Customer() {
           <div className="input-gp">
               <input
                 type="email"
-                className="form-control"
+                className="custom-input"
                 id="exampleFormControlInput1"
                 placeholder="search ..."
-                style={{ width: 200 }}
+                style={{ width: 200,height:38 }}
                 value={searchText}
                 onChange={(e) => onChangeTeam(e)}
               />

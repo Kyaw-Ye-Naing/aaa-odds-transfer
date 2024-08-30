@@ -124,8 +124,9 @@ function Report() {
                 <label className="form-label"></label>
                 <input
                   type="text"
-                  className="search-txt form-control"
+                  className="search-txt custom-input"
                   id="exampleFormControlInput1"
+                  style={{height:38}}
                   placeholder="search ..."
                 />
               </div>

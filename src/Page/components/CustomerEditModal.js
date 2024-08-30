@@ -56,10 +56,10 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                   <input
                     type="text"
                     value={customerdata.customerName}
-                    className="form-control"
+                    className="custom-input"
                     id="exampleInputEmail1"
                     required
-                    style={{fontSize:'0.8rem'}}
+                    style={{fontSize:'0.8rem',height:35}}
                     aria-describedby="emailHelp"
                     onChange={(value) =>
                       OnChangeText("customerName", value.target.value)
@@ -73,9 +73,9 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                   <input
                     type="number"
                     value={customerdata.commission}
-                    className="form-control"
+                    className="custom-input"
                     step="any"
-                    style={{fontSize:'0.8rem'}}
+                    style={{fontSize:'0.8rem',height:35}}
                     required
                     onChange={(value) =>
                       OnChangeText("commission", value.target.value)
@@ -90,9 +90,9 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                   <input
                     type="number"
                     value={customerdata.betLimit}
-                    className="form-control"
+                    className="custom-input"
                     step="any"
-                    style={{fontSize:'0.8rem'}}
+                    style={{fontSize:'0.8rem',height:35}}
                     required
                     onChange={(value) =>
                       OnChangeText("betLimit", value.target.value)

@@ -120,13 +120,14 @@ const BodyLiveData = () => {
                     </div>
                 </div>
 
-                <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12 row">
+                <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                     <div className='search-input-panel'>
                     <input
                         type="text"
                         value={searchText}
                         onChange={(e) => handleTeamChange(e)}
-                        className="search-txt form-control"
+                        className="custom-input"
+                        style={{height:35,width:200}}
                         id="exampleFormControlInput1"
                         placeholder="search ..."
                     />

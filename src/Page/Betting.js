@@ -214,9 +214,7 @@ function Betting() {
   const getBettingEvents = () => {
     setLoading(true);
     const userId = localStorage.getItem("userId");
-    //console.log("session storage",userId)
     oddController.getBettingEvents(parseInt(userId), (data) => {
-      console.log("dsta", data.events);
       setEventsData(data.events);
       setSearchTeams(data.events.filter(item => moment(item.date).format("yyyy-MM-DD hh:mm:ss a") > moment().format("yyyy-MM-DD hh:mm:ss a")));
       setIsConfirm(data.isConfirm);
@@ -344,7 +342,6 @@ function Betting() {
   }
 
   const cancelSearch = () => {
-    console.log("dfsfsf",eventType,data.events)
     setSearchText("");
     const temp_data = eventType === "Upcoming" ? eventsData.filter(item => moment(item.date).format("yyyy-MM-DD hh:mm:ss a") > moment().format("yyyy-MM-DD hh:mm:ss a")) : 
     eventType === "Previous" ? eventsData.filter(item => moment(item.date).format("yyyy-MM-DD hh:mm:ss a") < moment().format("yyyy-MM-DD hh:mm:ss a")) : eventsData;
@@ -353,7 +350,6 @@ function Betting() {
 
   const handleEventCheckbox = (type) => {
     setEventType(type);
-    console.log("type",type,eventsData)
     if (type === 'Upcoming') {
       //var tempData = searchTeams.filter(item => item.data > moment().format("yyyy-MM-DD hh:mm:ss"));
       var tempData = eventsData.filter(item => moment(item.date).format("yyyy-MM-DD hh:mm:ss a") > moment().format("yyyy-MM-DD hh:mm:ss a"));
@@ -400,10 +396,10 @@ function Betting() {
                 <div className="input-gp" style={{ marginBottom: '10px' }}>
                   <input
                     type="email"
-                    className="form-control"
+                    className="custom-input"
                     id="exampleFormControlInput1"
                     placeholder="search ..."
-                    style={{ width: "10rem" }}
+                    style={{ width: "10rem",height:38 }}
                     value={searchText}
                     onChange={(e) => onChangeBetting(e)}
                   />
@@ -681,9 +677,10 @@ function Betting() {
                           type="email"
                           value={totalAmount}
                           readOnly={true}
-                          className="form-control"
+                          disabled
+                          className="custom-input"
                           id="exampleFormControlInput1"
-                          style={{fontSize:'0.875rem'}}
+                          style={{fontSize:'0.875rem',height:35}}
                         />
                       </div>
                       </div>

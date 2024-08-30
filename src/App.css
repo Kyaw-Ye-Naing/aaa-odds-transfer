@@ -230,6 +230,7 @@ hr {
 .search-input-panel{
     display: flex;
     justify-content: end;
+    align-items: center;
 }
 
 .search-txt {
@@ -319,6 +320,85 @@ hr {
     font-family: 'Roboto', sans-serif;
 background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 } */
+
+/* Custom CSS for iPhone-style modal */
+.iphone-modal {
+    border-radius: 16px; /* Rounded corners for iPhone-like look */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    border: none; /* Remove border */
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly translucent background */
+    overflow: hidden; /* Clip inner elements */
+}
+
+/* Header styling similar to iOS */
+.iphone-modal .modal-header {
+    border-bottom: 1px solid #e0e0e0; /* Light gray bottom border */
+    padding: 12px 16px; /* Padding for spacing */
+}
+
+.iphone-modal .modal-title {
+    font-weight: 500; /* Moderate font weight */
+    font-size: 18px; /* Slightly larger font size */
+    margin: 0; /* Remove default margin */
+}
+
+.iphone-modal .btn-close {
+    background: none; /* Remove default background */
+    border: none; /* Remove border */
+    font-size: 1.5rem; /* Adjust icon size */
+    opacity: 0.5; /* Subtle visibility */
+    transition: opacity 0.2s; /* Smooth transition for hover effect */
+}
+
+.iphone-modal .btn-close:hover {
+    opacity: 1; /* Full visibility on hover */
+}
+
+/* Body styling similar to iOS */
+.iphone-modal .modal-body {
+    padding: 16px; /* Padding for spacing */
+    font-size: 16px; /* Font size for readability */
+    color: #333; /* Darker text color */
+}
+
+/* Footer styling similar to iOS */
+.iphone-modal .modal-footer {
+    border-top: 1px solid #e0e0e0; /* Light gray top border */
+    padding: 12px 16px; /* Padding for spacing */
+    display: flex;
+    justify-content: flex-end; /* Right-aligned buttons */
+    gap: 10px; /* Spacing between buttons */
+}
+
+.iphone-modal .btn {
+    border-radius: 8px; /* Rounded buttons for a more iOS-like look */
+    padding: 8px 16px; /* Padding for a comfortable button size */
+    transition: background-color 0.2s; /* Smooth background transition */
+}
+
+.iphone-modal .btn-secondary {
+    background-color: #f0f0f0; /* Light gray for secondary button */
+    color: #000; /* Black text */
+}
+
+.iphone-modal .btn-primary {
+    background-color: #007aff; /* iOS-style blue for primary button */
+    color: #fff; /* White text */
+}
+
+.iphone-modal .btn-primary:hover {
+    background-color: #005bb5; /* Darker blue on hover */
+}
+
+
+
+
+
+
+
+
+
+
 
 /*------ media query ---------*/
 

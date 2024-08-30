@@ -71,9 +71,9 @@ const Cancel = () => {
                   <input
                     type="text"
                     value={newcustomerData.customerName}
-                    className="form-control"
+                    className="custom-input"
                     id="exampleInputEmail1"
-                    style={{fontSize:'0.8rem'}}
+                    style={{fontSize:'0.8rem',height:35}}
                     required
                     aria-describedby="emailHelp"
                     onChange={(value) =>
@@ -88,8 +88,8 @@ const Cancel = () => {
                   <input
                     type="number"
                     value={newcustomerData.commission}
-                    className="form-control"
-                    style={{fontSize:'0.8rem'}}
+                    className="custom-input"
+                    style={{fontSize:'0.8rem',height:35}}
                     step="any"
                     required
                     onChange={(value) =>
@@ -105,9 +105,9 @@ const Cancel = () => {
                   <input
                     type="number"
                     value={newcustomerData.betLimit}
-                    className="form-control"
+                    className="custom-input"
                     step="any"
-                    style={{fontSize:'0.8rem'}}
+                    style={{fontSize:'0.8rem',height:35}}
                     required
                     onChange={(value) =>
                       OnChangeText("betLimit", value.target.value)

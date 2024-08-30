@@ -26,8 +26,22 @@
     padding: 25px 20px;
 }
 
-.font-500 {
+.login-label {
+    font-size: 1rem;
     font-weight: 500;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    color: #000;
+    font-weight: 500;
+    display: flex;
+    padding-top: 3rem;
+    justify-content: center;
+}
+
+.login-sub-title {
+    font-size: 1.3rem;
 }
 
 .image-size-small {
@@ -40,21 +54,15 @@
     margin-bottom: -70px;
 }
 
-/* .icon-camera {
-    position: absolute;
-    right: -1px;
-    top: 21px;
-    width: 30px;
-    height: 30px;
-    background-color: #FFF;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
+.login-panel {
+    padding: 3rem;
+}
 
 .Icon-outside {
     display: flex;
+   }
+   .Icon-outside input:focus{
+     box-shadow: #156064 !important;
    }
    
    .Icon-outside i{
@@ -69,6 +77,8 @@
     margin-bottom: 1rem;
     background-color: #156064;
     color: #fff;
+    border-top-left-radius: 4px; 
+    border-bottom-left-radius: 4px; 
    }
 
    .Icon-outside1 {
@@ -87,4 +97,92 @@
     /* margin-bottom: 1rem; */
     background-color: #156064;
     color: #fff;
+    border-top-left-radius: 4px; 
+    border-bottom-left-radius: 4px; 
+   }
+
+   /* Pure CSS for modern input styling */
+.custom-input {
+    width: 100%; 
+    max-width: 500px; 
+    padding: 12px; 
+    border: 1px solid #ccc; 
+    /* border-top-right-radius: 4px; 
+    border-bottom-right-radius: 4px;  */
+    font-size: 16px; 
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #156064; 
+    box-shadow: 0 0 5px rgba(11, 129, 58, 0.5); 
+    outline: none; 
+}
+
+.custom-input:hover {
+    border-color: #156064; 
+}
+
+
+
+
+
+
+
+
+
+   @media  screen and (max-width: 360px) {
+    .image-size-small img {
+        width: 100px;
+    }
+    .Icon-outside i,.Icon-outside1 i{
+        font-size: 1.2rem;
+    }
+   .custom-input{
+        font-size: 0.9rem;
+    }
+    .login-sub-title {
+        font-size: 1rem;
+    }
+    .login-title {
+        padding-top: 1rem;
+    }
+    .login-panel {
+        padding: 1rem;
+    }
+    .login-label {
+        font-size: 0.875rem;
+    }
+   }
+
+   @media  screen and (max-width: 576px) {
+    .image-size-small img {
+        width: 120px;
+    }
+    .sub-title {
+        font-size: 1rem;
+    }
+    .login-panel {
+        padding: 1rem;
+    }
+    .login-sub-title {
+        font-size: 1.2rem;
+    }
+   }
+
+   @media  screen and (max-width: 768px) {
+    .Icon-outside i,.Icon-outside1 i{
+        font-size: 1.4rem;
+    }
+    .Icon-outside input,.Icon-outside1 input{
+        font-size: 1rem;
+    }
+   }
+
+   @media  screen and (max-width: 992px) {
+   
+   }
+
+   @media  screen and (max-width: 1200px) {
+   
    }

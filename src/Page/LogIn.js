@@ -6,6 +6,7 @@ import Spinner from "../asset/spinner1";
 import {useHistory} from "react-router-dom";
 import { oddController } from '../controllers/oddsController/oddController';
 import color from '../config/color';
+import { Input } from '@headlessui/react'
 
 const userdata = [
     {
@@ -29,14 +30,22 @@ function LogIn() {
         setLoading(true);
         oddController.checkLogIn(name, password, (data) => {
             setLoading(false);
+            if (data.status === 1) {
+                toast.error(data.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+                return;
+            }
             localStorage.setItem("USER", JSON.stringify(data.userDetails));
             localStorage.setItem("TOKEN",data.token);
             localStorage.setItem("userName",data.userDetails.oddsUserName);
             localStorage.setItem("userRole",data.userDetails.roleId);
             localStorage.setItem("userId",data.userDetails.oddsUserId);
-            toast.success(data.message, {
-                position: toast.POSITION.TOP_RIGHT,
-            });
+            // if (data.status !== 2) {
+            //     toast.success(data.message, {
+            //         position: toast.POSITION.TOP_RIGHT,
+            //     });
+            // }  
             if(data.status == 2){
                 history.push("/odds");
             }  
@@ -55,29 +64,30 @@ function LogIn() {
                                 <a href="" class="text-primary"><i class="lni lni-camera"></i></a>
                             </div> */}
                         </div>
-                        <div className="p-5 bg-white rounded shadow-lg">
-                            <h3 className="mb-2 text-center pt-5">LOG IN</h3>
-                            <p className="text-center lead">Log In to manage all your process</p>
+                        <div className="bg-white rounded shadow-lg login-panel">
+                            <span className="mb-2 login-title">LOG IN</span>
+                            <p className="text-center login-sub-title">Log In to manage all your process</p>
                             <form>
-                                <label className="font-500">Username</label>
+                                <label className="login-label">Username</label>
                                 <div className="Icon-outside">
                                     <i className="fa fa-user" aria-hidden="true"></i>
                                     <input
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        className="form-control mb-3"
+                                        className="custom-input mb-3 txt"
                                         type="text"
                                     />
                                 </div>
-                                <label className="font-500">Password</label>
+                                <label className="login-label">Password</label>
                                 <div className="Icon-outside1">
                                     <i className="fa fa-lock" aria-hidden="true"></i>
                                     <input
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="form-control"
+                                        className="custom-input"
                                         type="password"
                                     />
+                                   
                                 </div>
                                 <p className="m-0 py-3"><a href="" className="text-muted"></a></p>
                                 <button
