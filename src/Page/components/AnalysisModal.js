@@ -11,7 +11,9 @@ const [loading,setLoading] = useState(false);
 
  useEffect(() => {
     setLoading(true);
-    oddController.getVoucherDetails(rapidEventId,(data) => {
+    console.log("data in model >>>>",rapidEventId);
+    const userId = localStorage.getItem("userId");
+    oddController.getVoucherDetails(rapidEventId,userId,(data) => {
         //console.log("data in model >>>>",data);
         setVoucherDetails(data.payload);
         //setSearchSingle(data.livedata);

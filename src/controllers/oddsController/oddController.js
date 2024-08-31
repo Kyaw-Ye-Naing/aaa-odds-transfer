@@ -238,8 +238,12 @@ const getSingleLiveData = (startDate,isBody,userId, setResponse) => {
 };
 
 //---get voucher details
-const getVoucherDetails = (rapidEventId, setResponse) => {
-    getApi(`${apiList.getVoucherDetails}/${parseInt(rapidEventId)}`,
+const getVoucherDetails = (rapidEventId,userId, setResponse) => {
+    postApi(`${apiList.getVoucherDetails}`,
+        {
+            rapidEventId : rapidEventId,
+            userId : parseInt(userId)
+        },
         (data) => {
             setResponse(data);
         });

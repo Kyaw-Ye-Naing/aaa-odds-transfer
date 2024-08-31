@@ -664,7 +664,7 @@ function Betting() {
                           )
                           :
                           <>
-                            <i className="fas fa-save" style={{color:'#fff'}}></i>&nbsp;
+                            <i className="fas fa-save my-icon" style={{color:'#fff'}}></i>&nbsp;
                             <span style={{fontSize:'0.875rem'}}>Save</span>
                           </>
                         }
