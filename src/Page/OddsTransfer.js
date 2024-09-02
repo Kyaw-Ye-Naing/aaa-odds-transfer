@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar";
 import color from "../config/color";
 import Loading from "./components/Loading";
 import DialogModal from "./components/DialogModal";
-
+import { useTranslation } from "react-i18next";
 
 const TeamData = [
   {
@@ -321,6 +321,7 @@ const CopyData = [
 
 // Example items, to simulate f
 function OddsTransfer() {
+  const { t, i18n } = useTranslation("global");
   const rowsPerPage = 10;
   const [items, setItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -591,7 +592,7 @@ function OddsTransfer() {
         className="site-header"
         style={{color:color['dark'].main}}
       >
-        Odds Transfer
+        {t('oddTransfer')}
       </span>
       <div className="main">
         {/* <div className="row"> */}
@@ -629,17 +630,17 @@ function OddsTransfer() {
               className="btn"
               disabled={isLoading1 ? true : false}
               onClick={() => teamsHandleSave()}
-              style={{fontSize:'0.875rem',backgroundColor:color['dark'].main,color:'#fff'}}
+              style={{fontSize:'0.87rem',backgroundColor:color['dark'].main,color:'#fff'}}
             >
-              Add <i className="fa-solid fa-plus"></i>
+              {t('add')} <i className="fa-solid fa-plus"></i>
             </button>
           </div>
           <div className="d-flex justify-content-between my-2">
-            <span style={{ fontSize:'0.875rem' }}>
-              Selected {selectedTeams} Teams
+            <span style={{ fontSize:'0.87rem' }}>
+              {t('selected')} {selectedTeams} {t('team')}
             </span>
-            <div style={{ fontSize:'0.875rem' }}>
-              Check All &nbsp;
+            <div style={{ fontSize:'0.87rem' }}>
+              {t('checkAll')} &nbsp;
               <input
                 className="form-check-input"
                 style={{ padding: "8px" }}
@@ -662,12 +663,12 @@ function OddsTransfer() {
                     style={{
                       backgroundColor:color['dark'].headerbg,
                       color: MyColor.color,
-                      fontSize:'0.875rem'
+                      fontSize:'0.87rem'
                     }}
                   >
-                    <th scope="col">NO</th>
-                    <th scope="col">Team</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">{t('no')}</th>
+                    <th scope="col">{t('team')}</th>
+                    <th scope="col">{t('action')}</th>
                   </tr>
                 </thead>
                 <tbody style={{fontSize:'0.8rem'}}>
@@ -700,12 +701,12 @@ function OddsTransfer() {
             )}
           </div>
           <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
+            previousLabel={t('previous')}
+            nextLabel={t('next')}
             breakLabel={"..."}
             pageCount={page}
             marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
+            pageRangeDisplayed={2}
             onPageChange={handlePageClick}
             containerClassName={"pagination justify-content-center"}
             pageClassName={"page-item"}
@@ -748,9 +749,9 @@ function OddsTransfer() {
               className="btn mb-3"
               disabled={isLoading ? true : false}
               onClick={() => refreshOdds()}
-              style={{fontSize:'0.875rem',backgroundColor:color['dark'].main,color:'#fff'}}
+              style={{fontSize:'0.87rem',backgroundColor:color['dark'].main,color:'#fff'}}
             >
-             Refresh <i className="fa-solid fa-arrows-rotate"></i>
+              {t('refresh')}  <i className="fa-solid fa-arrows-rotate"></i>
             </button>
           </div>
           <div className="table-responsive">
@@ -765,13 +766,13 @@ function OddsTransfer() {
                     style={{
                       backgroundColor: color['dark'].headerbg,
                       color: MyColor.color,
-                      fontSize:'0.875rem'
+                      fontSize:'0.87rem'
                     }}
                   >
-                    <th scope="col">No</th>
-                    <th scope="col">Team</th>
-                    <th scope="col">Old Odds</th>
-                    <th scope="col" >New Odds</th>
+                    <th scope="col">{t('no')}</th>
+                    <th scope="col">{t('team')}</th>
+                    <th scope="col">{t('oldOdds')}</th>
+                    <th scope="col" >{t('newOdds')}</th>
                   </tr>
                   <tr
                     style={{
@@ -830,8 +831,8 @@ function OddsTransfer() {
             )}
           </div>
           <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
+            previousLabel={t('previous')}
+            nextLabel={t('next')}
             breakLabel={"..."}
             pageCount={oddpage}
             marginPagesDisplayed={2}
@@ -879,14 +880,14 @@ function OddsTransfer() {
             <button
               type="button"
               className="btn mb-3"
-              style={{ marginBottom: 5,fontSize:'0.875rem',backgroundColor:color['dark'].main,color:'#fff' }}
+              style={{ marginBottom: 5,fontSize:'0.87rem',backgroundColor:color['dark'].main,color:'#fff' }}
               disabled={isLoading2 || searchedCopy.length == 0 ? true : false}
               onClick={() => handleCopy()}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
                 {isLoading2 ? <Spinner /> : null}
                 <span>
-                  Copy <i className="fa-solid fa-clipboard"></i>
+                {t('copy')}  <i className="fa-solid fa-clipboard"></i>
                 </span>
               </div>
             </button>
@@ -899,14 +900,14 @@ function OddsTransfer() {
                   style={{
                     backgroundColor: color['dark'].headerbg,
                     color: MyColor.color,
-                    fontSize:'0.875rem'
+                    fontSize:'0.87rem'
                   }}
                 >
-                  <th scope="col">No</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Team</th>
-                  <th scope="col">Odds</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{t('no')}</th>
+                  <th scope="col">{t('time')}</th>
+                  <th scope="col">{t('team')}</th>
+                  <th scope="col">{t('odds')}</th>
+                  <th scope="col">{t('action')}</th>
                 </tr>
               </thead>
               <tbody style={{fontSize:'0.8rem'}}>
@@ -949,8 +950,8 @@ function OddsTransfer() {
             </table>
           </div>
           <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
+            previousLabel={t('previous')}
+            nextLabel={t('next')}
             breakLabel={"..."}
             pageCount={copypage}
             marginPagesDisplayed={2}

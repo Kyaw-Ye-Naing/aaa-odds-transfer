@@ -7,6 +7,7 @@ import { oddController } from "../controllers/oddsController/oddController";
 import ReactPaginate from "react-paginate";
 import color from "../config/color";
 import Loading from "./components/Loading";
+import { useTranslation } from "react-i18next";
 
 const data = [
   {
@@ -30,6 +31,7 @@ const data = [
 ];
 
 function Customer() {
+  const {t} = useTranslation("global");
   const rowsPerPage = 8;
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -135,12 +137,14 @@ function Customer() {
         setCustomerData={setCustomerData}
         getCustomer={getCustomer}
         setLoading={setLoading}
+        t={t}
       />
       <CustomerCreateModal
         setNewCustomerData={setNewCustomerData}
         newcustomerData={newcustomerData}
         getCustomer={getCustomer}
         setLoading={setLoading}
+        t={t}
       />
        <NavBar username={username} customercolor={"link-btn-active"} userRole={userRole}/>
       {isLoading ? (
@@ -150,7 +154,7 @@ function Customer() {
         </div>
       ) : (
         <div>
-          <span className="site-header" style={{color:color['dark'].main}}>Customer</span>
+          <span className="site-header" style={{color:color['dark'].main}}>{t('customer')}</span>
           <div className="customer-header">
           <div className="input-gp">
               <input
@@ -158,7 +162,7 @@ function Customer() {
                 className="custom-input"
                 id="exampleFormControlInput1"
                 placeholder="search ..."
-                style={{ width: 200,height:38 }}
+                style={{ width: 160,height:38,fontSize:'0.8rem' }}
                 value={searchText}
                 onChange={(e) => onChangeTeam(e)}
               />
@@ -180,18 +184,18 @@ function Customer() {
               data-bs-target="#customeraddModal"
               data-bs-toggle="modal"
             >
-              <i className="fas fa-add my-icon"></i>&nbsp;Add New
+              <i className="fas fa-add my-icon"></i>&nbsp;{t('addNew')}
             </button>
           </div>
           <div className="table-responsive">
             <table className="table">
               <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Commission</th>
-                  <th scope="col">Bet Limit</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{t('no')}</th>
+                  <th scope="col">{t('name')}</th>
+                  <th scope="col">{t('commission')}</th>
+                  <th scope="col">{t('betLimit')}</th>
+                  <th scope="col">{t('action')}</th>
                 </tr>
               </thead>
               <tbody style={{fontSize:'0.8rem'}}>
@@ -225,7 +229,7 @@ function Customer() {
                                 )
                               }
                             >
-                              <i className="fas fa-edit my-icon"></i>&nbsp;Edit
+                              <i className="fas fa-edit my-icon"></i>&nbsp;{t('edit')}
                             </button>
                           </td>
                         </tr>
@@ -233,15 +237,15 @@ function Customer() {
                     })
                   :
                   <tr>
-              <td colSpan={4} style={{textAlign:'center'}}>no data</td>
+              <td colSpan={4} style={{textAlign:'center'}}>{t('nodata')}</td>
             </tr>
                   }
               </tbody>
             </table>
           </div>
           <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
+            previousLabel={t('previous')}
+            nextLabel={t('next')}
             breakLabel={"..."}
             pageCount={page}
             marginPagesDisplayed={2}

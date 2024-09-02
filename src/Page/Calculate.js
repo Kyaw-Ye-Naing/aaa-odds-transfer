@@ -6,8 +6,10 @@ import { oddController } from "../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
 import color from "../config/color";
 import Loading from "./components/Loading";
+import { useTranslation } from "react-i18next";
 
 function Calculate() {
+  const {t} = useTranslation("global");
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
   const [events, setEvents] = useState([]);
   const [loadingText, setLoadingText] = useState("Loading .....");
@@ -72,7 +74,7 @@ function Calculate() {
   return (
     <div>
       <NavBar username={username} calculatecolor={"link-btn-active"} userRole={userRole} />
-      <span className="site-header" style={{color:color['dark'].main}}>Voucher Calculation</span>
+      <span className="site-header" style={{color:color['dark'].main}}>{t('calculateTitle')}</span>
       {isLoading ? (
         <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
           <Loading />
@@ -86,12 +88,12 @@ function Calculate() {
             : <span className="badge bg-warning">Pending</span>}</span><br/> */}
             <button
             type="button"
-            style={{ marginLeft: '5px',backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.875rem' }}
+            style={{ marginLeft: '5px',backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.87rem' }}
             disabled={isShow}
             className="btn"
             onClick={() => handleCalculate()}
           >
-            <i className="fas fa-file-signature"></i>&nbsp;Calculate Voucher
+            <i className="fas fa-file-signature"></i>&nbsp;{t('calculateVoucher')}
           </button>
           </div>
           <div className="d-flex my-2" style={{ gap: 5 ,fontSize:'0.8rem'}}>
@@ -116,7 +118,7 @@ function Calculate() {
                 style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem',marginLeft:5}}
                 onClick={() => getEventResult()}
               >
-                Search
+                {t('search')}
               </button>
             </div>
           </div>
@@ -124,14 +126,14 @@ function Calculate() {
           <div className="cal-container">
             <div className="table-responsive">
               <table className="table">
-                <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+                <thead style={{fontSize:'0.87rem',backgroundColor:color['dark'].headerbg}}>
                   <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">League</th>
-                    <th scope="col">Home</th>
-                    <th scope="col">Result</th>
-                    <th scope="col">Away</th>
+                    <th scope="col">{t('no')}</th>
+                    <th scope="col">{t('time')}</th>
+                    <th scope="col">{t('league')}</th>
+                    <th scope="col">{t('home')}</th>
+                    <th scope="col">{t('result')}</th>
+                    <th scope="col">{t('away')}</th>
                   </tr>
                 </thead>
                 <tbody style={{fontSize:'0.8rem'}}>
@@ -154,7 +156,7 @@ function Calculate() {
                     })
                     :
                     <tr>
-                      <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
+                      <td colSpan={7} style={{ textAlign: 'center' }}>{t('nodata')}</td>
                     </tr>
                   }
                 </tbody>

@@ -6,8 +6,10 @@ import { useHistory } from "react-router-dom";
 import { oddController } from "../controllers/oddsController/oddController";
 import color from "../config/color";
 import Loading from "./components/Loading";
+import { useTranslation } from "react-i18next";
 
 function Report() {
+  const {t} = useTranslation("global");
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
   const [isLoading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(defaultDate);
@@ -74,63 +76,55 @@ function Report() {
      
       <NavBar username={username} reportcolor={"link-btn-active"} userRole={userRole}/>
        
-      <span className="site-header" style={{color:color['dark'].main}}>User Win / Lose Reports</span>
+      <span className="site-header" style={{color:color['dark'].main}}>{t('reportTitle')}</span>
 
       <div style={{marginLeft:3,marginRight:3}}>
-        <div className="row mb-2" style={{ fontSize: '0.8rem' }}>
-          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 row">
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-              <div className="mb-2">
-                <label className="form-label">Start Date</label>
-                <input
-                  className="form-control"
-                  type="date"
-                  id="birthday"
-                  value={startDate}
-                  style={{ fontSize: '0.8rem'}}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  name="birthday"
-                />
-              </div>
+        <div style={{ fontSize: '0.8rem',display:'flex',justifyContent:'space-between',alignItems:'center',gap:5,flexWrap:'wrap',marginBottom:5 }}>
+          <div style={{display:'flex',flexWrap:'wrap',gap:'0.5rem'}}>
+            <div className="mb-2" style={{flex:'1 0 5rem'}}>
+              <label className="form-label">Start Date</label>
+              <input
+                className="form-control"
+                type="date"
+                id="birthday"
+                value={startDate}
+                style={{ fontSize: '0.8rem' }}
+                onChange={(e) => setStartDate(e.target.value)}
+                name="birthday"
+              />
             </div>
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-              <div className="mb-2">
-                <label className="form-label">End Date</label>
-                <input
-                  className="form-control"
-                  type="date"
-                  id="birthday"
-                  value={endDate}
-                  style={{ fontSize: '0.8rem' }}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  name="birthday"
-                />
-              </div>
+            <div className="mb-2" style={{flex:'1 0 5rem'}}>
+              <label className="form-label">End Date</label>
+              <input
+                className="form-control"
+                type="date"
+                id="birthday"
+                value={endDate}
+                style={{ fontSize: '0.8rem' }}
+                onChange={(e) => setEndDate(e.target.value)}
+                name="birthday"
+              />
             </div>
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" >
-              <button
-                type="button"
-                className="search-btn btn"
-                style={{ backgroundColor: color['dark'].main, color: '#fff', fontSize: '0.8rem' }}
-                onClick={() => getWinLoseReport()}
-              >
-                Search
-              </button>
+            <div style={{flex:'1 0 0rem'}}>
+            <button
+              type="button"
+              className="search-btn2 btn"
+              style={{ backgroundColor: color['dark'].main, color: '#fff', fontSize: '0.8rem' }}
+              onClick={() => getWinLoseReport()}
+            >
+              {t('search')}
+            </button>
             </div>
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 row">
-            <div className="search-input-panel">
-              <div className="mb-2">
-                <label className="form-label"></label>
-                <input
-                  type="text"
-                  className="search-txt custom-input"
-                  id="exampleFormControlInput1"
-                  style={{height:38}}
-                  placeholder="search ..."
-                />
-              </div>
-            </div>
+          <div className="">
+            <label className="form-label"></label>
+            <input
+              type="text"
+              className="search-txt custom-input"
+              id="exampleFormControlInput1"
+              style={{ height: 35 }}
+              placeholder="search ..."
+            />
           </div>
         </div>
 
@@ -142,25 +136,25 @@ function Report() {
       ) : (
         <div className="table-responsive">
           <table className="report-table table">
-            <thead style={{backgroundColor:color['dark'].headerbg,fontSize:'0.875rem'}}>
+            <thead style={{backgroundColor:color['dark'].headerbg,fontSize:'0.87rem'}}>
               <tr>
               <th scope="col"></th>
-              <th scope="col">No</th>
-              <th scope="col">Username</th>
-              <th scope="col">TurnOver</th>
-              <th scope="col">ValidAmount</th>
-              <th scope="col" style={{textAlign:'right'}}>W/L Amount</th>
-              <th scope="col" style={{textAlign:'right'}}>Commission</th>
-              <th scope="col" style={{textAlign:'right'}}>Total Amount</th>
+              <th scope="col">{t('no')}</th>
+              <th scope="col">{t('username')}</th>
+              <th scope="col">{t('turnOver')}</th>
+              <th scope="col">{t('validAmount')}</th>
+              <th scope="col" style={{textAlign:'right'}}>{t('wlAmount')}</th>
+              <th scope="col" style={{textAlign:'right'}}>{t('commission')}</th>
+              <th scope="col" style={{textAlign:'right'}}>{t('totalAmount')}</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{fontSize:'0.8rem'}}>
             {item.length != 0 ?
             item &&
                     item.map((d, i) => {
                       return (
                         <Fragment key={i}>
-                          <tr style={{fontSize:'0.8rem'}}> 
+                          <tr> 
                             <td>
                               <a onClick={() => handleClick(i)} style={{marginLeft:'5%',cursor:'pointer'}}>
                               {d.isExpand ? (
@@ -192,7 +186,7 @@ function Report() {
                       );
                     })
             :<tr>
-              <td colSpan={8} style={{textAlign:'center'}}>no data</td>
+              <td colSpan={8} style={{textAlign:'center'}}>{t('nodata')}</td>
             </tr>
                   }
             </tbody>
@@ -244,7 +238,7 @@ export function ReportExpandRow({ itemdetails,customerId,setIsEdit,setItemview,i
 
     return (
       <>
-        <tr className="table-secondary" style={{fontSize:'0.875rem'}}>
+        <tr className="table-secondary" style={{fontSize:'0.87rem'}}>
           
           <th scope="col">No</th>
           <th scope="col">Betted Date</th>

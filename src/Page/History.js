@@ -10,6 +10,7 @@ import ReactiveButton from 'reactive-button';
 import { Button } from 'react-bootstrap';
 import color from "../config/color";
 import Loading from "./components/Loading";
+import { useTranslation } from "react-i18next";
 
 const data = [
   {
@@ -51,6 +52,7 @@ const data1 = [
 ];
 
 function History() {
+  const {t} = useTranslation('global');
   const [isLoading, setLoading] = useState(false);
   const [item, setItem] = useState([]);
   const history = useHistory();
@@ -174,7 +176,7 @@ function History() {
 
   return (
     <div>
-      <DeleteAlertModal handleRemoveVoucher={handleRemoveVoucher} deleteId={deleteId} />
+      <DeleteAlertModal handleRemoveVoucher={handleRemoveVoucher} deleteId={deleteId} t={t}/>
       <MyModal
         isEdit={isEdit}
         historydata={itemview}
@@ -188,9 +190,10 @@ function History() {
         handleChangeGoal={handleChangeGoal}
         setSelectdCustomer={setSelectdCustomer}
         handleUpdate={handleUpdate}
+        t={t}
       />
       <NavBar username={username} historycolor={"link-btn-active"} userRole={userRole}/>
-      <span className="site-header" style={{color:color['dark'].main}}>Member Outstanding</span>
+      <span className="site-header" style={{color:color['dark'].main}}>{t('outstandingTitle')}</span>
       <div className="d-flex justify-content-center mb-2">
         <div className="btn-group" role="group" aria-label="Basic example">
         <button type="button" 
@@ -198,19 +201,19 @@ function History() {
         style={{backgroundColor:tab === "list" ? color['dark'].secondary : color['dark'].secondary3,fontSize:'0.8rem' }} 
         onClick={() => handleOnClick("list")}
         >
-          List Mode
+          {t('listMode')}
         </button>
         <button type="button" 
         className="btn-normal" 
         style={{backgroundColor:tab === "edit" ? color['dark'].secondary : color['dark'].secondary3,fontSize:'0.8rem' }} 
         onClick={() => handleOnClick("edit")}
         >
-          Edit Mode
+          {t('editMode')}
         </button>
         </div>
       </div> 
       { tab === "edit" ?
-      <Edit customer={customer}/> :
+      <Edit customer={customer} t={t}/> :
       <div>
         {isLoading ? (
           <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
@@ -223,12 +226,12 @@ function History() {
               <div className="table-responsive">
                 <table className="table">
                   <thead>
-                    <tr style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+                    <tr style={{fontSize:'0.87rem',backgroundColor:color['dark'].headerbg}}>
                       <th scope="col"></th>
-                      <th scope="col">No</th>
+                      <th scope="col">{t('no')}</th>
                       <th scope="col"></th>
-                      <th scope="col">Username</th>
-                      <th scope="col">Amount</th>
+                      <th scope="col">{t('username')}</th>
+                      <th scope="col">{t('amount')}</th>
                       <th scope="col"></th>
                       <th scope="col"></th>
                     </tr>
@@ -308,14 +311,16 @@ function History() {
                                 setGoal={setGoal}
                                 setUnit={setUnit}
                                 setDeleteId={setDeleteId}
-                                setIsEdit={setIsEdit} />
+                                setIsEdit={setIsEdit} 
+                                t={t}
+                                />
                             ) : null}
                           </Fragment>
                         );
                       })
                       :
                       <tr>
-                        <td colSpan={7} style={{ textAlign: 'center' }}>no data</td>
+                        <td colSpan={7} style={{ textAlign: 'center' }}>{t('nodata')}</td>
                       </tr>
                     }
                   </tbody>
@@ -342,7 +347,9 @@ export function ExpandRow({
   setSelectdCustomer,
   setUnit,
   setGoal,
-  setDeleteId }) {
+  setDeleteId,
+  t
+ }) {
   //const result = data.filter(a=>a.CustomerId == customerId);
 
   var result = itemdetails.filter((el) => {
@@ -416,14 +423,14 @@ export function ExpandRow({
 
   return (
     <>
-      <tr style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+      <tr style={{fontSize:'0.87rem',backgroundColor:color['dark'].headerbg}}>
         <th></th>
-        <th scope="col">No</th>
-        <th scope="col">Betted Date</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Choice</th>
-        <th scope="col">Odds</th>
-        <th scope="col">Action</th>
+        <th scope="col">{t('no')}</th>
+        <th scope="col">{t('bettedDate')}</th>
+        <th scope="col">{t('amount')}</th>
+        <th scope="col">{t('choice')}</th>
+        <th scope="col">{t('odds')}</th>
+        <th scope="col">{t('action')}</th>
       </tr>
       {result &&
         result.map((d, i) => {
@@ -456,7 +463,7 @@ export function ExpandRow({
                       data-bs-target="#myModal"
                       onClick={() => handleViewModal("Edit", d)}
                     >
-                      <i className="fas fa-edit my-icon"></i>&nbsp;Edit
+                      <i className="fas fa-edit my-icon"></i>&nbsp;{t('edit')}
                     </button>
                     <button
                       className="btn"
@@ -465,7 +472,7 @@ export function ExpandRow({
                       data-bs-target="#deletealertModal"
                       onClick={() => setDeleteId(d.bettingId)}
                     >
-                      <i className="fas fa-trash my-icon"></i>&nbsp;Delete
+                      <i className="fas fa-trash my-icon"></i>&nbsp;{t('delete')}
                     </button>
                   </div>
                 </td>
@@ -478,25 +485,25 @@ export function ExpandRow({
 }
 
 const Edit = (props) => {
-const {customer} = props;
+const {customer,t} = props;
 const [voucherList,setVoucherList] = useState([]);
 const [editableData,setEditableData] = useState([]);
 const [valueState, setValueState] = useState('idle');
 
   useEffect(() => {
-    console.log("customer",customer)
+    //console.log("customer",customer)
   },[])
 
  const handleVoucherView = (customerId)=>{
   setEditableData([]);
-  console.log("customer",customerId)
+  //console.log("customer",customerId)
   oddController.getOverallVoucher(parseInt(customerId), (data) => {
     setVoucherList(data.payload);
   });
  }
 
  const handleVoucherAdd = (v) => {
-  console.log("ddd",editableData)
+  //console.log("ddd",editableData)
   const arr = editableData.map(obj => ({ ...obj }));
   arr.push(v);
   //const arr = [...editableData];
@@ -536,11 +543,11 @@ const handleVoucherRemove = (value) => {
         <div className="col-lg-3 col-12 mb-4">
           <div className="bg-light" style={{height:500,overflowY:'scroll'}}>
             <table class="table">
-              <thead style={{position:'sticky',fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+              <thead style={{position:'sticky',fontSize:'0.87rem',backgroundColor:color['dark'].headerbg}}>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{t('name')}</th>
+                  <th scope="col">{t('action')}</th>
                 </tr>
               </thead>
               <tbody style={{fontSize:'0.8rem'}}>
@@ -562,14 +569,14 @@ const handleVoucherRemove = (value) => {
         </div>
         <div className="col-lg-4 col-12 mb-2">
         <div className="bg-light">
-          <table class="table">
-            <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+          <table class="table table-hover">
+            <thead style={{fontSize:'0.87rem',backgroundColor:color['dark'].headerbg}}>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Choice</th>
-                <th scope="col">Odds</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Action</th>
+                <th scope="col">{t('choice')}</th>
+                <th scope="col">{t('odds')}</th>
+                <th scope="col">{t('amount')}</th>
+                <th scope="col">{t('action')}</th>
               </tr>
             </thead>
             <tbody style={{fontSize:'0.8rem'}}>
@@ -586,7 +593,7 @@ const handleVoucherRemove = (value) => {
                 </td>
               </tr>
                 ) : <tr>
-                  <td colSpan={5} style={{ textAlign: 'center' }}>No Data</td>
+                  <td colSpan={5} style={{ textAlign: 'center' }}>{t('nodata')}</td>
                 </tr>
 }
               {/* <tr>
@@ -610,13 +617,13 @@ const handleVoucherRemove = (value) => {
         <div className="col-lg-5 col-12 mb-2">
         <div className="bg-light">
         <table class="table">
-            <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
+            <thead style={{fontSize:'0.87rem',backgroundColor:color['dark'].headerbg}}>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Choice</th>
-                <th scope="col">Odds</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Action</th>
+                <th scope="col">{t('choice')}</th>
+                <th scope="col">{t('odds')}</th>
+                <th scope="col">{t('amount')}</th>
+                <th scope="col">{t('action')}</th>
               </tr>
             </thead>
             <tbody style={{fontSize:'0.8rem'}}>
@@ -627,8 +634,9 @@ const handleVoucherRemove = (value) => {
                 <td>
                     <input
                       type="text"
-                      className="form-control"
+                      className="custom-input"
                       value={v.odds}
+                      style={{height:30,fontSize:'0.8rem',width:60}}
                       onChange={(e) =>
                        handleTextChange(i, e.target.value,'odds', v)
                       }
@@ -637,10 +645,10 @@ const handleVoucherRemove = (value) => {
                 <td>
                     <input
                       type="text"
-                      className="form-control"
+                      className="custom-input"
                       value={v.amount}
-                      width={'100%'}
-                    onChange={(e) =>
+                      style={{height:30,fontSize:'0.8rem',width:60}}
+                      onChange={(e) =>
                      handleTextChange(i, e.target.value, 'amount', v)
                     }
                     />
@@ -653,7 +661,7 @@ const handleVoucherRemove = (value) => {
               </tr>
 ) :
 <tr>
-                  <td colSpan={5} style={{ textAlign: 'center' }}>No Data</td>
+                  <td colSpan={5} style={{ textAlign: 'center' }}>{t('nodata')}</td>
                 </tr>
 }
             </tbody>
@@ -661,10 +669,10 @@ const handleVoucherRemove = (value) => {
             <div className="d-flex justify-content-center pb-2">
               <ReactiveButton
                 buttonState={valueState}
-                idleText="Save"
+                idleText={t('save')}
                 style={{backgroundColor:color['dark'].main,color:'#fff'}}
-                loadingText="Loading"
-                successText="Update Successfully!"
+                loadingText={t('loading')}
+                successText={t('successText')}
                 disabled={editableData.length > 0 ? false : true}
                 onClick={()=>handleVoucherSave()}
               />

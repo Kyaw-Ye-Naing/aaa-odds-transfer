@@ -3,7 +3,7 @@ import { oddController } from "../../controllers/oddsController/oddController";
 import { toast } from "react-toastify";
 import color from "../../config/color";
 
-function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoading }) {
+function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoading,t }) {
   const OnChangeText = (text, value) => {
     const newcustomer = { ...customerdata };
     newcustomer[text] = value;
@@ -37,7 +37,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
           <div className="modal-content">
             <div className="modal-header">
               <div className="modal-title" id="customerModalLabel">
-                <h5>Customer Edit</h5>
+                <h5>{t('customer')} {t('edit')}</h5>
               </div>
 
               <button
@@ -51,7 +51,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
               <form>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
-                    Customer Name
+                    {t('name')}
                   </label>
                   <input
                     type="text"
@@ -68,7 +68,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
-                    Commission
+                    {t('commission')}
                   </label>
                   <input
                     type="number"
@@ -85,7 +85,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
-                    Bet Limit
+                   {t('betLimit')}
                   </label>
                   <input
                     type="number"
@@ -119,7 +119,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 className="btn btn-secondary" 
                 data-bs-dismiss="modal" 
                >
-                  Close
+                  {t('close')}
                   </button>
                 <button 
                 type="button" 
@@ -128,7 +128,7 @@ function CustomerEditModal({ customerdata, setCustomerData,getCustomer,setLoadin
                 className="btn" 
                 onClick={()=>EditSave()} 
                 >
-                  Save
+                   {t('save')}
                 </button>
                 </div>
               </form>

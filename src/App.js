@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,9 +11,19 @@ import History from './Page/History';
 import Customer from './Page/Customer';
 import Analysis from './Page/Analysis';
 import { ToastContainer } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 function App() {
+  const { i18n } = useTranslation("global");
+
+  useEffect(() => {
+    //eslint-disable-next-line
+    i18n.changeLanguage(localStorage.getItem("language") === "mm" ? "mm" : "en");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
     <div className="App">

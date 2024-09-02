@@ -7,7 +7,9 @@ function CustomerCreateModal({
   newcustomerData,
   setNewCustomerData,
   getCustomer,
+  t
 }) {
+
   const OnChangeText = (text, value) => {
     //console.log("text box",value);
     const newcustomer = { ...newcustomerData };
@@ -52,7 +54,7 @@ const Cancel = () => {
           <div className="modal-content">
             <div className="modal-header">
               <div className="modal-title" id="customeraddModalLabel">
-                <h5>Customer Create</h5>
+                <h5>{t('customer')} {t('create')}</h5>
               </div>
 
               <button
@@ -66,7 +68,7 @@ const Cancel = () => {
               <form>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
-                    Customer Name
+                   {t('name')}
                   </label>
                   <input
                     type="text"
@@ -83,7 +85,7 @@ const Cancel = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
-                    Commission
+                    {t('commission')}
                   </label>
                   <input
                     type="number"
@@ -100,7 +102,7 @@ const Cancel = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
-                    Bet Limit
+                  {t('betLimit')}
                   </label>
                   <input
                     type="number"
@@ -136,7 +138,7 @@ const Cancel = () => {
                   style={{ fontSize:'0.8rem' }}
                   onClick={() => Cancel()}
                 >
-                  Close
+                  {t('close')}
                 </button>
                 <button
                   type="button"
@@ -144,7 +146,7 @@ const Cancel = () => {
                   onClick={() => Save()}
                   style={{ marginLeft: 5,fontSize:'0.8rem',backgroundColor:color['dark'].main,color:'#fff' }}
                 >
-                  Save
+                  {t('save')}
                 </button>
                 </div>
               </form>

@@ -6,7 +6,6 @@ import Spinner from "../asset/spinner1";
 import {useHistory} from "react-router-dom";
 import { oddController } from '../controllers/oddsController/oddController';
 import color from '../config/color';
-import { Input } from '@headlessui/react'
 
 const userdata = [
     {

@@ -5,13 +5,13 @@ import { useState } from 'react';
 import Loader from '../../asset/loader';
 import color from '../../config/color';
 
-function AnalysisModal({rapidEventId}) {
+function AnalysisModal({rapidEventId,t}) {
 const [voucherDetails,setVoucherDetails] = useState([]);
 const [loading,setLoading] = useState(false);
 
  useEffect(() => {
     setLoading(true);
-    console.log("data in model >>>>",rapidEventId);
+   // console.log("data in model >>>>",rapidEventId);
     const userId = localStorage.getItem("userId");
     oddController.getVoucherDetails(rapidEventId,userId,(data) => {
         //console.log("data in model >>>>",data);
@@ -28,7 +28,7 @@ const [loading,setLoading] = useState(false);
                 <div className="modal-dialog modal-lg modal-dialog-scrollable">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h6>Voucher Details</h6>
+                            <h6>{t('voucher')} {t('details')}</h6>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
                         </div>
                         <div className="modal-body">
@@ -40,8 +40,8 @@ const [loading,setLoading] = useState(false);
                                     <div className='row'>
                                         <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12 p-0' style={{ borderRight: '1px solid black' }}>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',fontSize :'0.87rem' }}>
-                                                <span>Home</span>
-                                                <span>Total - {voucherDetails.homeList && voucherDetails.homeList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
+                                                <span>{t('home')}</span>
+                                                <span>{t('total')} - {voucherDetails.homeList && voucherDetails.homeList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                             <div style={{fontSize:'0.8rem'}}>
                                                 {voucherDetails.homeList && voucherDetails.homeList.map((v, i) =>
@@ -57,8 +57,8 @@ const [loading,setLoading] = useState(false);
                                         </div>
                                         <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12 p-0' style={{ borderRight: '1px solid black' }}>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',fontSize :'0.87rem' }}>
-                                                <span>Away</span>
-                                                <span>Total - {voucherDetails.awayList && voucherDetails.awayList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
+                                                <span>{t('away')}</span>
+                                                <span>{t('total')} - {voucherDetails.awayList && voucherDetails.awayList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                             <div style={{fontSize:'0.8rem'}}>
                                                 {voucherDetails.awayList && voucherDetails.awayList.map((v, i) =>
@@ -74,8 +74,8 @@ const [loading,setLoading] = useState(false);
                                         </div>
                                         <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12 p-0' style={{ borderRight: '1px solid black' }}>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',fontSize :'0.87rem' }}>
-                                                <span>Over</span>
-                                                <span>Total - {voucherDetails.overList && voucherDetails.overList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
+                                                <span>{t('over')}</span>
+                                                <span>{t('total')} - {voucherDetails.overList && voucherDetails.overList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                             <div style={{fontSize:'0.8rem'}}>
                                                 {voucherDetails.overList && voucherDetails.overList.map((v, i) =>
@@ -91,8 +91,8 @@ const [loading,setLoading] = useState(false);
                                         </div>
                                         <div className='col-lg-3 col-md-3 col-sm-12 col-xs-12 p-0'>
                                             <div className='bg-success text-white' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',fontSize :'0.87rem' }}>
-                                                <span>Under</span>
-                                                <span>Total - {voucherDetails.underList && voucherDetails.underList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
+                                                <span>{t('under')}</span>
+                                                <span>{t('total')} - {voucherDetails.underList && voucherDetails.underList.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)}</span>
                                             </div>
                                             <div style={{fontSize:'0.8rem'}}>
                                                 {voucherDetails.underList && voucherDetails.underList.map((v, i) =>

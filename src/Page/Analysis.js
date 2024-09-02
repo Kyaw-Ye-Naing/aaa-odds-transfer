@@ -6,8 +6,10 @@ import NavBar from "./components/NavBar";
 import './analysis.css';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import color from "../config/color";
+import { useTranslation } from 'react-i18next';
 
 function Analysis() {
+    const {t} = useTranslation('global');
     const handle = useFullScreenHandle();
     const [username, setUsername] = useState("");
     const history = useHistory();
@@ -59,13 +61,13 @@ function Analysis() {
             {/* {type == 'goal' ?  <GoalLiveData /> :  <BodyLiveData />} */}
 
                 <div style={{ background: handle.active ? "#fff" : null, height: handle.active ? '100%' : null }}>
-                <span className="site-header" style={{color:color['dark'].main}}>Analysis</span>
+                <span className="site-header" style={{color:color['dark'].main}}>{t('analysis')}</span>
                     { handle.active ?
                         <button onClick={handle.exit} className='btn btn-light' style={{ position: 'absolute',top : 0 ,right : 0 }}>
                             <i className="fa-solid fa-minimize" style={{ color: 'gray', fontSize: '1.2rem' }}></i>
                         </button> : null
                     }
-                    <BodyLiveData />
+                    <BodyLiveData t={t}/>
                 </div>
             </FullScreen>
         </div>

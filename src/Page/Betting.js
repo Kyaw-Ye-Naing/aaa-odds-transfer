@@ -14,8 +14,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import color from "../config/color";
 import Loading from "./components/Loading";
+import { useTranslation } from "react-i18next";
 
 function Betting() {
+  const {t} = useTranslation("global"); 
   const handle = useFullScreenHandle();
   const [eventsData, setEventsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -382,24 +384,25 @@ function Betting() {
         ) : (   
           <React.Fragment>
               <InputAmountModal
+              t={t}
                 //closeModal={closeModal}
                 inputElement={inputElement}
                 handleTeamAdd={handleTeamAdd}
               />
               <div style={{ background: handle.active ? "#fff" : null, height: handle.active ? '100%' : null }} className={handle.active ? 'container-fluid' : null}>
-                <span className="site-header" style={{color:color['dark'].main}}>User Betting Page</span>
+                <span className="site-header" style={{color:color['dark'].main}}>{t('userBettingPage')}</span>
                 {handle.active ?
                   <button onClick={handle.exit} className='btn btn-light' style={{ position: 'absolute', top: 5, right: 5 }}>
                     <i className="fa-solid fa-minimize" style={{ color: 'gray', fontSize: '1rem' }}></i>
                   </button> : null
                 }
-                <div className="input-gp" style={{ marginBottom: '10px' }}>
+                <div className="input-gp" style={{ marginBottom: 5 }}>
                   <input
                     type="email"
                     className="custom-input"
                     id="exampleFormControlInput1"
                     placeholder="search ..."
-                    style={{ width: "10rem",height:38 }}
+                    style={{ width: "10rem",height:35,fontSize:'0.87rem' }}
                     value={searchText}
                     onChange={(e) => onChangeBetting(e)}
                   />
@@ -415,13 +418,13 @@ function Betting() {
                     ></i>
                   </button>
                   <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic" style={{backgroundColor:'white',color:'#000',borderColor:'gray',marginLeft:5}}>
+                    <Dropdown.Toggle id="dropdown-basic" style={{backgroundColor:'white',color:'#000',borderColor:'gray',marginLeft:5,fontSize:'0.87rem'}}>
                      {eventType}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu style={{fontSize:'1rem'}}>
-                      <Dropdown.Item onClick={() => handleEventCheckbox('Upcoming')}>Upcoming</Dropdown.Item>
-                      <Dropdown.Item onClick={() => handleEventCheckbox('All Event')}>All Event</Dropdown.Item>
-                      <Dropdown.Item onClick={() => handleEventCheckbox('Previous')}>Previous</Dropdown.Item>
+                    <Dropdown.Menu style={{fontSize:'0.87rem'}}>
+                      <Dropdown.Item onClick={() => handleEventCheckbox('Upcoming')}>{t('upcoming')}</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleEventCheckbox('All Event')}>{t('allEvents')}</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleEventCheckbox('Previous')}>{t('previousEvent')}</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
@@ -429,39 +432,39 @@ function Betting() {
                   <div className="col-12 col-lg-8 col-md-8">
                     <div className="event mb-1">
                       <table className="table">
-                        <thead style={{ position: 'sticky', top: 0 }}>
+                        <thead style={{ position: 'sticky', top: 0,fontSize:'0.87rem' }}>
                           <tr style={{backgroundColor:color['dark'].headerbg}}>
                             <th scope="col" width="15">
-                              No
+                              {t('no')}
                             </th>
                             <th scope="col" width="50">
-                              Time
+                              {t('time')}
                             </th>
                             <th scope="col" width="100">
-                              Home
+                              {t('home')}
                             </th>
                             <th scope="col" width="30">
-                              Over
+                            {t('over')}
                             </th>
                             <th scope="col" width="30">
-                              Goal
+                              {t('goalOdd')}
                             </th>
                             <th scope="col" width="30">
-                              Under
+                            {t('under')}
                             </th>
                             <th scope="col" width="100">
-                              Away
+                            {t('away')}
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody style={{fontSize:'0.8rem'}}>
                           {eventsData.length == 0 ? (
                             <tr>
                               <td
                                 colSpan={7}
                                 style={{ textAlign: "center", fontWeight: "bold" }}
                               >
-                                No Data
+                               {t('nodata')}
                               </td>
                             </tr>
                           ) : (
@@ -496,7 +499,7 @@ function Betting() {
                                       data-bs-target="#inputamountModal"
                                       onClick={() => handleOpenModal("over", d)}
                                       className="btn btn-outline-success"
-                                      style={{ padding: "0.3rem 1rem" }}
+                                      style={{ padding: "0.05rem 0.7rem" }}
                                     >
                                       <i className="fas fa-arrow-up"></i>
                                     </button>
@@ -509,7 +512,7 @@ function Betting() {
                                       data-bs-target="#inputamountModal"
                                       onClick={() => handleOpenModal("under", d)}
                                       className="btn btn-outline-success"
-                                      style={{ padding: "0.3rem 1rem" }}
+                                      style={{ padding: "0.05rem 0.7rem" }}
                                     >
                                       <i className="fas fa-arrow-down"></i>
                                     </button>
@@ -541,9 +544,10 @@ function Betting() {
                   <div className="col-12 col-lg-4 col-md-4">
                     <div className="panel">
                       <select
-                        className="form-select mb-3"
+                        className="form-select mb-3 shadow-none"
                         aria-label=".form-select-lg example"
                         value={selectedCustomer}
+                        style={{fontSize:'0.87rem'}}
                         onChange={(e) => setSelectdCustomer(e.target.value)}
                       >
                         <option defaultValue={0}>
@@ -559,21 +563,23 @@ function Betting() {
                       </select>
 
                       <div className="panel-details">
-                        <table className="table">
-                          <thead style={{fontSize:'0.875rem'}}>
+                        <table className="table table-responsive">
+                          <thead style={{fontSize:'0.87rem'}}>
                             <tr style={{backgroundColor:color['dark'].headerbg}}>
-                              <th scope="col" width="50">No</th>
-                              <th scope="col" width="200">
-                                Choice
+                              <th scope="col">
+                                {t('no')}
                               </th>
-                              <th scope="col" width="100">
-                                Odds
+                              <th scope="col">
+                                {t('choice')}
                               </th>
-                              <th scope="col" width="100">
-                                Amount
+                              <th scope="col">
+                                {t('odds')}
                               </th>
-                              <th scope="col" width="50">
-                                Action
+                              <th scope="col">
+                                {t('amount')}
+                              </th>
+                              <th scope="col">
+                                {t('action')}
                               </th>
                             </tr>
                           </thead>
@@ -613,9 +619,9 @@ function Betting() {
                                       {/* {b.choiceOdds} */}
                                       <input
                                         type="email"
-                                        className="form-control"
+                                        className="custom-input"
                                         value={b.choiceOdds}
-                                        style={{fontSize:'0.8rem'}}
+                                        style={{fontSize:'0.8rem',height:20,width:80}}
                                         onChange={(e) =>
                                           handleTextChange(i, e.target.value,'odds',b)
                                         }
@@ -625,9 +631,9 @@ function Betting() {
                                       {/* {b.amount} */}
                                       <input
                                         type="email"
-                                        className="form-control"
+                                        className="custom-input"
                                         value={b.amount}
-                                        style={{fontSize:'0.8rem'}}
+                                        style={{fontSize:'0.8rem',height:20,width:80}}
                                         onChange={(e) =>
                                           handleTextChange(i, e.target.value, 'amount',b)
                                         }
@@ -642,7 +648,7 @@ function Betting() {
                                 );
                               })
                               : <tr>
-                                <td colSpan={4} style={{ textAlign: 'center' }}>no data</td>
+                                <td colSpan={4} style={{ textAlign: 'center' }}>{t('nodata')}</td>
                               </tr>}
                           </tbody>
                         </table>
@@ -659,19 +665,19 @@ function Betting() {
                         {isSpinner ?
                           (
                             <>
-                              <span>Saving......</span>
+                              <span>{t('saving')}......</span>
                             </>
                           )
                           :
                           <>
                             <i className="fas fa-save my-icon" style={{color:'#fff'}}></i>&nbsp;
-                            <span style={{fontSize:'0.875rem'}}>Save</span>
+                            <span style={{fontSize:'0.875rem'}}>{t('save')}</span>
                           </>
                         }
                       </button>
                       <div>
                         <label htmlFor="exampleFormControlInput1" className="form-label" style={{fontSize:'0.8rem',fontWeight:'bold'}}>
-                          Total
+                          {t('total')}
                         </label>
                         <input
                           type="email"
@@ -694,24 +700,24 @@ function Betting() {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="card mt-5" style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
                 <div className="card-body">
-                  <h4 style={{ textAlign: "center" }}> Betting Confirmation Box</h4>
+                  <h4 style={{ textAlign: "center" }}>{t('bettingConfirmBox')}</h4>
                   <table className="table">
-                    <thead style={{fontSize:'0.875rem'}}>
+                    <thead style={{fontSize:'0.87rem'}}>
                       <tr className="table-secondary">
                         <th scope="col" width="15">
-                          No
+                          {t('no')}
                         </th>
                         <th scope="col" width="300">
-                          Bet Type
+                          {t('betType')}
                         </th>
                         <th scope="col" width="100">
-                          Bet Amt
+                          {t('betAmt')}
                         </th>
                         <th scope="col" width="100">
-                          Over Amt
+                        {t('overAmt')}
                         </th>
                         <th scope="col" width="30">
-                          Confirm
+                        {t('confirm')}
                         </th>
                       </tr>
                     </thead>
@@ -722,7 +728,7 @@ function Betting() {
                             colSpan={7}
                             style={{ textAlign: "center", fontWeight: "bold" }}
                           >
-                            No Data
+                           {t('nodata')}
                           </td>
                         </tr>
                       ) : (
@@ -752,7 +758,7 @@ function Betting() {
                   </table>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <button type="button" className="btn" style={{backgroundColor:color['dark'].main,color:'white',fontSize:'0.8rem'}} onClick={() => handleConfrimSave()}>
-                      <i className="fa fa-save"></i>&nbsp;Save
+                      <i className="fa fa-save"></i>&nbsp;{t('save')}
                     </button>
                   </div>
                 </div>

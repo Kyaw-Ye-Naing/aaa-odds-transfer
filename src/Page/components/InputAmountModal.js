@@ -1,14 +1,7 @@
 import React from 'react';
 import color from '../../config/color';
 
-function InputAmountModal({handleTeamAdd,inputElement}) {
-//     const inputElement = useRef(null);
-
-//   useEffect(() => {
-//     if (inputElement.current) {
-//       inputElement.current.focus();
-//     }
-//   }, []);
+function InputAmountModal({handleTeamAdd,inputElement,t}) {
 
     return (
         <div>
@@ -27,12 +20,13 @@ function InputAmountModal({handleTeamAdd,inputElement}) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="exampleFormControlInput1" className="form-label">Bet Amount</label>
+                            <label htmlFor="exampleFormControlInput1" className="form-label" style={{fontSize:'0.87rem'}}>{t('betAmount')}</label>
                                <form onSubmit={(e)=>handleTeamAdd(e)}>
                                <input type="amount" 
-                                className="form-control" 
+                                className="custom-input" 
                                // value={betamount}
                                ref={inputElement}
+                               style={{fontSize:'0.8rem',height:38}}
                                 //onChange={(e)=>setBetAmount(e.target.value)}
                                 id="exampleFormControlInput1"/>
                                     <div className="d-flex flex-row-reverse bd-highlight mt-2">
@@ -40,14 +34,16 @@ function InputAmountModal({handleTeamAdd,inputElement}) {
                                             onClick={() => handleTeamAdd()}
                                             data-bs-dismiss="modal"
                                             className="btn"
-                                            style={{ backgroundColor: color['dark'].main, color: 'white' }}
+                                            style={{ backgroundColor: color['dark'].main, color: 'white',fontSize:'0.8rem' }}
                                         >
-                                            Save</button>
+                                            {t('save')}
+                                            </button>
                                         <button type="button"
-                                            style={{ marginRight: 5 }}
+                                            style={{ marginRight: 5,fontSize:'0.8rem' }}
                                             className="btn btn-secondary"
                                             data-bs-dismiss="modal">
-                                            Close</button>
+                                            {t('close')}
+                                            </button>
 
                                     </div>
                                </form>   

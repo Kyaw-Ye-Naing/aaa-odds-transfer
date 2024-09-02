@@ -7,7 +7,7 @@ import AnalysisModal from './components/AnalysisModal';
 import color from '../config/color';
 import Loading from './components/Loading';
 
-const BodyLiveData = () => {
+const BodyLiveData = ({t}) => {
     const defaultDate = moment(new Date()).format("YYYY-MM-DD");
     const [username, setUsername] = useState("");
     const history = useHistory();
@@ -36,7 +36,7 @@ const BodyLiveData = () => {
         setLoading(true);
         const userId = localStorage.getItem("userId");
         oddController.getSingleLiveData(startDate, true,parseInt(userId), (data) => {
-            console.log("dsta",data)
+            //console.log("dsta",data)
             setSearchSingle(data.livedata);
             setSingleLiveData(data.livedata);
             setPage(data.livedata.length / rowsPerPage);
@@ -93,46 +93,36 @@ const BodyLiveData = () => {
      
     return (
         <div>
-             <AnalysisModal rapidEventId={rapidEventId}/>
-            <div className="row mb-2">
-                <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12 row">
-                    <div className="col-md-6 col-lg-4 col-sm-6 col-xs-12 mb-2">
-                        <input
-                            className="form-control"
-                            type="date"
-                            id="birthday"
-                            style={{fontSize:'0.8rem'}}
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                            name="birthday"
-                        />
-                    </div>
-
-                    <div className="col-md-6 col-lg-4 col-sm-6 col-xs-12 mb-2">
-                        <button
-                            type="button"
-                            className="btn"
-                            style={{backgroundColor:color['dark'].main,color:'#fff',fontSize:'0.8rem'}}
-                            onClick={() => getGetBodyLiveData()}
-                        >
-                            Search
-                        </button>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    <div className='search-input-panel'>
+             <AnalysisModal rapidEventId={rapidEventId} t={t}/>
+            <div className="mb-2 d-flex justify-content-between align-items-center flex-wrap" style={{gap:5}}>
+                <div className="">
                     <input
-                        type="text"
-                        value={searchText}
-                        onChange={(e) => handleTeamChange(e)}
                         className="custom-input"
-                        style={{height:35,width:200}}
-                        id="exampleFormControlInput1"
-                        placeholder="search ..."
+                        type="date"
+                        id="birthday"
+                        style={{ fontSize: '0.8rem', height: 32, width: 150 }}
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        name="birthday"
                     />
-                    </div>
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: color['dark'].main, color: '#fff', fontSize: '0.8rem',marginLeft:5 }}
+                        onClick={() => getGetBodyLiveData()}
+                    >
+                        {t('search')}
+                    </button>
                 </div>
+                <input
+                    type="text"
+                    value={searchText}
+                    onChange={(e) => handleTeamChange(e)}
+                    className="custom-input"
+                    style={{ height: 35, width: 200 }}
+                    id="exampleFormControlInput1"
+                    placeholder="search ..."
+                />
             </div>
             {isLoading ? (
                 <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
@@ -145,15 +135,15 @@ const BodyLiveData = () => {
                         <table className="table">
                             <thead style={{fontSize:'0.875rem',backgroundColor:color['dark'].headerbg}}>
                                 <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">EventTime</th>
-                                    <th scope="col">Team</th>
-                                    <th scope="col">Home Amt</th>
-                                    <th scope="col">Away Amt</th>
-                                    <th scope="col">Over Amt</th>
-                                    <th scope="col">Under Amt</th>
-                                    <th scope="col">Body Diff</th>
-                                    <th scope="col">Goal Diff</th>
+                                    <th scope="col">{t('no')}</th>
+                                    <th scope="col">{t('eventTime')}</th>
+                                    <th scope="col">{t('team')}</th>
+                                    <th scope="col">{t('homeAmt')}</th>
+                                    <th scope="col">{t('awayAmt')}</th>
+                                    <th scope="col">{t('overAmt')}</th>
+                                    <th scope="col">{t('underAmt')}</th>
+                                    <th scope="col">{t('bodyDiff')}</th>
+                                    <th scope="col">{t('goalDiff')}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -179,21 +169,21 @@ const BodyLiveData = () => {
                                                         <td style={{color:d.under > d.over ? color['dark'].secondary6 : 'black'}}>{d.under.toLocaleString("en-US")}</td>
                                                         <td style={{color:color['dark'].secondary5}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
                                                         <td style={{color:color['dark'].secondary5}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
-                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" style={{backgroundColor:color['dark'].main,color:'#fff'}} className='btn btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>View</button></td>
+                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" style={{backgroundColor:color['dark'].main,color:'#fff'}} className='btn btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>{t('view')}</button></td>
                                                     </tr>
                                                 </Fragment>
                                             )
                                         })
                                     : <tr>
-                                        <td colSpan={9} style={{ textAlign: 'center' }}>no data</td>
+                                        <td colSpan={9} style={{ textAlign: 'center' }}>{t('nodata')}</td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                     <ReactPaginate
-                        previousLabel={"previous"}
-                        nextLabel={"next"}
+                        previousLabel={t('previous')}
+                        nextLabel={t('next')}
                         breakLabel={"..."}
                         pageCount={page}
                         marginPagesDisplayed={2}

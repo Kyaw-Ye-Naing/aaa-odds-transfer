@@ -64,12 +64,16 @@ hr {
 }
 
 .title span {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .logLink {
     display: flex;
     align-items: center;
+}
+
+.group-list .btn-label{
+    font-size: 0.875rem;
 }
 
 /*----------- End Nav Bar Section --------*/
@@ -223,7 +227,7 @@ hr {
 }
 
 /*--------Start Report Site-------------------*/
-.search-btn {
+.search-btn,.search-btn2 {
     margin-top: 1.65rem;
 }
 
@@ -442,8 +446,7 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 
 @media screen and (max-width:360px) {
     .group-list .btn-label {
-        font-size: 0.8rem;
-        font-weight: bold;
+        font-size: 0.75rem;
     }
 
     .title {
@@ -452,6 +455,9 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 
     .input-gp {
         width: 50%;
+    }
+    .search-btn2 {
+        margin-top: 0;
     }
 }
 
@@ -469,9 +475,10 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 
 @media screen and (max-width : 700px) {
     .title span {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     .site-header {
+        font-size: 1rem;
         margin-bottom: 3px;
     }
 }
@@ -489,12 +496,18 @@ background-image: linear-gradient(to top, #4a8db7 0%, #74bde0 100%);
 }
 
 @media  screen and (max-width: 576px) {
-   
+    .group-list .btn-label {
+        font-size: 0.8rem;
+    }
+    .site-header {
+        font-size: 0.9rem;
+        margin-bottom: 3px;
+    }
 }
 
 @media  screen and (max-width: 768px) {
-    .search-btn {
-        margin-top: 0;
+    .group-list .btn-label {
+        font-size: 0.87rem;
     }
     .search-input-panel{
         justify-content: start;
