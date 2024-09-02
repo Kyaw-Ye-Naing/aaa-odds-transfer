@@ -61,7 +61,7 @@ function NavBar({
         </div>
         <div className="logout" style={{display:'flex',alignItems:'center',gap:15}}>
         {
-          userRole === 1 ?
+          username == "Bo Bo" ?
          <div style={{
           display:'flex',
           flexDirection:'column',
