@@ -17,7 +17,7 @@ import Loading from "./components/Loading";
 import { useTranslation } from "react-i18next";
 
 function Betting() {
-  const {t} = useTranslation("global"); 
+  const {t,i18n} = useTranslation("global"); 
   const handle = useFullScreenHandle();
   const [eventsData, setEventsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -81,6 +81,7 @@ function Betting() {
         oppositeNameId: betdata.awayTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
         choice: betdata.homeTeam,
+        choiceMyan:betdata.homeTeamMyan,
         choiceOdds: betdata.bodyOdds,
         amount: betamount,
       };
@@ -100,6 +101,7 @@ function Betting() {
         oppositeNameId: betdata.homeTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
         choice: betdata.awayTeam,
+        choiceMyan:betdata.awayTeamMyan,
         choiceOdds: betdata.bodyOdds,
         amount: betamount,
       };
@@ -119,6 +121,7 @@ function Betting() {
         oppositeNameId: betdata.awayTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
         choice: betdata.homeTeam + " (GP Over)",
+        choiceMyan:betdata.homeTeamMyan + " ဂိုးပေါ်",
         choiceOdds: betdata.goalOdds,
         amount: betamount,
       };
@@ -138,6 +141,7 @@ function Betting() {
         oppositeNameId: betdata.homeTeamId,
         isHomeBodyOdd: isHomeBodyOdd,
         choice: betdata.homeTeam + " (GA Under)",
+        choiceMyan:betdata.homeTeamMyan + " ဂိုးအောက်",
         choiceOdds: betdata.goalOdds,
         amount: betamount,
       };
@@ -284,9 +288,7 @@ function Betting() {
   };
 
   const handleRemove = (index) => {
-    console.log("before", bettingData)
     const result = bettingData.filter((_, i) => i !== index);
-    console.log("after", result)
     setBettingData(result);
     if (result.length > 0) {
       calculate(result);
@@ -484,10 +486,10 @@ function Betting() {
                                     >
                                       {d.homeTeamId == d.overTeamId ? (
                                         <span>
-                                          {d.homeTeam}({d.bodyOdds})
+                                          {i18n.language === "mm" ? d.homeTeamMyan : d.homeTeam}({d.bodyOdds})
                                         </span>
                                       ) : (
-                                        <span>{d.homeTeam}</span>
+                                        <span>{i18n.language === "mm" ? d.homeTeamMyan : d.homeTeam}</span>
                                       )}
                                     </a>
                                     {/* </button> */}
@@ -526,10 +528,10 @@ function Betting() {
                                     >
                                       {d.awayTeamId == d.overTeamId ? (
                                         <span>
-                                          {d.awayTeam}({d.bodyOdds})
+                                          {i18n.language === "mm" ? d.awayTeamMyan : d.awayTeam}({d.bodyOdds})
                                         </span>
                                       ) : (
-                                        <span>{d.awayTeam}</span>
+                                        <span>{i18n.language === "mm" ? d.awayTeamMyan : d.awayTeam}</span>
                                       )}
                                     </a>
                                   </td>
@@ -614,7 +616,7 @@ function Betting() {
                                 return (
                                   <tr key={i} style={{fontSize:'0.8rem'}}>
                                     <td scope="row" className="text-center">{i + 1}</td>
-                                    <td>{b.choice}</td>
+                                    <td>{i18n.language === "mm" ? b.choiceMyan : b.choice}</td>
                                     <td>
                                       {/* {b.choiceOdds} */}
                                       <input
@@ -737,7 +739,7 @@ function Betting() {
                           return (
                             <tr key={i}>
                               <th scope="row">{i + 1}</th>
-                              <td>{d.choice}</td>
+                              <td>{i18n.language === "mm" ? d.choiceMyan : d.choice}</td>
                               <td>
                                 {d.amount}
                               </td>
@@ -770,104 +772,5 @@ function Betting() {
     </div>
   );
 }
-
-const data22 = [
-  {
-    "rapidEventId": 11223344,
-    "homeTeamId": 1,
-    "awayTeamId": 2,
-    "goalOdds": "1+70",
-    "bodyOdds": "2-50",
-    "overTeamId": 1,
-    "underTeamId": 2,
-    "date": "2023-04-24 03:00 PM",
-    "homeTeam": "Spurs",
-    "awayTeam": "Man U"
-  },
-  {
-    "rapidEventId": 343434232,
-    "homeTeamId": 3,
-    "awayTeamId": 4,
-    "goalOdds": "2+70",
-    "bodyOdds": "3-50",
-    "overTeamId": 4,
-    "underTeamId": 3,
-    "date": "2023-04-24 03:00 PM",
-    "homeTeam": "Chelsea",
-    "awayTeam": "Arsenal"
-  },
-  {
-    "rapidEventId": 6575757,
-    "homeTeamId": 5,
-    "awayTeamId": 6,
-    "goalOdds": "1+70",
-    "bodyOdds": "2-50",
-    "overTeamId": 5,
-    "underTeamId": 6,
-    "date": "2023-04-24 03:00 PM",
-    "homeTeam": "Liverpool",
-    "awayTeam": "Newcastle Utd"
-  }
-]
-
-const data33 = [
-  {
-    "rapidEventId": 771,
-    "leagueId": 45,
-    "footballTeamId": 1,
-    "unders": true,
-    "overs": false,
-    "bodyOdd": "1+40",
-    "goalOdd": "2+70",
-    "home": false,
-    "away": false,
-    "isHome": false,
-    "oppositeNameId": 2,
-    "isHomeBodyOdd": true,
-    "choice": "Man U" + " (GA Under)",
-    "choiceOdds": "1+40",
-    "amount": 400,
-    "extraAmount": 300,
-    "select": false,
-  },
-  {
-    "rapidEventId": 772,
-    "leagueId": 45,
-    "footballTeamId": 1,
-    "unders": true,
-    "overs": false,
-    "bodyOdd": "1+40",
-    "goalOdd": "2+70",
-    "home": false,
-    "away": false,
-    "isHome": false,
-    "oppositeNameId": 2,
-    "isHomeBodyOdd": true,
-    "choice": "Man U" + " (GA Under)",
-    "choiceOdds": "1+40",
-    "amount": 400,
-    "extraAmount": 300,
-    "select": false,
-  },
-  {
-    "rapidEventId": 773,
-    "leagueId": 45,
-    "footballTeamId": 1,
-    "unders": true,
-    "overs": false,
-    "bodyOdd": "1+40",
-    "goalOdd": "2+70",
-    "home": false,
-    "away": false,
-    "isHome": false,
-    "oppositeNameId": 2,
-    "isHomeBodyOdd": true,
-    "choice": "Man U" + " (GA Under)",
-    "choiceOdds": "1+40",
-    "amount": 400,
-    "extraAmount": 300,
-    "select": false,
-  }
-]
 
 export default Betting;

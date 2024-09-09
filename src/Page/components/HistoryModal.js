@@ -14,17 +14,19 @@ function HistoryModal({
   setSelectdCustomer,
   handleChangeGoal,
   handleClickUnit,
-  customer
+  customer,
+  t,
+  i18n
 }) {
 
   return (
     <div>
-      <div className="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{fontSize:'0.8rem'}}>
+      <div className="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ fontSize: '0.8rem' }}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <div className="modal-title" id="exampleModalLabel">
-                <div style={{display:'flex',gap:5}}>
+                <div style={{ display: 'flex', gap: 5 }}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{historydata.voucher}</span>
                   <span style={{ fontSize: '0.8rem' }}>{historydata.status == "Pending"
                     ? <span className="badge rounded-pill bg-warning">{historydata.status}</span>
@@ -33,22 +35,22 @@ function HistoryModal({
                       : <span className="badge rounded-pill bg-danger">{historydata.status}</span>}</span>
                 </div>
                 <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-                  <span className="">Name</span>
+                  <span className="">{t('name')}</span>
                   <select
-                  className="form-select form-select"
-                  aria-label=".form-select-lg example"
-                  style={{fontSize:'0.8rem'}}
-                  value={selectedCustomer}
-                  onChange={(e) => setSelectdCustomer(e.target.value)}
-                >
-                  {
-                    customer && customer.map((data, i) => {
-                      return (
-                        <option key={data.customerId} value={data.customerId}>{data.customerName}</option>
-                      )
-                    })
-                  }
-                </select>
+                    className="form-select form-select"
+                    aria-label=".form-select-lg example"
+                    style={{ fontSize: '0.8rem' }}
+                    value={selectedCustomer}
+                    onChange={(e) => setSelectdCustomer(e.target.value)}
+                  >
+                    {
+                      customer && customer.map((data, i) => {
+                        return (
+                          <option key={data.customerId} value={data.customerId}>{data.customerName}</option>
+                        )
+                      })
+                    }
+                  </select>
                 </div>
               </div>
 
@@ -56,24 +58,24 @@ function HistoryModal({
             </div>
             <div className="modal-body">
               <div className="event-details">
-                <div style={{ display:'flex',flexDirection:'column',marginBottom:10 }}>
-                  <span style={{color: color['dark'].secondary2,fontSize: '0.785rem'}}>{historydata.leagueName}</span>
-                  <span style={{fontSize: '1rem'}}>{historydata.event}</span>
-                  <span style={{ color: color['dark'].secondary4,fontSize: '0.785rem'}}>{`${moment(historydata.eventTime).format(
+                <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 10 }}>
+                  <span style={{ color: color['dark'].secondary2, fontSize: '0.785rem' }}>{historydata.leagueName}</span>
+                  <span style={{ fontSize: '1rem' }}>{i18n.language === "mm" ? historydata.eventMyan : historydata.event}</span>
+                  <span style={{ color: color['dark'].secondary4, fontSize: '0.785rem' }}>{`${moment(historydata.eventTime).format(
                     "DD-MM-YYYY hh:mm:ss a"
                   )}`}</span>
-                  <span style={{ fontSize: '1rem',marginTop:10 }}>Result : <span style={{ color: 'crimson' }}>{historydata.result}</span></span>
-                  <span style={{  fontSize: '1rem'}}>Bet : <span style={{ color: historydata.color }}>{historydata.bet}</span></span>
+                  <span style={{ fontSize: '1rem', marginTop: 10 }}>{t('result')} : <span style={{ color: 'crimson' }}>{historydata.result}</span></span>
+                  <span style={{ fontSize: '1rem' }}>{t('bet')} : <span style={{ color: historydata.color }}>{historydata.bet}</span></span>
                 </div>
-               
-                <div style={{marginBottom:10}}>
+
+                <div style={{ marginBottom: 10 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3, fontSize: '0.875rem' }}>
-                    <span>Odds</span>
+                    <span>{t('odds')}</span>
                     <input type="number"
                       value={goal}
                       onChange={(e) => handleChangeGoal(e.target.value)}
                       className="form-control"
-                      style={{ width: 65, fontSize: '0.875rem',marginLeft:20 }}
+                      style={{ width: 65, fontSize: '0.875rem', marginLeft: 20 }}
                       min={0}
                       max={12}
                     />
@@ -100,11 +102,11 @@ function HistoryModal({
                   {
                     isEdit == "Edit" ? (
                       <div className="amt-edit" style={{ fontSize: '0.875rem' }}>
-                        Amount
+                        {t('amount')}
                         <input
                           type="text"
                           value={amount}
-                          style={{ fontSize: '0.875rem',width:'auto' }}
+                          style={{ fontSize: '0.875rem', width: 'auto' }}
                           className="form-control"
                           onChange={(e) => setAmount(e.target.value)}
                         /></div>
@@ -123,17 +125,18 @@ function HistoryModal({
                     type="button"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 5, fontSize: '0.8rem' }}
                   >
-                    Close
+                    <i className="fa-regular fa-circle-xmark my-icon"></i>&nbsp;{t('close')}
                   </button>
                   <button
                     type="button"
                     data-bs-dismiss="modal"
-                    style={{backgroundColor:color['dark'].main,color:'white'}}
+                    style={{ backgroundColor: color['dark'].main, color: 'white', fontSize: '0.8rem' }}
                     className="btn"
                     onClick={() => handleUpdate(historydata.bettingId)}
-                  >Save
+                  >
+                    <i className="fa fa-save my-icon"></i>&nbsp;{t('save')}
                   </button>
                 </div>)
                 : null

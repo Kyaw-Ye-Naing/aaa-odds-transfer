@@ -76,5 +76,8 @@
     "voucher":"Voucher",
     "details":"Details",
     "logOut":"LogOut",
-    "outstandingTitle":"Member Outstanding"
+    "outstandingTitle":"Member Outstanding",
+    "bet" : "Bet",
+    "cancel":"Cancel",
+    "deleteConfirm":"Are you sure you want to delete?"
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { useHistory } from "react-router-dom";
 import color from "../../config/color";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ function NavBar({
 }) {
   const history = useHistory();
   const { t, i18n } = useTranslation("global");
+  const [language,setLanguage] = useState("EN");
 
   const handleButtonLink = (type) => {
     if (type === 1) {
@@ -40,6 +41,7 @@ function NavBar({
     console.log("current lan",i18n.language)
     i18n.changeLanguage(i18n.language === "en" ? "mm" : "en");
     localStorage.setItem("language", i18n.language);
+    setLanguage(i18n.language.toUpperCase());
   };
 
   return (
@@ -59,9 +61,9 @@ function NavBar({
           <span className="px-2">Odds Trasfer Site</span>
           <i className="fa-solid fa-diamond diamond" style={{ fontSize: 12 }}></i>
         </div>
-        <div className="logout" style={{display:'flex',alignItems:'center',gap:15}}>
+        <div className="logout" style={{display:'flex',alignItems:'center',gap:15}}  onClick={()=>onChangeLanguage()} >
         {
-          username == "Bo Bo" ?
+          username == "Bo Bo" || username == "paingpaing" ?
          <div style={{
           display:'flex',
           flexDirection:'column',
@@ -71,11 +73,11 @@ function NavBar({
           cursor:'pointer'
           }}>
          <i 
-         className="fa-solid fa-globe" 
-         onClick={()=>onChangeLanguage()} 
-         style={{fontSize:'1.2rem'}}>
+         className="fa-solid fa-globe lang-ico" 
+        >
          </i>
-         <span style={{fontSize:'0.5rem'}}>Language</span>
+         <span className="lang-title">Language</span>
+         <span className="lang-value">{language}</span>
          </div> : null
 }
           <a
@@ -85,7 +87,7 @@ function NavBar({
             onClick={() => localStorage.clear()}
           >
             <i className="fa-solid fa-right-from-bracket"></i>
-            <span>&nbsp;{t('logOut')}</span>
+            <span className="loggingOut">&nbsp;{t('logOut')}</span>
           </a>
         </div>
       </div>

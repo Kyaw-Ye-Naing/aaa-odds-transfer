@@ -7,7 +7,7 @@ import AnalysisModal from './components/AnalysisModal';
 import color from '../config/color';
 import Loading from './components/Loading';
 
-const BodyLiveData = ({t}) => {
+const BodyLiveData = ({t,i18n}) => {
     const defaultDate = moment(new Date()).format("YYYY-MM-DD");
     const [username, setUsername] = useState("");
     const history = useHistory();
@@ -75,11 +75,13 @@ const BodyLiveData = ({t}) => {
 
     const handleTeamChange = (e) => {
         setSearchText(e.target.value);
+        const columnNameHome = i18n.language === "mm" ? 'homeTeamMyan' : 'homeTeam' ;
+        const columnNameAway = i18n.language === "mm" ? 'awayTeamMyan' : 'awayTeam' ;
         if (e.target.value.length != 0) {
             const filteredRows = searchSingle.filter((row) => {
                 return (
-                    row.homeTeam.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                    row.awayTeam.toLowerCase().includes(e.target.value.toLowerCase())
+                    row[columnNameHome].toLowerCase().includes(e.target.value.toLowerCase()) ||
+                    row[columnNameAway].toLowerCase().includes(e.target.value.toLowerCase())
                 );
             });
             setSearchSingle(filteredRows);
@@ -161,15 +163,15 @@ const BodyLiveData = ({t}) => {
                                                     <tr >
                                                         <th scope="row">{pageCount * rowsPerPage + i + 1}</th>
                                                         <td>{moment(d.eventTime).format("hh:mm A")}</td>
-                                                        <td><span style={{color: d.overTeamId === d.homeTeamId ? color['dark'].secondary6 : null,marginRight : 5}}>{d.homeTeam}</span>
-                                                        Vs<span style={{color: d.overTeamId === d.awayTeamId ? color['dark'].secondary6 : null,marginLeft : 5}}>{d.awayTeam}</span> <br/> ({d.bodyOdds})/({d.goalOdds})</td>
+                                                        <td><span style={{color: d.overTeamId === d.homeTeamId ? color['dark'].secondary6 : null,marginRight : 5}}>{i18n.language === "mm" ? d.homeTeamMyan : d.homeTeam}</span>
+                                                        Vs<span style={{color: d.overTeamId === d.awayTeamId ? color['dark'].secondary6 : null,marginLeft : 5}}>{i18n.language === "mm" ?  d.awayTeamMyan : d.awayTeam}</span> <br/> ({d.bodyOdds})/({d.goalOdds})</td>
                                                         <td style={{color:d.homeAmount > d.awayAmount ? color['dark'].secondary6 : 'black'}}>{d.homeAmount.toLocaleString("en-US")}</td>
                                                         <td style={{color:d.awayAmount > d.homeAmount ? color['dark'].secondary6 : 'black'}}>{d.awayAmount.toLocaleString("en-US")}</td>
                                                         <td style={{color:d.over > d.under ? color['dark'].secondary6 : 'black'}}>{d.over.toLocaleString("en-US")}</td>
                                                         <td style={{color:d.under > d.over ? color['dark'].secondary6 : 'black'}}>{d.under.toLocaleString("en-US")}</td>
-                                                        <td style={{color:color['dark'].secondary5}}>{d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
-                                                        <td style={{color:color['dark'].secondary5}}>{d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
-                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" style={{backgroundColor:color['dark'].main,color:'#fff'}} className='btn btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}>{t('view')}</button></td>
+                                                        <td style={{color:color['dark'].secondary5}}>{i18n.language === "mm" ? d.maxBodyMyan : d.maxBody}<br/>{d.bodyAmount.toLocaleString("en-US")}</td>
+                                                        <td style={{color:color['dark'].secondary5}}>{i18n.language === "mm" ? d.maxGoalMyan : d.maxGoal}<br/>{d.goalAmount.toLocaleString("en-US")}</td>
+                                                        <td><button data-bs-toggle="modal" data-bs-target="#analysisModal" style={{backgroundColor:color['dark'].main,color:'#fff'}} className='btn btn-sm mt-2' onClick={()=>setRapidEventId(d.rapidId)}><i className="fa fa-eye"></i>&nbsp;{t('view')}</button></td>
                                                     </tr>
                                                 </Fragment>
                                             )

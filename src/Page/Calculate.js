@@ -9,7 +9,7 @@ import Loading from "./components/Loading";
 import { useTranslation } from "react-i18next";
 
 function Calculate() {
-  const {t} = useTranslation("global");
+  const {t,i18n} = useTranslation("global");
   const defaultDate = moment(new Date()).format("YYYY-MM-DD");
   const [events, setEvents] = useState([]);
   const [loadingText, setLoadingText] = useState("Loading .....");
@@ -147,9 +147,9 @@ function Calculate() {
                             "hh:mm:ss a"
                           )}`}</td>
                           <td>{d.leagueName}</td>
-                          <td>{d.homeName}</td>
+                          <td>{i18n.language === "mm" ? d.homeNameMyan : d.homeName}</td>
                           <td>{d.homeResult} - {d.awayResult}</td>
-                          <td>{d.awayName}</td>
+                          <td>{i18n.language === "mm" ? d.awayNameMyan : d.awayName}</td>
 
                         </tr>
                       );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Login.css';
 import MyColor from '../config/color';
 import { toast } from "react-toastify";
@@ -21,6 +21,15 @@ function LogIn() {
     const [isLoading, setLoading] = useState(false);
     const [userInfo, setUserInfo] = useState([]);
     const history = useHistory();
+
+   useEffect(()=>{
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("USER");
+      localStorage.removeItem("language");
+      localStorage.removeItem("TOKEN");
+   },[])
 
     const handleSave = () => {
         // localStorage.setItem("info", JSON.stringify(userdata))

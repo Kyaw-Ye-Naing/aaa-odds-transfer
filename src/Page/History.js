@@ -52,7 +52,7 @@ const data1 = [
 ];
 
 function History() {
-  const {t} = useTranslation('global');
+  const {t,i18n} = useTranslation('global');
   const [isLoading, setLoading] = useState(false);
   const [item, setItem] = useState([]);
   const history = useHistory();
@@ -74,6 +74,7 @@ function History() {
     "amount": 0,
     "status": "",
     "event": "",
+    "eventMyan": "",
     "color": "",
     "bettingId": 0,
     "eventTime": "",
@@ -191,6 +192,7 @@ function History() {
         setSelectdCustomer={setSelectdCustomer}
         handleUpdate={handleUpdate}
         t={t}
+        i18n={i18n}
       />
       <NavBar username={username} historycolor={"link-btn-active"} userRole={userRole}/>
       <span className="site-header" style={{color:color['dark'].main}}>{t('outstandingTitle')}</span>
@@ -213,7 +215,7 @@ function History() {
         </div>
       </div> 
       { tab === "edit" ?
-      <Edit customer={customer} t={t}/> :
+      <Edit customer={customer} t={t} i18n={i18n}/> :
       <div>
         {isLoading ? (
           <div style={{ width:'100%',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column' }}>
@@ -313,6 +315,7 @@ function History() {
                                 setDeleteId={setDeleteId}
                                 setIsEdit={setIsEdit} 
                                 t={t}
+                                i18n={i18n}
                                 />
                             ) : null}
                           </Fragment>
@@ -348,7 +351,8 @@ export function ExpandRow({
   setUnit,
   setGoal,
   setDeleteId,
-  t
+  t,
+  i18n
  }) {
   //const result = data.filter(a=>a.CustomerId == customerId);
 
@@ -368,6 +372,7 @@ export function ExpandRow({
     newdata["amount"] = result.amount;
     newdata["status"] = result.status;
     newdata["event"] = result.event;
+    newdata["eventMyan"] = result.eventMyan;
     newdata["color"] = result.color;
     newdata["bettingId"] = result.bettingId;
     newdata["eventTime"] = result.eventTime;
@@ -443,7 +448,7 @@ export function ExpandRow({
                   "DD-MM-YYYY hh:mm:ss a"
                 )}`}</td>
                 <td>{d.amount}</td>
-                <td><span style={{ color: d.color}}>{d.bet}</span></td>
+                <td><span style={{ color: d.color}}>{i18n.language === "mm" ? d.betMyan : d.bet}</span></td>
                 <td>{d.odds}</td>
                 <td>
                   <div className="d-flex">
@@ -485,7 +490,7 @@ export function ExpandRow({
 }
 
 const Edit = (props) => {
-const {customer,t} = props;
+const {customer,t,i18n} = props;
 const [voucherList,setVoucherList] = useState([]);
 const [editableData,setEditableData] = useState([]);
 const [valueState, setValueState] = useState('idle');
@@ -583,7 +588,7 @@ const handleVoucherRemove = (value) => {
               { voucherList.length > 0 ? voucherList.map((v,i) =>
               <tr>
                 <th scope="row">{i+1}</th>
-                <td>{v.choice}</td>
+                <td>{i18n.language === "mm" ? v.choiceMyan : v.choice}</td>
                 <td>{v.odds}</td>
                 <td>{v.amount}</td> 
                 <td>
@@ -630,7 +635,7 @@ const handleVoucherRemove = (value) => {
               { editableData.length > 0 ? editableData.map((v,i) =>
               <tr>
                 <th scope="row">{i+1}</th>
-                <td>{v.choice}</td>
+                <td>{i18n.language === "mm" ? v.choiceMyan : v.choice}</td>
                 <td>
                     <input
                       type="text"

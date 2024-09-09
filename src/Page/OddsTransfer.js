@@ -353,6 +353,7 @@ function OddsTransfer() {
   const history = useHistory();
   const [teamEye, setTeamEye] = useState(true);
   const [userRole, setUserRole] = useState();
+  const currentLanguage = 
  
   // const saved = localStorage.getItem("info");
   // const initialValue = JSON.parse(saved);
@@ -525,9 +526,10 @@ function OddsTransfer() {
 
   const onChangeTeam = (e) => {
     setSearchText(e.target.value);
+    const column = i18n.language === "mm" ? "teamNameMyan" : "teamName";
     if (e.target.value.length != 0) {
       const filteredRows = items.filter((row) => {
-        return row.teamName
+        return row[column]
           .toLowerCase()
           .includes(e.target.value.toLowerCase());
       });
@@ -545,9 +547,10 @@ function OddsTransfer() {
   };
 
   const onChangeOdds = (e) => {
+    const column = i18n.language === "mm" ? "teamNameMyan" : "teamName";
     setSearchOdd(e.target.value);
     const filteredRows = oddsitem.filter((row) => {
-      return row.teamName.toLowerCase().includes(e.target.value.toLowerCase());
+      return row[column].toLowerCase().includes(e.target.value.toLowerCase());
     });
     setSearchedOdd(filteredRows);
     setOddPage(Math.ceil(filteredRows.length / rowsPerPage));
@@ -561,8 +564,9 @@ function OddsTransfer() {
 
   const onChangeCopy = (e) => {
     setSearchCopy(e.target.value);
+    const column = i18n.language === "mm" ? "teamNameMyan" : "teamName";
     const filteredRows = copyitem.filter((row) => {
-      return row.teamName.toLowerCase().includes(e.target.value.toLowerCase());
+      return row[column].toLowerCase().includes(e.target.value.toLowerCase());
     });
     setSearchedCopy(filteredRows);
     setCopyPage(Math.ceil(filteredRows.length / rowsPerPage));
@@ -682,7 +686,7 @@ function OddsTransfer() {
                         return (
                           <tr key={item.teamId}>
                             <td>{pageCount * rowsPerPage + index + 1}</td>
-                            <td>{item.teamName}</td>
+                            <td>{i18n.language === "mm" ? item.teamNameMyan :item.teamName}</td>
                             <td>
                               <input
                                 className="form-check-input"
@@ -796,17 +800,17 @@ function OddsTransfer() {
                               {item.isOverHome == true ? (
                                 <div>
                                   <span style={{ color: "red" }}>
-                                    {item.teamName}
+                                    {i18n.language === "mm" ? item.teamNameMyan : item.teamName}
                                   </span>
                                   &nbsp;vs&nbsp;
-                                  <span>{item.underName}</span>
+                                  <span>{i18n.language === "mm" ? item.underNameMyan : item.underName}</span>
                                 </div>
                               ) : (
                                 <div>
-                                  <span>{item.underName}</span>
+                                  <span>{i18n.language === "mm" ? item.underNameMyan : item.underName}</span>
                                   &nbsp;vs&nbsp;
                                   <span style={{ color: "red" }}>
-                                    {item.teamName}
+                                    {i18n.language === "mm" ? item.teamNameMyan : item.teamName}
                                   </span>
                                 </div>
                               )}
@@ -925,7 +929,7 @@ function OddsTransfer() {
                           <td>{`${moment(item.eventTime).format(
                             "hh:mm:ss a"
                           )}`}</td>
-                          <td>{item.teamName}</td>
+                          <td>{i18n.language === "mm" ? item.teamNameMyan : item.teamName}</td>
                           <td>
                             {item.body} / {item.goal}
                           </td>

@@ -9,7 +9,7 @@ import color from "../config/color";
 import { useTranslation } from 'react-i18next';
 
 function Analysis() {
-    const {t} = useTranslation('global');
+    const {t,i18n} = useTranslation('global');
     const handle = useFullScreenHandle();
     const [username, setUsername] = useState("");
     const history = useHistory();
@@ -67,7 +67,7 @@ function Analysis() {
                             <i className="fa-solid fa-minimize" style={{ color: 'gray', fontSize: '1.2rem' }}></i>
                         </button> : null
                     }
-                    <BodyLiveData t={t}/>
+                    <BodyLiveData t={t} i18n={i18n}/>
                 </div>
             </FullScreen>
         </div>
