@@ -496,10 +496,11 @@ function OddsTransfer() {
 
   const handleCopy = () => {
     setLoading2(true);
+    const columnName  = i18n.language === "mm" ? 'teamNameMyan' : 'teamName';
     const copyArray = [];
     searchedCopy.map((data) => {
       return copyArray.push(
-        `\n${moment(data.eventTime).format("hh:mm")} ${data.teamName} ${data.body
+        `\n${moment(data.eventTime).format("hh:mm")} ${data[columnName]} ${data.body
         }/${data.goal}`
       );
     });
