@@ -61,7 +61,7 @@ function NavBar({
           <span className="px-2">Odds Trasfer Site</span>
           <i className="fa-solid fa-diamond diamond" style={{ fontSize: 12 }}></i>
         </div>
-        <div className="logout" style={{display:'flex',alignItems:'center',gap:15}}  onClick={()=>onChangeLanguage()} >
+        <div className="logout" style={{display:'flex',alignItems:'center',gap:15}}>
         {
           username == "Bo Bo" || username == "paingpaing" ?
          <div style={{
@@ -71,7 +71,9 @@ function NavBar({
           alignItems:'center',
           color:color['dark'].secondary,
           cursor:'pointer'
-          }}>
+          }}
+          onClick={()=>onChangeLanguage()}
+          >
          <i 
          className="fa-solid fa-globe lang-ico" 
         >
