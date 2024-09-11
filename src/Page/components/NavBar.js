@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import color from "../../config/color";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ function NavBar({
 }) {
   const history = useHistory();
   const { t, i18n } = useTranslation("global");
-  const [language,setLanguage] = useState("EN");
+  const [language, setLanguage] = useState("EN");
 
   const handleButtonLink = (type) => {
     if (type === 1) {
@@ -29,16 +29,16 @@ function NavBar({
       history.push("/calculate");
     } else if (type === 5) {
       history.push("/history");
-    } else if (type === 6){
+    } else if (type === 6) {
       history.push("/customer");
-    } 
+    }
     else {
       history.push("/analysis");
     }
   };
 
   const onChangeLanguage = () => {
-    console.log("current lan",i18n.language)
+    console.log("current lan", i18n.language)
     i18n.changeLanguage(i18n.language === "en" ? "mm" : "en");
     localStorage.setItem("language", i18n.language);
     setLanguage(i18n.language.toUpperCase());
@@ -46,8 +46,8 @@ function NavBar({
 
   return (
     <div>
-      <div className="odds-nav" style={{backgroundColor:color['dark'].main}}>
-        <div className="profile" style={{fontSize:'0.87rem'}}>
+      <div className="odds-nav" style={{ backgroundColor: color['dark'].main }}>
+        <div className="profile" style={{ fontSize: '0.87rem' }}>
           <img
             src="https://annedece.sirv.com/Images/user-vector.jpg"
             className="img-thumbnail rounded-circle"
@@ -61,31 +61,28 @@ function NavBar({
           <span className="px-2">Odds Trasfer Site</span>
           <i className="fa-solid fa-diamond diamond" style={{ fontSize: 12 }}></i>
         </div>
-        <div className="logout" style={{display:'flex',alignItems:'center',gap:15}}>
-        {
-          username == "Bo Bo" || username == "paingpaing" ?
-         <div style={{
-          display:'flex',
-          flexDirection:'column',
-          justifyContent:'center',
-          alignItems:'center',
-          color:color['dark'].secondary,
-          cursor:'pointer'
-          }}
-          onClick={()=>onChangeLanguage()}
-          >
-         <i 
-         className="fa-solid fa-globe lang-ico" 
-        >
-         </i>
-         <span className="lang-title">Language</span>
-         <span className="lang-value">{language}</span>
-         </div> : null
-}
+        <div className="logout" style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: color['dark'].secondary,
+                cursor: 'pointer'
+              }}
+                onClick={() => onChangeLanguage()}
+              >
+                <i
+                  className="fa-solid fa-globe lang-ico"
+                >
+                </i>
+                <span className="lang-title">Language</span>
+                <span className="lang-value">{language}</span>
+              </div> 
           <a
             href="/"
             className="btn logLink"
-            style={{backgroundColor:color['dark'].secondary,fontSize:'0.87rem'}}
+            style={{ backgroundColor: color['dark'].secondary, fontSize: '0.87rem' }}
             onClick={() => localStorage.clear()}
           >
             <i className="fa-solid fa-right-from-bracket"></i>
@@ -96,64 +93,64 @@ function NavBar({
 
       {userRole <= 2 ? (
         <>
-        <div
-          className="group-list"
-          role="group"
-          aria-label="Basic mixed styles example"
-        >
-          <button
-            type="button"
-            className={`btn ${homecolor}`}
-            onClick={() => handleButtonLink(1)}
+          <div
+            className="group-list"
+            role="group"
+            aria-label="Basic mixed styles example"
           >
-            <span className="btn-label">{t('transfer')}</span>
-          </button>
-          <button
-            type="button"
-            className={`btn ${bettingcolor}`}
-            onClick={() => handleButtonLink(2)}
-          >
-            <span className="btn-label">{t('betting')}</span>
-          </button>
-          <button
-            type="button"
-            className={`btn ${reportcolor}`}
-            onClick={() => handleButtonLink(3)}
-          >
-            <span className="btn-label">{t('report')}</span>
-          </button>
-          <button
-            type="button"
-            className={`btn ${calculatecolor}`}
-            onClick={() => handleButtonLink(4)}
-          >
-            <span className="btn-label">{t('calculate')}</span>
-          </button>
-          <button
-            type="button"
-            className={`btn ${historycolor}`}
-            onClick={() => handleButtonLink(5)}
-          >
-            <span className="btn-label">{t('outstanding')}</span>
-          </button>
-          <button
-            type="button"
-            className={`btn ${customercolor}`}
-            onClick={() => handleButtonLink(6)}
-          >
-            <span className="btn-label">{t('customer')}</span>
-          </button>
-          <button
-            type="button"
-            className={`btn ${analysiscolor}`}
-            onClick={() => handleButtonLink(7)}
-          >
-            <span className="btn-label">{t('analysis')}</span>
-          </button>
-        </div>
-         <hr />
-         </>
-      ) : null} 
+            <button
+              type="button"
+              className={`btn ${homecolor}`}
+              onClick={() => handleButtonLink(1)}
+            >
+              <span className="btn-label">{t('transfer')}</span>
+            </button>
+            <button
+              type="button"
+              className={`btn ${bettingcolor}`}
+              onClick={() => handleButtonLink(2)}
+            >
+              <span className="btn-label">{t('betting')}</span>
+            </button>
+            <button
+              type="button"
+              className={`btn ${reportcolor}`}
+              onClick={() => handleButtonLink(3)}
+            >
+              <span className="btn-label">{t('report')}</span>
+            </button>
+            <button
+              type="button"
+              className={`btn ${calculatecolor}`}
+              onClick={() => handleButtonLink(4)}
+            >
+              <span className="btn-label">{t('calculate')}</span>
+            </button>
+            <button
+              type="button"
+              className={`btn ${historycolor}`}
+              onClick={() => handleButtonLink(5)}
+            >
+              <span className="btn-label">{t('outstanding')}</span>
+            </button>
+            <button
+              type="button"
+              className={`btn ${customercolor}`}
+              onClick={() => handleButtonLink(6)}
+            >
+              <span className="btn-label">{t('customer')}</span>
+            </button>
+            <button
+              type="button"
+              className={`btn ${analysiscolor}`}
+              onClick={() => handleButtonLink(7)}
+            >
+              <span className="btn-label">{t('analysis')}</span>
+            </button>
+          </div>
+          <hr />
+        </>
+      ) : null}
     </div>
   );
 }
