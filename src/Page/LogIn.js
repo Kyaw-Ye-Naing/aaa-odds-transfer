@@ -6,7 +6,10 @@ import Spinner from "../asset/spinner1";
 import {useHistory} from "react-router-dom";
 import { oddController } from '../controllers/oddsController/oddController';
 import color from '../config/color';
-
+import { getDatabase, ref, set, get } from 'firebase/database';
+import app from '../config/firebase.config';
+import { logDOM } from '@testing-library/react';
+import { use } from 'i18next';
 const userdata = [
     {
       userId:1,
@@ -22,20 +25,55 @@ function LogIn() {
     const [userInfo, setUserInfo] = useState([]);
     const history = useHistory();
 
-   useEffect(()=>{
-      localStorage.removeItem("userId");
-      localStorage.removeItem("userName");
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("USER");
-      localStorage.removeItem("language");
-      localStorage.removeItem("TOKEN");
-   },[])
+//    useEffect(()=>{
+//       localStorage.removeItem("userId");
+//       localStorage.removeItem("userName");
+//       localStorage.removeItem("userRole");
+//       localStorage.removeItem("USER");
+//       localStorage.removeItem("language");
+//       localStorage.removeItem("TOKEN");
+//    },[])
+  useEffect(()=>{
+    if(!!localStorage.getItem("USER")){
+        console.log(localStorage.getItem("USER"));
+        
+            history.push("/odds");
+        }
+    },[])
+   
+   
+   const saveDataToFirebase = async (username) => {
+    
+     const db = getDatabase(app);
+     const newDocRef = ref(db, "loginUser/" + username) ;
+        set(newDocRef, {
+        active: true
+        }).then( () => {
+     //   alert("data saved successfully")
+        }).catch((error) => {
+       // alert("error: ", error.message);
+        console.log(error)
+        })
+    }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         // localStorage.setItem("info", JSON.stringify(userdata))
        
         //console.log("dddd",rapidEventId);
         setLoading(true);
+       
+
+        const db = getDatabase(app);
+        const dbRef = ref(db, "loginUser/"+ name);
+        const snapshot = await get(dbRef);
+        if(snapshot.exists() && snapshot.val().active) {
+                toast.error("User is already logged in", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+                setLoading(false);
+                return
+        } 
+
         oddController.checkLogIn(name, password, (data) => {
             setLoading(false);
             if (data.status === 1) {
@@ -44,16 +82,21 @@ function LogIn() {
                 });
                 return;
             }
+            
+            
             localStorage.setItem("USER", JSON.stringify(data.userDetails));
-            localStorage.setItem("TOKEN",data.token);
+            localStorage.setItem("TOKEN",data.token);       
             localStorage.setItem("userName",data.userDetails.oddsUserName);
             localStorage.setItem("userRole",data.userDetails.roleId);
             localStorage.setItem("userId",data.userDetails.oddsUserId);
-            // if (data.status !== 2) {
-            //     toast.success(data.message, {
-            //         position: toast.POSITION.TOP_RIGHT,
-            //     });
-            // }  
+            if (data.status !== 2) {
+                toast.success(data.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            }  
+            saveDataToFirebase(name?.toLowerCase().trim());
+          
+
             if(data.status == 2){
                 history.push("/odds");
             }  

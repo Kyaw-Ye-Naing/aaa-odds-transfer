@@ -1,3 +1,4 @@
+import logOutFirebase from "../../utils/firebaseLogout";
 import { authHeader, baseUrl,handleResponse } from "../_constants";
 export const getApi = async (url, setData) => {
   const requestOptions = {
@@ -9,5 +10,10 @@ export const getApi = async (url, setData) => {
     .then((data) => setData(data))
     .catch((error) => {
       console.log("get_error>>>", error);
+      // if(error.status === 401) {
+      //   let username = localStorage.getItem("userName");
+      //   logOutFirebase(username?.toLowerCase().trim());
+
+      // }
     });
 };

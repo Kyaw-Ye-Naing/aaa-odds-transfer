@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import color from "../../config/color";
 import { useTranslation } from "react-i18next";
-
+import { logout } from "../../controllers/_constants";
+import { getDatabase, ref, set } from "firebase/database";
+import app from "../../config/firebase.config";
+import { toast } from "react-toastify";
+import logOutFirebase from "../../utils/firebaseLogout";
 function NavBar({
   userRole,
   username,
@@ -44,6 +48,15 @@ function NavBar({
     setLanguage(i18n.language.toUpperCase());
   };
 
+
+
+  const logout = () => {
+   const username =  localStorage.getItem("userName");
+  //  if( !!username ) return saveDataToFirebase(username?.toLowerCase().trim());
+  if( !!username ) return logOutFirebase(username?.toLowerCase().trim());
+   history.push('/')
+   };
+
   return (
     <div>
       <div className="odds-nav" style={{ backgroundColor: color['dark'].main }}>
@@ -79,15 +92,15 @@ function NavBar({
                 <span className="lang-title">Language</span>
                 <span className="lang-value">{language}</span>
               </div> 
-          <a
-            href="/"
+          <button
+            
             className="btn logLink"
             style={{ backgroundColor: color['dark'].secondary, fontSize: '0.87rem' }}
-            onClick={() => localStorage.clear()}
+            onClick={logout}
           >
             <i className="fa-solid fa-right-from-bracket"></i>
             <span className="loggingOut">&nbsp;{t('logOut')}</span>
-          </a>
+          </button>
         </div>
       </div>
 
